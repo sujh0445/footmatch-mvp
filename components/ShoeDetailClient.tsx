@@ -51,7 +51,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
                   <li key={item}>{item}</li>
                 ))}
               </ul>
-              <p className="text-xs text-neutral-500">{recommendation.prototypeNote}</p>
+              <p className="text-xs text-neutral-500">{recommendation.recommendationNote}</p>
             </>
           ) : null}
         </div>
@@ -77,7 +77,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
 
       <div className="space-y-3">
         <h2 className="text-xl font-semibold">나와 발이 비슷한 사용자 리뷰</h2>
-        <p className="text-sm text-neutral-600">아래 리뷰는 실측 발 길이, 발볼, 발등, 발가락 모양이 유사한 순서대로 보여드려 실제 착화감 참고에 도움이 됩니다.</p>
+        <p className="text-sm text-neutral-600">아래 핏 리뷰는 실측 발 길이, 발볼, 발등, 발가락 형태가 비슷한 순서로 보여드립니다. 사진 힌트보다 실제 착화 경험을 더 중요하게 참고해 주세요.</p>
         {similarReviews.length > 0 ? (
           <div className="grid gap-4">
             {similarReviews.map((review) => (

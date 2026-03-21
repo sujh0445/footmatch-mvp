@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "FootMatch",
-  description: "나와 비슷한 발을 가진 사람들의 신발 사이즈 후기를 찾아보세요."
+  description: "실측 발 길이와 핏 리뷰를 바탕으로 신발 사이즈 선택을 돕는 FootMatch."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

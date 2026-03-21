@@ -37,7 +37,8 @@ export function UploadAnalyzer() {
     <section className="mx-auto grid max-w-4xl gap-5 lg:grid-cols-[1fr_320px]">
       <div className="card space-y-4">
         <h1 className="text-2xl font-semibold">발 사진 업로드</h1>
-        <p className="text-sm text-neutral-600">윗면/옆면 사진을 올리면 발볼·발등·발가락 모양 힌트를 정리해드립니다.</p>
+        <p className="text-sm text-neutral-600">사진은 발볼·발등·발가락 모양을 참고용으로 추정하며, 실제 구매 습관과 앞볼 압박 경험을 더 중요하게 반영합니다.</p>
+        <p className="text-xs text-neutral-500">사진 결과는 촬영 각도와 이미지에 따라 달라질 수 있어요.</p>
 
         <label className="block rounded-2xl border-2 border-dashed border-neutral-300 p-4 text-sm">
           <span className="mb-2 block font-medium">발 윗면 사진</span>
@@ -65,7 +66,7 @@ export function UploadAnalyzer() {
         </div>
 
         <button className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50" disabled={!canAnalyze} onClick={onAnalyze}>
-          {loading ? "분석 중..." : "사진 힌트 분석하기"}
+          {loading ? "정리 중..." : "사진 참고 힌트 확인하기"}
         </button>
       </div>
 
