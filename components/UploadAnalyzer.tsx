@@ -1,0 +1,80 @@
+"use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useMemo, useState } from "react";
+import { analyzeFootPhotos } from "@/services/footAnalysis";
+import { saveAnalysisResult } from "@/lib/storage";
+
+export function UploadAnalyzer() {
+  const router = useRouter();
+  const [topFile, setTopFile] = useState<File | null>(null);
+  const [sideFile, setSideFile] = useState<File | null>(null);
+  const [topPreview, setTopPreview] = useState<string | null>(null);
+  const [sidePreview, setSidePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const canAnalyze = useMemo(() => Boolean(topFile && sideFile && !loading), [topFile, sideFile, loading]);
+
+  const onFile =
+    (setter: (f: File | null) => void, previewSetter: (src: string | null) => void) =>
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0] ?? null;
+      setter(file);
+      previewSetter(file ? URL.createObjectURL(file) : null);
+    };
+
+  const onAnalyze = async () => {
+    if (!topFile || !sideFile) return;
+    setLoading(true);
+    const result = await analyzeFootPhotos({ topViewFileName: topFile.name, sideViewFileName: sideFile.name });
+    saveAnalysisResult(result);
+    router.push("/analysis");
+  };
+
+  return (
+    <section className="mx-auto grid max-w-4xl gap-5 lg:grid-cols-[1fr_320px]">
+      <div className="card space-y-4">
+        <h1 className="text-2xl font-semibold">발 사진 업로드 (선택)</h1>
+        <p className="text-sm text-neutral-600">사진 분석은 발 형태 경향을 참고용으로만 사용합니다. 길이는 입력값 기준으로 사용됩니다.</p>
+
+        <label className="block rounded-2xl border-2 border-dashed border-neutral-300 p-4 text-sm">
+          <span className="mb-2 block font-medium">위에서 찍은 발 사진</span>
+          <input type="file" accept="image/*" onChange={onFile(setTopFile, setTopPreview)} className="block w-full text-sm" />
+          {topFile ? <p className="mt-2 text-xs text-neutral-600">선택됨: {topFile.name}</p> : null}
+        </label>
+
+        <label className="block rounded-2xl border-2 border-dashed border-neutral-300 p-4 text-sm">
+          <span className="mb-2 block font-medium">측면 발 사진</span>
+          <input type="file" accept="image/*" onChange={onFile(setSideFile, setSidePreview)} className="block w-full text-sm" />
+          {sideFile ? <p className="mt-2 text-xs text-neutral-600">선택됨: {sideFile.name}</p> : null}
+        </label>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          {topPreview ? <Image src={topPreview} alt="발 윗면 미리보기" className="h-36 w-full rounded-xl object-cover" width={400} height={160} unoptimized /> : <div className="h-36 rounded-xl bg-neutral-100" />}
+          {sidePreview ? <Image src={sidePreview} alt="발 옆면 미리보기" className="h-36 w-full rounded-xl object-cover" width={400} height={160} unoptimized /> : <div className="h-36 rounded-xl bg-neutral-100" />}
+        </div>
+
+        <div className="grid gap-2 sm:grid-cols-2">
+          <button className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50" disabled={!canAnalyze} onClick={onAnalyze}>
+            {loading ? "분석 중..." : "사진 기반 시범 분석"}
+          </button>
+          <button className="btn-secondary w-full" type="button" onClick={() => router.push("/analysis")}>
+            사진 없이 계속
+          </button>
+        </div>
+      </div>
+
+      <aside className="card h-fit space-y-3">
+        <h2 className="text-lg font-semibold">촬영 가이드</h2>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-600">
+          <li>양말을 벗고 촬영해주세요.</li>
+          <li>발 전체가 잘 보이게 찍어주세요.</li>
+          <li>그림자가 심하지 않게 촬영해주세요.</li>
+          <li>위에서 찍은 사진과 측면 사진을 권장합니다.</li>
+          <li>사진 품질이 낮으면 형태 분석 정확도가 떨어질 수 있습니다.</li>
+        </ul>
+      </aside>
+    </section>
+  );
+}
