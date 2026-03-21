@@ -27,11 +27,11 @@ export function OnboardingForm() {
   return (
     <form onSubmit={onSubmit} className="card mx-auto max-w-2xl space-y-4">
       <h1 className="text-2xl font-semibold">발 정보를 입력해주세요</h1>
-      <p className="text-sm text-neutral-600">실측 발 길이를 기준으로 추천하고, 사진은 발 모양 힌트를 보완하는 용도로만 사용합니다.</p>
+      <p className="text-sm text-neutral-600">FootMatch는 실측 발 길이(mm)와 실제 착화 경험을 중심으로 보고, 사진 결과는 참고용 형태 힌트로만 보조 반영합니다.</p>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">
-          실측 발 길이 (mm) *
+          실측 발 길이(mm) *
           <input type="number" min={220} max={320} step={1} value={form.actualFootLengthMm} onChange={(e) => setForm((p) => ({ ...p, actualFootLengthMm: Number(e.target.value) }))} className="input mt-1" required />
         </label>
 

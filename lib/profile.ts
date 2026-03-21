@@ -12,7 +12,7 @@ export function normalizeFootProfile(analysis: MockAnalysisOutput, selfInput: Fo
   const notes: string[] = [];
 
   if (selfInput.commonIssue === "heel_slip" && analysis.heelSlipTendency !== "low") {
-    notes.push("사진 힌트에서도 뒤꿈치 고정 이슈 가능성이 보여요.");
+    notes.push("촬영 이미지 기준 추정에서도 뒤꿈치 고정 이슈 가능성이 보여요.");
   }
 
   if (selfInput.preferredFit === "roomy" && analysis.forefootWidth !== "narrow") {
@@ -62,7 +62,7 @@ export function explainSimilarity(user: FootProfile, reviewer: FootProfile): str
   const lengthDelta = Math.abs(user.footLengthMm - reviewer.footLengthMm);
   if (lengthDelta <= 3) reasons.push(`실측 발 길이 차이가 ${lengthDelta}mm로 매우 작아요.`);
 
-  if (user.forefootWidth === reviewer.forefootWidth) reasons.push("발볼 유형이 같아 앞쪽 압박 체감이 비슷할 가능성이 큽니다.");
+  if (user.forefootWidth === reviewer.forefootWidth) reasons.push("발볼 경향이 비슷해 앞쪽 압박 체감도 유사할 가능성이 있어요.");
   if (user.instepHeight === reviewer.instepHeight) reasons.push("발등 높이가 비슷해 끈 조임/압박 느낌이 유사할 수 있어요.");
   if (user.toeShape === reviewer.toeShape) reasons.push("발가락 모양이 비슷해 앞코 공간 체감 참고에 도움이 됩니다.");
 
@@ -77,7 +77,7 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
 
   if (user.forefootWidth === "wide") {
     adjustment += 5;
-    rationale.push("발볼이 넓은 편이라 앞쪽 압박을 줄이기 위해 +5mm를 우선 고려했어요.");
+    rationale.push("앞발 너비가 넓은 편으로 보여 앞쪽 압박 완화를 위해 +5mm 여유를 우선 고려했어요.");
   }
 
   if (user.instepHeight === "high") {
@@ -89,10 +89,10 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
   const trueSizeVotes = similar.filter((r) => r.purchasedSize === r.usualSize).length;
 
   if (upsizeVotes > trueSizeVotes) {
-    rationale.push("비슷한 발 사용자 리뷰에서 업사이징 선택이 더 많았어요.");
+    rationale.push("비슷한 발의 핏 리뷰에서 업사이징 선택이 더 많았어요.");
   } else {
     adjustment -= 5;
-    rationale.push("비슷한 발 사용자 리뷰에서 정사이즈 선택이 더 많았어요.");
+    rationale.push("비슷한 발의 핏 리뷰에서 정사이즈 선택이 더 많았어요.");
   }
 
   if (user.heelSlipTendency === "high" && adjustment > 0) {
@@ -106,6 +106,6 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
   return {
     recommendedSize,
     rationale,
-    prototypeNote: "실측 발 길이 + 발볼/압박 성향 + 유사 리뷰를 함께 반영한 추천입니다."
+    recommendationNote: "실측 발 길이(mm), 착화 경험, 비슷한 발의 핏 리뷰를 함께 반영한 참고용 추천입니다."
   };
 }
