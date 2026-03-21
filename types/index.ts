@@ -5,7 +5,8 @@ export type HeelSlipTendency = "low" | "medium" | "high";
 export type LeftRightDifference = "small" | "medium" | "large";
 
 export interface FootSelfInput {
-  usualSneakerSize: number;
+  actualFootLengthMm: number;
+  purchasedShoeSizeMm?: number;
   widthSelfAssessment: WidthCategory;
   instepSelfAssessment: InstepCategory;
   commonIssue: "toe_tightness" | "width_pressure" | "instep_pressure" | "heel_slip" | "none";
@@ -19,12 +20,11 @@ export interface FootProfile {
   toeShape: ToeShape;
   heelSlipTendency: HeelSlipTendency;
   leftRightDifference: LeftRightDifference;
-  usualSneakerSize: number;
+  purchasedShoeSizeMm?: number;
   notes?: string[];
 }
 
 export interface MockAnalysisOutput {
-  footLengthMm: number;
   forefootWidth: WidthCategory;
   instepHeight: InstepCategory;
   toeShape: ToeShape;

@@ -25,7 +25,7 @@ export function ShoeSearchClient() {
   return (
     <section className="space-y-5">
       <div className="card space-y-3">
-        <h1 className="text-2xl font-semibold">데모 신발 검색</h1>
+        <h1 className="text-2xl font-semibold">신발 검색</h1>
         <div className="grid gap-3 sm:grid-cols-[1fr_200px]">
           <input value={query} onChange={(e) => setQuery(e.target.value)} className="input" placeholder="브랜드 또는 모델 검색" />
           <select value={category} onChange={(e) => setCategory(e.target.value as typeof category)} className="select">

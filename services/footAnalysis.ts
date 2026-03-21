@@ -19,19 +19,12 @@ function hashString(value: string): number {
   return hash;
 }
 
-/**
- * Mock computer-vision analysis service.
- *
- * Replace this function with a real API/model call later.
- * Keep the returned structure stable so downstream normalization and recommendation logic remain unchanged.
- */
 export async function analyzeFootPhotos(input: AnalyzeFootInput): Promise<MockAnalysisOutput> {
   const seed = hashString(`${input.topViewFileName}-${input.sideViewFileName}`);
 
   await new Promise((resolve) => setTimeout(resolve, 900));
 
   return {
-    footLengthMm: 245 + (seed % 35),
     forefootWidth: widths[seed % widths.length],
     instepHeight: insteps[Math.floor(seed / 7) % insteps.length],
     toeShape: toeShapes[Math.floor(seed / 11) % toeShapes.length],

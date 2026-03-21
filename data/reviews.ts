@@ -11,7 +11,6 @@ export const shoeReviews: ShoeReview[] = [
       toeShape: "egyptian",
       heelSlipTendency: "low",
       leftRightDifference: "small",
-      usualSneakerSize: 270
     },
     usualSize: 270,
     purchasedSize: 275,
@@ -36,7 +35,6 @@ export const shoeReviews: ShoeReview[] = [
       toeShape: "greek",
       heelSlipTendency: "medium",
       leftRightDifference: "small",
-      usualSneakerSize: 270
     },
     usualSize: 270,
     purchasedSize: 270,
@@ -60,7 +58,6 @@ export const shoeReviews: ShoeReview[] = [
       toeShape: "square",
       heelSlipTendency: "low",
       leftRightDifference: "medium",
-      usualSneakerSize: 270
     },
     usualSize: 270,
     purchasedSize: 275,
@@ -84,7 +81,6 @@ export const shoeReviews: ShoeReview[] = [
       toeShape: "egyptian",
       heelSlipTendency: "medium",
       leftRightDifference: "small",
-      usualSneakerSize: 275
     },
     usualSize: 275,
     purchasedSize: 275,
@@ -108,7 +104,6 @@ export const shoeReviews: ShoeReview[] = [
       toeShape: "greek",
       heelSlipTendency: "low",
       leftRightDifference: "small",
-      usualSneakerSize: 270
     },
     usualSize: 270,
     purchasedSize: 275,
@@ -132,7 +127,6 @@ export const shoeReviews: ShoeReview[] = [
       toeShape: "egyptian",
       heelSlipTendency: "low",
       leftRightDifference: "small",
-      usualSneakerSize: 270
     },
     usualSize: 270,
     purchasedSize: 270,

@@ -1,24 +1,32 @@
 import { FootProfile, FootSelfInput, MockAnalysisOutput, ShoeReview, SizeRecommendation } from "@/types";
 
+function roundToNearestFive(value: number): number {
+  return Math.round(value / 5) * 5;
+}
+
+function estimateSizeFromFootLength(lengthMm: number): number {
+  return roundToNearestFive(lengthMm + 10);
+}
+
 export function normalizeFootProfile(analysis: MockAnalysisOutput, selfInput: FootSelfInput): FootProfile {
   const notes: string[] = [];
 
   if (selfInput.commonIssue === "heel_slip" && analysis.heelSlipTendency !== "low") {
-    notes.push("자가 입력한 뒤꿈치 들림 경향이 분석 결과와 유사합니다.");
+    notes.push("사진 힌트에서도 뒤꿈치 고정 이슈 가능성이 보여요.");
   }
 
   if (selfInput.preferredFit === "roomy" && analysis.forefootWidth !== "narrow") {
-    notes.push("여유 핏 선호와 현재 발볼 볼륨이 잘 맞을 가능성이 있습니다.");
+    notes.push("여유 핏 선호와 발 앞쪽 볼륨이 잘 맞는 편입니다.");
   }
 
   return {
-    footLengthMm: analysis.footLengthMm,
+    footLengthMm: selfInput.actualFootLengthMm,
     forefootWidth: analysis.forefootWidth,
     instepHeight: analysis.instepHeight,
     toeShape: analysis.toeShape,
     heelSlipTendency: analysis.heelSlipTendency,
     leftRightDifference: analysis.leftRightDifference,
-    usualSneakerSize: selfInput.usualSneakerSize,
+    purchasedShoeSizeMm: selfInput.purchasedShoeSizeMm,
     notes
   };
 }
@@ -48,6 +56,19 @@ export function getSimilarReviews(user: FootProfile, reviews: ShoeReview[]): (Sh
     .sort((a, b) => b.similarity - a.similarity);
 }
 
+export function explainSimilarity(user: FootProfile, reviewer: FootProfile): string[] {
+  const reasons: string[] = [];
+
+  const lengthDelta = Math.abs(user.footLengthMm - reviewer.footLengthMm);
+  if (lengthDelta <= 3) reasons.push(`실측 발 길이 차이가 ${lengthDelta}mm로 매우 작아요.`);
+
+  if (user.forefootWidth === reviewer.forefootWidth) reasons.push("발볼 유형이 같아 앞쪽 압박 체감이 비슷할 가능성이 큽니다.");
+  if (user.instepHeight === reviewer.instepHeight) reasons.push("발등 높이가 비슷해 끈 조임/압박 느낌이 유사할 수 있어요.");
+  if (user.toeShape === reviewer.toeShape) reasons.push("발가락 모양이 비슷해 앞코 공간 체감 참고에 도움이 됩니다.");
+
+  return reasons.slice(0, 2);
+}
+
 export function generateSizeRecommendation(user: FootProfile, reviews: ShoeReview[]): SizeRecommendation {
   const similar = getSimilarReviews(user, reviews).filter((r) => r.similarity >= 65).slice(0, 5);
 
@@ -56,33 +77,35 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
 
   if (user.forefootWidth === "wide") {
     adjustment += 5;
-    rationale.push("비슷한 발볼 사용자들은 반 사이즈 업에서 압박이 줄어드는 경우가 많았습니다.");
+    rationale.push("발볼이 넓은 편이라 앞쪽 압박을 줄이기 위해 +5mm를 우선 고려했어요.");
   }
 
   if (user.instepHeight === "high") {
     adjustment += 5;
-    rationale.push("발등이 높은 프로필은 반 사이즈 업에서 발등 압박이 줄었다는 리뷰가 많았습니다.");
+    rationale.push("발등 높이가 있어 끈/혀 압박 완화를 위해 +5mm 여유를 반영했어요.");
   }
 
   const upsizeVotes = similar.filter((r) => r.purchasedSize > r.usualSize).length;
   const trueSizeVotes = similar.filter((r) => r.purchasedSize === r.usualSize).length;
 
   if (upsizeVotes > trueSizeVotes) {
-    rationale.push("유사도가 높은 리뷰어 다수가 업사이징을 선택했습니다.");
+    rationale.push("비슷한 발 사용자 리뷰에서 업사이징 선택이 더 많았어요.");
   } else {
     adjustment -= 5;
-    rationale.push("유사도가 높은 리뷰어 다수가 정사이즈를 선택했습니다.");
+    rationale.push("비슷한 발 사용자 리뷰에서 정사이즈 선택이 더 많았어요.");
   }
 
   if (user.heelSlipTendency === "high" && adjustment > 0) {
-    rationale.push("뒤꿈치 들림 경향을 고려해 과도한 사이즈 업은 피했습니다.");
+    adjustment -= 5;
+    rationale.push("뒤꿈치 들림 경향을 고려해 과한 업사이징은 줄였어요.");
   }
 
-  const recommendedSize = user.usualSneakerSize + (adjustment >= 5 ? 5 : 0);
+  const baseSize = user.purchasedShoeSizeMm ?? estimateSizeFromFootLength(user.footLengthMm);
+  const recommendedSize = baseSize + (adjustment >= 5 ? 5 : 0);
 
   return {
     recommendedSize,
     rationale,
-    prototypeNote: "로컬 규칙과 데모 리뷰 데이터 기반의 프로토타입 추천입니다."
+    prototypeNote: "실측 발 길이 + 발볼/압박 성향 + 유사 리뷰를 함께 반영한 추천입니다."
   };
 }
