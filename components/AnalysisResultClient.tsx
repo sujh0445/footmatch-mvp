@@ -36,24 +36,24 @@ export function AnalysisResultClient() {
     );
   }
 
-  const { analysis, profile } = state;
+  const { analysis, selfInput, profile } = state;
 
   return (
     <section className="space-y-5">
-      <h1 className="text-2xl font-semibold">발 분석 결과 (MVP 목업)</h1>
+      <h1 className="text-2xl font-semibold">내 발 프로필 요약</h1>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <ResultCard label="발 길이" value={`${analysis.footLengthMm} mm`} />
+        <ResultCard label="실측 발 길이" value={`${selfInput.actualFootLengthMm} mm`} />
         <ResultCard label="발볼" value={analysis.forefootWidth} />
         <ResultCard label="발등" value={analysis.instepHeight} />
-        <ResultCard label="발가락 형태" value={analysis.toeShape} />
+        <ResultCard label="발가락 모양" value={analysis.toeShape} />
         <ResultCard label="뒤꿈치 들림 경향" value={analysis.heelSlipTendency} />
         <ResultCard label="좌우 차이" value={analysis.leftRightDifference} />
       </div>
 
       <div className="card space-y-2 text-sm text-neutral-700">
-        <p className="font-medium">신뢰도 안내</p>
-        <p>현재는 MVP 데모 결과입니다. 실제 비전 모델 연동 시 정확도가 향상됩니다.</p>
-        <p className="text-xs text-neutral-500">목업 분석 신뢰도: {(analysis.confidence * 100).toFixed(0)}%</p>
+        <p className="font-medium">사진 분석 안내</p>
+        <p>사진은 발볼·발등·발가락 모양 같은 형태 힌트를 보완하는 용도이며, 길이 측정은 실측값을 기준으로 사용합니다.</p>
+        <p className="text-xs text-neutral-500">형태 힌트 신뢰도: {(analysis.confidence * 100).toFixed(0)}%</p>
       </div>
 
       <button
@@ -63,7 +63,7 @@ export function AnalysisResultClient() {
           router.push("/shoes");
         }}
       >
-        프로필 저장 후 계속
+        추천 확인하러 가기
       </button>
     </section>
   );
@@ -71,14 +71,14 @@ export function AnalysisResultClient() {
 
 function ResultCard({ label, value }: { label: string; value: string }) {
   const valueMap: Record<string, string> = {
-    narrow: "좁음",
+    narrow: "좁은 편",
     normal: "보통",
-    wide: "넓음",
-    low: "낮음",
-    high: "높음",
-    egyptian: "이집트형",
-    greek: "그리스형",
-    square: "스퀘어형",
+    wide: "넓은 편",
+    low: "낮은 편",
+    high: "높은 편",
+    egyptian: "엄지발가락이 가장 긴 형태",
+    greek: "둘째발가락이 가장 긴 형태",
+    square: "앞쪽 발가락 길이가 비슷한 형태",
     medium: "중간",
     small: "작음",
     large: "큼"

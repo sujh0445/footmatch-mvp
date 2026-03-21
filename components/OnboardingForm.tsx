@@ -6,7 +6,8 @@ import { saveSelfInput } from "@/lib/storage";
 import { FootSelfInput } from "@/types";
 
 const initial: FootSelfInput = {
-  usualSneakerSize: 270,
+  actualFootLengthMm: 255,
+  purchasedShoeSizeMm: 270,
   widthSelfAssessment: "normal",
   instepSelfAssessment: "normal",
   commonIssue: "none",
@@ -25,13 +26,34 @@ export function OnboardingForm() {
 
   return (
     <form onSubmit={onSubmit} className="card mx-auto max-w-2xl space-y-4">
-      <h1 className="text-2xl font-semibold">기본 발 착화 정보를 입력해주세요</h1>
-      <p className="text-sm text-neutral-600">이 정보는 사진 분석 결과를 보완해 사이즈 추천 정확도를 높입니다.</p>
+      <h1 className="text-2xl font-semibold">발 정보를 입력해주세요</h1>
+      <p className="text-sm text-neutral-600">실측 발 길이를 기준으로 추천하고, 사진은 발 모양 힌트를 보완하는 용도로만 사용합니다.</p>
 
-      <label className="block text-sm">
-        평소 운동화 사이즈 (mm / JP)
-        <input type="number" min={220} max={320} step={5} value={form.usualSneakerSize} onChange={(e) => setForm((p) => ({ ...p, usualSneakerSize: Number(e.target.value) }))} className="input mt-1" required />
-      </label>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="block text-sm">
+          실측 발 길이 (mm) *
+          <input type="number" min={220} max={320} step={1} value={form.actualFootLengthMm} onChange={(e) => setForm((p) => ({ ...p, actualFootLengthMm: Number(e.target.value) }))} className="input mt-1" required />
+        </label>
+
+        <label className="block text-sm">
+          최근 구매한 신발 사이즈 (선택)
+          <input
+            type="number"
+            min={220}
+            max={320}
+            step={5}
+            value={form.purchasedShoeSizeMm ?? ""}
+            onChange={(e) =>
+              setForm((p) => ({
+                ...p,
+                purchasedShoeSizeMm: e.target.value ? Number(e.target.value) : undefined
+              }))
+            }
+            className="input mt-1"
+            placeholder="예: 270"
+          />
+        </label>
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">

@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { shoeReviews } from "@/data/reviews";
 import { FootProfileChips } from "@/components/FootProfileChips";
 import { SimilarityBadge } from "@/components/SimilarityBadge";
-import { generateSizeRecommendation, getSimilarReviews } from "@/lib/profile";
+import { explainSimilarity, generateSizeRecommendation, getSimilarReviews } from "@/lib/profile";
 import { getFootProfile } from "@/lib/storage";
 import { ShoeModel } from "@/types";
 
@@ -40,21 +40,12 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
 
   return (
     <section className="space-y-6">
-      <div className="card space-y-2">
-        <p className="text-xs uppercase tracking-wide text-neutral-500">{categoryLabel[shoe.category]}</p>
-        <h1 className="text-3xl font-semibold">
-          {shoe.brand} {shoe.modelName}
-        </h1>
-        <p className="text-neutral-700">{shoe.fitSummary}</p>
-        <p className="text-sm text-neutral-600">일반적인 사이징 경향: {shoe.sizingTendency}</p>
-      </div>
-
       {profile ? (
         <div className="card space-y-3">
-          <h2 className="text-xl font-semibold">사이즈 추천</h2>
+          <h2 className="text-xl font-semibold">추천 사이즈</h2>
           {recommendation ? (
             <>
-              <p className="text-lg font-medium">추천 사이즈: {recommendation.recommendedSize}</p>
+              <p className="text-2xl font-semibold">{recommendation.recommendedSize} mm</p>
               <ul className="list-disc space-y-1 pl-5 text-sm text-neutral-700">
                 {recommendation.rationale.map((item) => (
                   <li key={item}>{item}</li>
@@ -75,8 +66,18 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       )}
 
+      <div className="card space-y-2">
+        <p className="text-xs uppercase tracking-wide text-neutral-500">{categoryLabel[shoe.category]}</p>
+        <h1 className="text-3xl font-semibold">
+          {shoe.brand} {shoe.modelName}
+        </h1>
+        <p className="text-neutral-700">{shoe.fitSummary}</p>
+        <p className="text-sm text-neutral-600">일반적인 사이징 경향: {shoe.sizingTendency}</p>
+      </div>
+
       <div className="space-y-3">
         <h2 className="text-xl font-semibold">나와 발이 비슷한 사용자 리뷰</h2>
+        <p className="text-sm text-neutral-600">아래 리뷰는 실측 발 길이, 발볼, 발등, 발가락 모양이 유사한 순서대로 보여드려 실제 착화감 참고에 도움이 됩니다.</p>
         {similarReviews.length > 0 ? (
           <div className="grid gap-4">
             {similarReviews.map((review) => (
@@ -86,6 +87,13 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
                   <SimilarityBadge score={review.similarity} />
                 </div>
                 <FootProfileChips profile={review.reviewerFootProfile} />
+                {profile ? (
+                  <ul className="list-disc space-y-1 pl-5 text-xs text-neutral-600">
+                    {explainSimilarity(profile, review.reviewerFootProfile).map((reason) => (
+                      <li key={reason}>{reason}</li>
+                    ))}
+                  </ul>
+                ) : null}
                 <div className="grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-4">
                   <p>
                     평소 사이즈 <span className="font-medium">{review.usualSize}</span>
@@ -107,7 +115,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
             ))}
           </div>
         ) : (
-          <div className="card text-sm text-neutral-600">이 모델에 대한 데모 리뷰가 아직 없습니다.</div>
+          <div className="card text-sm text-neutral-600">이 모델에 대한 리뷰가 아직 없습니다.</div>
         )}
       </div>
 

@@ -34,7 +34,7 @@ export function ReviewForm() {
   return (
     <section className="mx-auto max-w-3xl space-y-5">
       <form className="card space-y-4" onSubmit={onSubmit}>
-        <h1 className="text-2xl font-semibold">구조화 리뷰 작성</h1>
+        <h1 className="text-2xl font-semibold">핏 리뷰 작성</h1>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="text-sm">
             신발 모델
@@ -48,7 +48,7 @@ export function ReviewForm() {
           </label>
 
           <label className="text-sm">
-            전체 핏 결과
+            전체 핏 느낌
             <select className="select mt-1" value={form.fitResult} onChange={(e) => setForm((p) => ({ ...p, fitResult: e.target.value }))}>
               <option value="too small">작았음</option>
               <option value="true-to-size">정사이즈</option>
@@ -106,11 +106,11 @@ export function ReviewForm() {
         </div>
 
         <button className="btn-primary" type="submit">
-          리뷰 제출 (데모)
+          핏 리뷰 제출
         </button>
       </form>
 
-      {submitted ? <div className="card text-sm text-emerald-700">감사합니다! 이 리뷰는 현재 데모 세션에 반영됩니다.</div> : null}
+      {submitted ? <div className="card text-sm text-emerald-700">감사합니다! 리뷰가 저장되면 추천 정확도 개선에 반영됩니다.</div> : null}
     </section>
   );
 }

@@ -37,7 +37,7 @@ export function UploadAnalyzer() {
     <section className="mx-auto grid max-w-4xl gap-5 lg:grid-cols-[1fr_320px]">
       <div className="card space-y-4">
         <h1 className="text-2xl font-semibold">발 사진 업로드</h1>
-        <p className="text-sm text-neutral-600">윗면/옆면 사진을 업로드하면 MVP 목업 분석 결과를 생성합니다.</p>
+        <p className="text-sm text-neutral-600">윗면/옆면 사진을 올리면 발볼·발등·발가락 모양 힌트를 정리해드립니다.</p>
 
         <label className="block rounded-2xl border-2 border-dashed border-neutral-300 p-4 text-sm">
           <span className="mb-2 block font-medium">발 윗면 사진</span>
@@ -65,7 +65,7 @@ export function UploadAnalyzer() {
         </div>
 
         <button className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50" disabled={!canAnalyze} onClick={onAnalyze}>
-          {loading ? "분석 중..." : "내 발 분석하기"}
+          {loading ? "분석 중..." : "사진 힌트 분석하기"}
         </button>
       </div>
 
@@ -73,7 +73,7 @@ export function UploadAnalyzer() {
         <h2 className="text-lg font-semibold">촬영 가이드</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-600">
           <li>바닥이 단순한 곳에 발을 올려주세요.</li>
-          <li>A4 용지 또는 카드 1장을 함께 넣어 크기 기준을 맞춰주세요.</li>
+          <li>발 앞쪽이 잘 보이도록 프레임 중앙에 맞춰 촬영해주세요.</li>
           <li>윗면 1장, 옆면 1장을 각각 촬영해주세요.</li>
           <li>그림자가 적고 밝은 환경에서 촬영하면 더 좋아요.</li>
         </ul>
