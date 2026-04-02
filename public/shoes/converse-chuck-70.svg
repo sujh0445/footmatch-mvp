@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <rect width="1200" height="900" fill="#f3e8ff"/>
+  <g opacity="0.22">
+    <circle cx="150" cy="130" r="90" fill="#7c3aed"/>
+    <circle cx="1030" cy="160" r="120" fill="#7c3aed"/>
+    <circle cx="1060" cy="760" r="140" fill="#7c3aed"/>
+  </g>
+  <g transform="translate(120 250)">
+    <path d="M60 220 C120 130, 270 110, 420 120 C520 126, 650 160, 760 250 L865 310 C900 330, 930 358, 948 394 C958 414, 950 438, 930 452 C903 471, 860 478, 822 475 L155 475 C108 475, 71 459, 43 429 C18 402, 12 366, 25 336 C33 317, 46 280, 60 220Z" fill="white"/>
+    <path d="M202 212 C303 194, 440 206, 562 240 C661 267, 752 312, 834 382" stroke="#7c3aed" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <path d="M188 458 L848 458" stroke="#7c3aed" stroke-width="18" stroke-linecap="round"/>
+    <path d="M232 242 L290 185 M336 228 L398 170 M446 238 L515 182 M562 266 L630 212" stroke="#7c3aed" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <text x="90" y="118" font-size="34" font-family="Arial, Helvetica, sans-serif" fill="#7c3aed" opacity="0.8">FootMatch placeholder cover</text>
+  <text x="90" y="690" font-size="38" font-weight="700" font-family="Arial, Helvetica, sans-serif" fill="#7c3aed">Converse</text>
+  <text x="90" y="744" font-size="52" font-weight="700" font-family="Arial, Helvetica, sans-serif" fill="#111827">Chuck 70</text>
+  <text x="90" y="802" font-size="28" font-family="Arial, Helvetica, sans-serif" fill="#374151">라이프스타일</text>
+</svg>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { HeaderActions } from "@/components/HeaderActions";
 
 export const metadata: Metadata = {
   title: "FootMatch",
@@ -16,14 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className="text-lg font-semibold tracking-tight">
               FootMatch
             </Link>
-            <nav className="flex items-center gap-2 text-sm">
-              <Link className="btn-secondary" href="/shoes">
-                신발 보기
-              </Link>
-              <Link className="btn-primary" href="/onboarding">
-                발 프로필 시작
-              </Link>
-            </nav>
+            <HeaderActions />
           </div>
         </header>
         <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">{children}</main>

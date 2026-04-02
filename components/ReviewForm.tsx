@@ -57,12 +57,12 @@ export function ReviewForm() {
           </label>
 
           <label className="text-sm">
-            평소 사이즈
+            평소 자주 신는 운동화 사이즈
             <input className="input mt-1" type="number" step={5} value={form.usualSize} onChange={(e) => setForm((p) => ({ ...p, usualSize: Number(e.target.value) }))} />
           </label>
 
           <label className="text-sm">
-            구매 사이즈
+            이 모델에서 구매한 사이즈
             <input className="input mt-1" type="number" step={5} value={form.purchasedSize} onChange={(e) => setForm((p) => ({ ...p, purchasedSize: Number(e.target.value) }))} />
           </label>
         </div>
@@ -91,7 +91,13 @@ export function ReviewForm() {
 
         <label className="text-sm">
           코멘트
-          <textarea className="input mt-1 min-h-24" value={form.comment} onChange={(e) => setForm((p) => ({ ...p, comment: e.target.value }))} required />
+          <textarea
+            className="input mt-1 min-h-24"
+            value={form.comment}
+            onChange={(e) => setForm((p) => ({ ...p, comment: e.target.value }))}
+            placeholder="앞볼은 어땠나요? 발등 압박은 있었나요? 오래 걸었을 때 편했나요?"
+            required
+          />
         </label>
 
         <div className="space-y-2">
@@ -110,7 +116,7 @@ export function ReviewForm() {
         </button>
       </form>
 
-      {submitted ? <div className="card text-sm text-emerald-700">감사합니다! 리뷰가 저장되면 추천 정확도 개선에 반영됩니다.</div> : null}
+      {submitted ? <div className="card text-sm text-emerald-700">감사합니다. 현재는 프로토타입이라 임시 저장만 되지만, 이후 추천 정확도 개선에 반영될 수 있습니다.</div> : null}
     </section>
   );
 }

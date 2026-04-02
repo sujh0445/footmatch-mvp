@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
+import { saveAnalysisResult, saveFootProfile, getSelfInput } from "@/lib/storage";
 import { analyzeFootPhotos } from "@/services/footAnalysis";
-import { saveAnalysisResult } from "@/lib/storage";
+import { createFallbackAnalysis, normalizeFootProfile } from "@/lib/profile";
 
 export function UploadAnalyzer() {
   const router = useRouter();
@@ -24,21 +25,32 @@ export function UploadAnalyzer() {
       previewSetter(file ? URL.createObjectURL(file) : null);
     };
 
-  const onAnalyze = async () => {
-    if (!topFile || !sideFile) return;
+  const finalize = async (withPhoto: boolean) => {
+    const selfInput = getSelfInput();
+    if (!selfInput) {
+      router.push("/onboarding");
+      return;
+    }
 
     setLoading(true);
-    const result = await analyzeFootPhotos({ topViewFileName: topFile.name, sideViewFileName: sideFile.name });
-    saveAnalysisResult(result);
-    router.push("/analysis");
+
+    const analysis =
+      withPhoto && topFile && sideFile
+        ? await analyzeFootPhotos({ topViewFileName: topFile.name, sideViewFileName: sideFile.name })
+        : createFallbackAnalysis(selfInput);
+
+    saveAnalysisResult(analysis);
+    saveFootProfile(normalizeFootProfile(analysis, selfInput));
+    router.push("/shoes");
   };
 
   return (
-    <section className="mx-auto grid max-w-4xl gap-5 lg:grid-cols-[1fr_320px]">
+    <section className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-[1fr_320px]">
       <div className="card space-y-4">
         <h1 className="text-2xl font-semibold">발 사진 업로드</h1>
-        <p className="text-sm text-neutral-600">사진은 발볼·발등·발가락 모양을 참고용으로 추정하며, 실제 구매 습관과 앞볼 압박 경험을 더 중요하게 반영합니다.</p>
-        <p className="text-xs text-neutral-500">사진 결과는 촬영 각도와 이미지에 따라 달라질 수 있어요.</p>
+        <p className="text-sm text-neutral-600">
+          사진은 발 형태를 참고용으로만 반영합니다. 실제 추천에는 실측 발길이와 착화 경험을 더 중요하게 사용합니다.
+        </p>
 
         <label className="block rounded-2xl border-2 border-dashed border-neutral-300 p-4 text-sm">
           <span className="mb-2 block font-medium">발 윗면 사진</span>
@@ -65,18 +77,27 @@ export function UploadAnalyzer() {
           )}
         </div>
 
-        <button className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50" disabled={!canAnalyze} onClick={onAnalyze}>
-          {loading ? "정리 중..." : "사진 참고 힌트 확인하기"}
-        </button>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <button
+            className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={!canAnalyze}
+            onClick={() => finalize(true)}
+            type="button"
+          >
+            {loading ? "정리 중..." : "사진 참고 힌트 반영하기"}
+          </button>
+          <button className="btn-secondary w-full" onClick={() => finalize(false)} type="button">
+            사진 없이 추천 보기
+          </button>
+        </div>
       </div>
 
       <aside className="card h-fit space-y-3">
-        <h2 className="text-lg font-semibold">촬영 가이드</h2>
+        <h2 className="text-lg font-semibold">촬영 팁</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-600">
-          <li>바닥이 단순한 곳에 발을 올려주세요.</li>
-          <li>발 앞쪽이 잘 보이도록 프레임 중앙에 맞춰 촬영해주세요.</li>
-          <li>윗면 1장, 옆면 1장을 각각 촬영해주세요.</li>
-          <li>그림자가 적고 밝은 환경에서 촬영하면 더 좋아요.</li>
+          <li>발 전체가 보이게 촬영해주세요.</li>
+          <li>윗면 1장, 옆면 1장을 올려주세요.</li>
+          <li>결과는 참고용 힌트이며, 실측 발길이와 착화 경험을 더 중요하게 봅니다.</li>
         </ul>
       </aside>
     </section>

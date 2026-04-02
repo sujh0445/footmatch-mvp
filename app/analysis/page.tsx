@@ -1,5 +1,5 @@
-import { AnalysisResultClient } from "@/components/AnalysisResultClient";
+import { redirect } from "next/navigation";
 
 export default function AnalysisPage() {
-  return <AnalysisResultClient />;
+  redirect("/profile");
 }

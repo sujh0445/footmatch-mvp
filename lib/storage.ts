@@ -42,3 +42,8 @@ export function getFootProfile(): FootProfile | null {
   const raw = window.localStorage.getItem(KEYS.profile);
   return raw ? (JSON.parse(raw) as FootProfile) : null;
 }
+
+export function clearFootmatchProfile() {
+  if (!isClient()) return;
+  Object.values(KEYS).forEach((key) => window.localStorage.removeItem(key));
+}

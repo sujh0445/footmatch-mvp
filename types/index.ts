@@ -7,8 +7,8 @@ export type LeftRightDifference = "small" | "medium" | "large";
 export interface FootSelfInput {
   actualFootLengthMm: number;
   purchasedShoeSizeMm?: number;
-  widthSelfAssessment: WidthCategory;
-  instepSelfAssessment: InstepCategory;
+  sizeUpForWidth: "rarely" | "sometimes" | "often";
+  instepPressureExperience: "rarely" | "sometimes" | "often";
   commonIssue: "toe_tightness" | "width_pressure" | "instep_pressure" | "heel_slip" | "none";
   preferredFit: "snug" | "regular" | "roomy";
 }
@@ -40,6 +40,9 @@ export interface ShoeModel {
   category: "running" | "lifestyle" | "training";
   fitSummary: string;
   sizingTendency: string;
+  imageSrc: string;
+  imageAlt: string;
+  productUrl?: string;
 }
 
 export interface ShoeReview {
