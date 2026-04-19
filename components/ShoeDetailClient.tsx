@@ -65,24 +65,19 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           <h2 className="text-xl font-semibold">내 발 기준 추천</h2>
           {recommendation ? (
             <>
-              <p className="text-2xl font-semibold">{recommendation.recommendedSize} mm</p>
-              <ul className="list-disc space-y-1 pl-5 text-sm text-neutral-700">
-                {recommendation.rationale.map((item) => (
-                  <li key={item}>{item}</li>
+              <p className="text-2xl font-semibold">추천 사이즈 {recommendation.recommendedSize}</p>
+              <div className="space-y-1 text-sm text-neutral-700">
+                {recommendation.rationale.slice(0, 2).map((item) => (
+                  <p key={item}>{item}</p>
                 ))}
-              </ul>
-              <p className="text-xs text-neutral-500">{recommendation.recommendationNote}</p>
-              <div className="rounded-2xl border border-neutral-200 p-4">
-                <p className="text-xs uppercase tracking-wide text-neutral-500">추천 모델</p>
-                <p className="mt-1 text-lg font-semibold">{shoe.brand} {shoe.modelName}</p>
-                <p className="mt-1 text-sm text-neutral-600">추천 사이즈 기준으로 먼저 비교해보기 좋은 모델입니다.</p>
               </div>
+              <p className="text-xs text-neutral-500">주의 포인트: {recommendation.recommendationNote}</p>
             </>
           ) : null}
         </div>
       ) : (
         <div className="card space-y-3 text-sm text-neutral-700">
-          <p>내 발 기준 추천도 보고 싶다면 발 프로필을 먼저 입력해주세요.</p>
+          <p>내 발 기준으로 보려면 발 프로필을 먼저 입력해주세요.</p>
           <div className="mt-3">
             <Link href="/onboarding" className="btn-primary">
               발 프로필 입력하기

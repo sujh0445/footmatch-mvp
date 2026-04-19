@@ -45,7 +45,7 @@ export function ProfileClient() {
       <div className="card space-y-3">
         <h1 className="text-2xl font-semibold">내 발 프로필</h1>
         <p className="text-sm text-neutral-600">
-          프로필이 저장됐습니다. 이제 내 발 기준으로 신발을 비교할 수 있습니다.
+          저장된 발 정보로 신발을 비교할 수 있습니다.
         </p>
       </div>
 
@@ -62,14 +62,14 @@ export function ProfileClient() {
         <h2 className="text-lg font-semibold">핏 기준</h2>
         <div className="grid gap-3 sm:grid-cols-2">
           <SummaryItem label="선호 핏" value={fitMap[selfInput.preferredFit]} />
-          <SummaryItem label="추천에 참고한 발 형태" value={`${valueMap[profile.forefootWidth]} / ${valueMap[profile.instepHeight]}`} />
+          <SummaryItem label="발 형태 기준" value={`${valueMap[profile.forefootWidth]} / ${valueMap[profile.instepHeight]}`} />
         </div>
       </div>
 
       <div className="card space-y-3 text-sm text-neutral-700">
-        <h2 className="text-lg font-semibold">사진 참고 힌트</h2>
-        <p>{analysis.photoUploaded ? "사진 힌트를 보조로 반영했습니다." : "사진 없이 입력 정보만으로 프로필을 만들었습니다."}</p>
-        <p className="text-xs text-neutral-500">사진 반영 신뢰도: {(analysis.confidence * 100).toFixed(0)}%</p>
+        <h2 className="text-lg font-semibold">사진 참고</h2>
+        <p>{analysis.photoUploaded ? "보조 정보로만 반영했어요." : "입력 정보만으로 만들었어요."}</p>
+        <p className="text-xs text-neutral-500">사진 신뢰도: {(analysis.confidence * 100).toFixed(0)}%</p>
         {profile.notes?.length ? (
           <ul className="list-disc space-y-1 pl-5">
             {profile.notes.map((note) => (
@@ -81,21 +81,21 @@ export function ProfileClient() {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <button className="btn-primary" onClick={() => router.push("/shoes")}>
-          신발 추천 보러가기
+          추천 신발 보기
         </button>
         <button className="btn-secondary" onClick={() => router.push("/onboarding")}>
-          프로필 다시 만들기
+          발 정보 수정
         </button>
         <button
           className="rounded-2xl border border-rose-300 px-4 py-3 text-sm font-medium text-rose-700 transition hover:bg-rose-50"
           onClick={() => {
-            const ok = window.confirm("저장된 발 정보를 지우고 처음부터 다시 하시겠어요?");
+            const ok = window.confirm("저장된 발 정보와 사진 결과를 모두 지울까요?");
             if (!ok) return;
             clearFootmatchProfile();
             router.push("/onboarding");
           }}
         >
-          처음부터 다시 하기
+          전체 초기화
         </button>
       </div>
     </section>

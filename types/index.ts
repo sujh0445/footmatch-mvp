@@ -67,6 +67,7 @@ export interface ShoeReview {
 
 export interface SizeRecommendation {
   recommendedSize: number;
+  baseSize: number;
   rationale: string[];
   recommendationNote: string;
 }

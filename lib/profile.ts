@@ -34,17 +34,17 @@ export function normalizeFootProfile(analysis: MockAnalysisOutput, selfInput: Fo
   const notes: string[] = [];
 
   if (selfInput.sizeUpForWidth === "often") {
-    notes.push("발볼 때문에 반업 또는 크게 사는 편이라는 경험을 반영했어요.");
+    notes.push("발볼 여유를 우선 반영했어요.");
   } else if (selfInput.sizeUpForWidth === "sometimes") {
-    notes.push("신발에 따라 앞볼 여유를 더 찾는 편으로 보았어요.");
+    notes.push("앞볼 여유를 함께 봤어요.");
   }
 
   if (selfInput.instepPressureExperience === "often") {
-    notes.push("발등 눌림 경험이 잦아 발등 압박에 더 민감한 편으로 보았어요.");
+    notes.push("발등 압박을 더 민감하게 봤어요.");
   }
 
   if (analysis.confidence < 0.5) {
-    notes.push("사진 없이 분석했거나 사진 신뢰도가 낮아 형태 정보는 참고용으로만 반영했어요.");
+    notes.push("사진 정보는 가볍게 참고했어요.");
   }
 
   return {
@@ -99,9 +99,7 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
 
   let baseSize = user.purchasedShoeSizeMm ?? estimateSizeFromFootLength(user.footLengthMm);
   let adjustment = 0;
-  const rationale: string[] = [
-    `실측 발길이 ${user.footLengthMm}mm 기준 기본 추천은 ${baseSize}mm로 잡았어요.`
-  ];
+  const rationale: string[] = [`기본 기준은 ${baseSize}mm`];
 
   if (user.forefootWidth === "wide") {
     adjustment += 5;
@@ -111,9 +109,9 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
   }
 
   if (adjustment > 0) {
-    rationale.push("앞볼 또는 발등 압박 경험을 반영해 여유 쪽으로 먼저 보았어요.");
+    rationale.push(`압박 경험을 반영해 ${baseSize + 5}mm까지 우선 확인`);
   } else {
-    rationale.push("압박 경험이 크지 않아 기본 사이즈를 우선 기준으로 두었어요.");
+    rationale.push("압박 경험이 적어 기본 기준 우선");
   }
 
   if (similar.length > 0) {
@@ -122,9 +120,9 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
 
     if (upsizeVotes > trueSizeVotes) {
       adjustment = Math.max(adjustment, 5);
-      rationale.push("비슷한 발 조건의 핏 리뷰에서 반업/여유 선택이 더 많았어요.");
+      rationale.push("비슷한 리뷰는 여유 선택이 더 많음");
     } else {
-      rationale.push("비슷한 발 조건의 핏 리뷰에서는 정사이즈 선택도 충분히 많았어요.");
+      rationale.push("비슷한 리뷰도 정사이즈 선택이 많음");
     }
   }
 
@@ -132,7 +130,8 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
 
   return {
     recommendedSize,
+    baseSize,
     rationale: rationale.slice(0, 3),
-    recommendationNote: "실측 발길이, 착화 경험, 유사 사용자 리뷰를 함께 반영한 참고용 추천입니다."
+    recommendationNote: "입력값과 핏 리뷰 기준"
   };
 }

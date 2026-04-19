@@ -109,40 +109,47 @@ export function ShoeSearchClient() {
     <section className="space-y-5">
       <div className="card space-y-3">
         <h1 className="text-2xl font-semibold">신발 보기</h1>
-        <p className="text-sm text-neutral-600">
-          대표 이미지와 핵심 핏 특징을 기준으로 먼저 훑어보고,
-          상세에서 추천 해석과 리뷰를 확인해보세요.
-        </p>
+        <p className="text-sm text-neutral-600">브랜드, 카테고리, 핏 특징으로 빠르게 좁혀보세요.</p>
 
-        <div className="grid gap-3 lg:grid-cols-[1fr_220px_220px]">
+        <div className="space-y-1">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="input"
-            placeholder="브랜드 또는 모델 검색"
+            placeholder="브랜드 또는 모델명 입력"
           />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value as typeof category)}
-            className="select"
-          >
-            <option value="all">전체 카테고리</option>
-            <option value="running">러닝</option>
-            <option value="lifestyle">라이프스타일</option>
-            <option value="training">트레이닝</option>
-          </select>
-          <select
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-            className="select"
-          >
-            <option value="all">전체 브랜드</option>
-            {brands.map((brandName) => (
-              <option key={brandName} value={brandName}>
-                {brandName}
-              </option>
-            ))}
-          </select>
+          <p className="text-xs text-neutral-500">입력하면 바로 목록이 좁혀집니다.</p>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className="text-sm">
+            카테고리
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value as typeof category)}
+              className="select mt-1"
+            >
+              <option value="all">전체</option>
+              <option value="running">러닝</option>
+              <option value="lifestyle">라이프스타일</option>
+              <option value="training">트레이닝</option>
+            </select>
+          </label>
+          <label className="text-sm">
+            브랜드
+            <select
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              className="select mt-1"
+            >
+              <option value="all">전체</option>
+              {brands.map((brandName) => (
+                <option key={brandName} value={brandName}>
+                  {brandName}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
       </div>
 
@@ -151,7 +158,7 @@ export function ShoeSearchClient() {
           <div className="flex items-end justify-between gap-3">
             <div>
               <h2 className="text-xl font-semibold">내 발 기준 추천</h2>
-              <p className="text-sm text-neutral-600">저장된 발 프로필과 신발 핏 문구를 기준으로 먼저 골랐습니다.</p>
+              <p className="text-sm text-neutral-600">잘 맞을 가능성이 높은 3개</p>
             </div>
             <Link href="/profile" className="text-sm font-medium text-neutral-900 underline underline-offset-4">
               프로필 보기
