@@ -40,9 +40,27 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
 
   return (
     <section className="space-y-6">
+      <div className="card space-y-3 overflow-hidden p-0">
+        <img src={shoe.imageSrc} alt={shoe.imageAlt} className="h-64 w-full object-cover" />
+        <div className="space-y-2 p-5">
+          <p className="text-xs uppercase tracking-wide text-neutral-500">{categoryLabel[shoe.category]}</p>
+          <h1 className="text-3xl font-semibold">
+            {shoe.brand} {shoe.modelName}
+          </h1>
+          <p className="text-neutral-700">{shoe.fitSummary}</p>
+          <p className="text-sm text-neutral-600">앞볼과 전체 길이감을 먼저 확인해보세요.</p>
+          <p className="text-sm text-neutral-600">기본 경향: {shoe.sizingTendency}</p>
+          {shoe.productUrl ? (
+            <a href={shoe.productUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-medium text-neutral-900 underline underline-offset-4">
+              공식 제품 정보 보기
+            </a>
+          ) : null}
+        </div>
+      </div>
+
       {profile ? (
         <div className="card space-y-4">
-          <h2 className="text-xl font-semibold">추천 사이즈</h2>
+          <h2 className="text-xl font-semibold">내 발 기준 추천</h2>
           {recommendation ? (
             <>
               <p className="text-2xl font-semibold">{recommendation.recommendedSize} mm</p>
@@ -65,36 +83,19 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       ) : (
         <div className="card text-sm text-neutral-700">
-          개인화 추천을 보려면 먼저 발 프로필을 저장해주세요.
+          내 발 기준 추천을 보려면 발 프로필을 먼저 입력해주세요.
           <div className="mt-3">
             <Link href="/onboarding" className="btn-primary">
-              발 분석하기
+              발 프로필 입력하기
             </Link>
           </div>
         </div>
       )}
 
-      <div className="card space-y-3 overflow-hidden p-0">
-        <img src={shoe.imageSrc} alt={shoe.imageAlt} className="h-64 w-full object-cover" />
-        <div className="space-y-2 p-5">
-          <p className="text-xs uppercase tracking-wide text-neutral-500">{categoryLabel[shoe.category]}</p>
-          <h1 className="text-3xl font-semibold">
-            {shoe.brand} {shoe.modelName}
-          </h1>
-          <p className="text-neutral-700">{shoe.fitSummary}</p>
-          <p className="text-sm text-neutral-600">일반적인 사이징 경향: {shoe.sizingTendency}</p>
-          {shoe.productUrl ? (
-            <a href={shoe.productUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-medium text-neutral-900 underline underline-offset-4">
-              공식 제품 정보 보기
-            </a>
-          ) : null}
-        </div>
-      </div>
-
       <div className="space-y-3">
         <h2 className="text-xl font-semibold">나와 발이 비슷한 사용자 리뷰</h2>
         <p className="text-sm text-neutral-600">
-          아래 핏 리뷰는 실측 발길이, 발볼, 발등, 발가락 형태가 비슷한 사용자 순으로 보여드립니다.
+          비슷한 발 프로필의 리뷰를 먼저 보여줍니다.
         </p>
         {similarReviews.length > 0 ? (
           <div className="grid gap-4">
@@ -143,13 +144,21 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
             })}
           </div>
         ) : (
-          <div className="card text-sm text-neutral-600">이 모델에 대한 리뷰가 아직 없습니다.</div>
+          <div className="card space-y-3 text-sm text-neutral-600">
+            <h3 className="text-base font-semibold text-neutral-900">아직 등록된 핏 리뷰가 적어요</h3>
+            <p>현재는 모델 기본 정보와 사이징 경향을 먼저 참고해주세요.</p>
+            <Link href="/review" className="btn-secondary">
+              첫 리뷰 남기기
+            </Link>
+          </div>
         )}
-      </div>
 
-      <Link href="/review" className="btn-secondary">
-        내 리뷰 등록하기
-      </Link>
+        {similarReviews.length > 0 ? (
+          <Link href="/review" className="btn-secondary">
+            내 리뷰 등록하기
+          </Link>
+        ) : null}
+      </div>
     </section>
   );
 }

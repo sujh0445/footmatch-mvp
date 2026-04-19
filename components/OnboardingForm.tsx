@@ -43,34 +43,17 @@ export function OnboardingForm() {
       <div className="space-y-2">
         <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">Foot Profile</p>
         <h1 className="text-2xl font-semibold">발 정보를 입력해주세요</h1>
+        <div className="flex items-center justify-between text-xs text-neutral-500">
+          <span>발 프로필 입력</span>
+          <span>3단계</span>
+        </div>
         <p className="text-sm text-neutral-600">
-          FootMatch는 실측 발길이와 실제 착화 경험을 중심으로 보고,
-          사진은 발 형태를 참고하는 보조 정보로만 사용합니다.
+          실측 발길이와 착화 경험을 바탕으로 발 프로필을 입력합니다. 사진은 선택 입력입니다.
         </p>
       </div>
 
-      <div className="grid gap-2 sm:grid-cols-3">
-        <div className="rounded-2xl border border-neutral-200 bg-white px-4 py-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">1 / 3</p>
-          <p className="mt-1 text-sm font-medium text-neutral-900">기본 사이즈 정보</p>
-        </div>
-        <div className="rounded-2xl border border-neutral-200 bg-white px-4 py-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">2 / 3</p>
-          <p className="mt-1 text-sm font-medium text-neutral-900">압박 경험</p>
-        </div>
-        <div className="rounded-2xl border border-neutral-200 bg-white px-4 py-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">3 / 3</p>
-          <p className="mt-1 text-sm font-medium text-neutral-900">핏 성향</p>
-        </div>
-      </div>
-
       <section className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold">기본 사이즈 정보</h2>
-          <p className="text-sm text-neutral-600">
-            가장 기본이 되는 정보예요. 모르면 대략적으로 입력해도 됩니다.
-          </p>
-        </div>
+        <h2 className="text-lg font-semibold">기본 정보</h2>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block text-sm">
@@ -109,12 +92,7 @@ export function OnboardingForm() {
       </section>
 
       <section className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold">신발에서 자주 느끼는 압박</h2>
-          <p className="text-sm text-neutral-600">
-            발 모양 자체보다 실제로 어디가 불편했는지가 더 중요합니다.
-          </p>
-        </div>
+        <h2 className="text-lg font-semibold">압박 경험</h2>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block text-sm">
@@ -156,12 +134,7 @@ export function OnboardingForm() {
       </section>
 
       <section className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold">선호하는 핏과 자주 느끼는 불편</h2>
-          <p className="text-sm text-neutral-600">
-            딱 맞는 쪽이 좋은지, 앞쪽 여유가 있는 쪽이 좋은지까지 같이 반영합니다.
-          </p>
-        </div>
+        <h2 className="text-lg font-semibold">핏 성향</h2>
 
         <label className="block text-sm">
           신발에서 자주 느끼는 불편은 무엇인가요?
@@ -217,7 +190,7 @@ export function OnboardingForm() {
           프로필 저장하고 계속하기
         </button>
         <p className="text-center text-xs text-neutral-500">
-          사진은 선택 입력입니다. 나중에 추가해도 됩니다.
+          사진은 선택 입력입니다.
         </p>
       </div>
     </form>
