@@ -120,9 +120,9 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
 
     if (upsizeVotes > trueSizeVotes) {
       adjustment = Math.max(adjustment, 5);
-      rationale.push("비슷한 리뷰는 여유 선택이 더 많음");
+      rationale.push("비슷한 핏 리뷰는 여유 선택이 많음");
     } else {
-      rationale.push("비슷한 리뷰도 정사이즈 선택이 많음");
+      rationale.push("비슷한 핏 리뷰도 정사이즈 선택이 많음");
     }
   }
 

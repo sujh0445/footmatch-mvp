@@ -85,18 +85,18 @@ export function ProfileClient() {
           추천 신발 보기
         </button>
         <button className="btn-secondary" onClick={() => router.push("/onboarding")}>
-          발 정보 수정
+          발 프로필 수정
         </button>
         <button
           className="btn-danger"
           onClick={() => {
-            const ok = window.confirm("저장된 발 정보와 사진 결과를 모두 지울까요?");
+            const ok = window.confirm("저장된 발 프로필과 사진 결과를 모두 지울까요?");
             if (!ok) return;
             clearFootmatchProfile();
             router.push("/onboarding");
           }}
         >
-          전체 초기화
+          프로필 초기화
         </button>
       </div>
     </section>

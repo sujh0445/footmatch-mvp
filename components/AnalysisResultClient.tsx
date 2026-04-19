@@ -20,7 +20,7 @@ export function AnalysisResultClient() {
 
   useEffect(() => {
     setReady(true);
-    if (!state) setError("온보딩 또는 업로드 데이터가 없습니다. 처음부터 다시 진행해주세요.");
+    if (!state) setError("발 프로필 데이터가 없습니다.");
   }, [state]);
 
   if (!ready) return null;
@@ -30,7 +30,7 @@ export function AnalysisResultClient() {
       <div className="card max-w-2xl text-sm text-neutral-600">
         {error}
         <button onClick={() => router.push("/onboarding")} className="btn-primary mt-4">
-          온보딩으로 이동
+          발 프로필 만들기
         </button>
       </div>
     );
@@ -62,7 +62,7 @@ export function AnalysisResultClient() {
           router.push("/shoes");
         }}
       >
-        프로필 저장
+        발 프로필 저장
       </button>
     </section>
   );

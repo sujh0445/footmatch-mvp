@@ -158,7 +158,7 @@ export function ShoeSearchClient() {
               <h2 className="text-xl font-semibold">내 발 기준 추천</h2>
             </div>
             <Link href="/profile" className="text-sm font-medium text-neutral-900 underline underline-offset-4">
-              프로필 보기
+              내 발 프로필
             </Link>
           </div>
 

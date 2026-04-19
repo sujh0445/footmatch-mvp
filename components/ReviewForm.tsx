@@ -140,7 +140,7 @@ export function ReviewForm() {
         </div>
       </form>
 
-      {submitted ? <div className="card text-sm text-emerald-700">리뷰가 임시 저장됐습니다.</div> : null}
+      {submitted ? <div className="card text-sm text-emerald-700">핏 리뷰가 임시 저장됐습니다.</div> : null}
     </section>
   );
 }

@@ -76,10 +76,10 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       ) : (
         <div className="card space-y-3 text-sm text-neutral-700">
-          <p>내 발 기준으로 보려면 발 프로필을 입력해주세요.</p>
+          <p>발 프로필을 만들면 추천 사이즈를 볼 수 있어요.</p>
           <div className="mt-3">
             <Link href="/onboarding" className="btn-primary">
-              발 프로필 입력하기
+              발 프로필 만들기
             </Link>
           </div>
         </div>
@@ -90,14 +90,14 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           <div className="card space-y-3 text-sm text-neutral-600">
             <h3 className="text-base font-semibold text-neutral-900">아직 등록된 핏 리뷰가 적어요</h3>
             <Link href="/review" className="btn-secondary">
-              첫 리뷰 남기기
+              첫 핏 리뷰 남기기
             </Link>
           </div>
         </div>
       ) : profile ? (
         <div className="space-y-6">
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">내 발과 비슷한 리뷰</h2>
+            <h2 className="text-xl font-semibold">비슷한 핏 리뷰</h2>
             <div className="grid gap-4">
               {similarReviews.map((review) => (
                 <ReviewCard
@@ -110,7 +110,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">전체 리뷰</h2>
+            <h2 className="text-xl font-semibold">전체 핏 리뷰</h2>
             {remainingReviews.length > 0 ? (
               <div className="grid gap-4">
                 {remainingReviews.map((review) => (
@@ -123,7 +123,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </section>
 
           <Link href="/review" className="btn-secondary">
-            내 리뷰 등록하기
+            핏 리뷰 작성
           </Link>
         </div>
       ) : (
@@ -135,7 +135,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
             ))}
           </div>
           <Link href="/review" className="btn-secondary">
-            내 리뷰 등록하기
+            핏 리뷰 작성
           </Link>
         </div>
       )}

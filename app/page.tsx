@@ -20,7 +20,7 @@ export default function HomePage() {
 
         <div className="flex flex-wrap gap-3">
           <Link href="/onboarding" className="btn-primary">
-            내 발 프로필 만들기
+            발 프로필 만들기
           </Link>
           <Link href="/shoes" className="btn-secondary">
             신발 둘러보기
@@ -30,7 +30,7 @@ export default function HomePage() {
         <div className="grid gap-1 rounded-lg border border-neutral-100 bg-neutral-50/60 px-2 py-1.5 text-xs text-neutral-500 sm:grid-cols-3">
           <div className="flex items-center gap-2 px-2 py-1">
             <span className="text-[11px] font-medium text-neutral-400">1</span>
-            <span>발 정보</span>
+            <span>발 프로필</span>
           </div>
 
           <div className="flex items-center gap-2 px-2 py-1">

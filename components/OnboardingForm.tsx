@@ -205,7 +205,7 @@ export function OnboardingForm() {
       <div className="space-y-3">
         {error ? <p className="text-sm text-rose-700">{error}</p> : null}
         <button className="btn-primary w-full" type="submit">
-          프로필 저장하고 계속하기
+          발 프로필 저장
         </button>
       </div>
     </form>

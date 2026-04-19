@@ -84,7 +84,7 @@ export function UploadAnalyzer() {
             {loading ? "정리 중..." : "사진 반영하기"}
           </button>
           <button className="btn-secondary w-full" onClick={() => finalize(false)} type="button">
-            사진 없이 프로필 보기
+            사진 없이 내 발 프로필
           </button>
         </div>
       </div>
