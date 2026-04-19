@@ -3,19 +3,16 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { saveSelfInput } from "@/lib/storage";
-import { FootSelfInput } from "@/types";
+import { CommonIssue, FootSelfInput } from "@/types";
 
-const initial: FootSelfInput = {
-  actualFootLengthMm: 255,
-  purchasedShoeSizeMm: 270,
+const initial: Omit<FootSelfInput, "actualFootLengthMm" | "purchasedShoeSizeMm"> = {
   sizeUpForWidth: "sometimes",
   instepPressureExperience: "rarely",
-  commonIssue: "none",
+  commonIssues: [],
   preferredFit: "regular"
 };
 
-const issueOptions: Array<{ value: FootSelfInput["commonIssue"]; label: string }> = [
-  { value: "none", label: "해당 없음" },
+const issueOptions: Array<{ value: CommonIssue; label: string }> = [
   { value: "width_pressure", label: "앞볼 압박" },
   { value: "instep_pressure", label: "발등 답답함" },
   { value: "toe_tightness", label: "발가락 공간 부족" },
@@ -29,17 +26,51 @@ const fitOptions: Array<{ value: FootSelfInput["preferredFit"]; label: string; d
 ];
 
 export function OnboardingForm() {
-  const [form, setForm] = useState<FootSelfInput>(initial);
+  const [form, setForm] = useState(initial);
+  const [actualFootLengthInput, setActualFootLengthInput] = useState("255");
+  const [purchasedShoeSizeInput, setPurchasedShoeSizeInput] = useState("270");
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    saveSelfInput(form);
+
+    const actualFootLengthMm = Number(actualFootLengthInput);
+    const purchasedShoeSizeMm = purchasedShoeSizeInput.trim() ? Number(purchasedShoeSizeInput) : undefined;
+
+    if (!actualFootLengthInput.trim() || Number.isNaN(actualFootLengthMm) || actualFootLengthMm < 220 || actualFootLengthMm > 320) {
+      setError("실측 발길이를 220-320mm 사이로 입력해주세요.");
+      return;
+    }
+
+    if (
+      purchasedShoeSizeMm !== undefined &&
+      (Number.isNaN(purchasedShoeSizeMm) || purchasedShoeSizeMm < 220 || purchasedShoeSizeMm > 320)
+    ) {
+      setError("자주 구매하는 신발 사이즈는 220-320mm 사이로 입력해주세요.");
+      return;
+    }
+
+    setError("");
+    saveSelfInput({
+      ...form,
+      actualFootLengthMm,
+      purchasedShoeSizeMm
+    });
     router.push("/upload");
   };
 
+  const toggleIssue = (issue: CommonIssue) => {
+    setForm((prev) => ({
+      ...prev,
+      commonIssues: prev.commonIssues.includes(issue)
+        ? prev.commonIssues.filter((item) => item !== issue)
+        : [...prev.commonIssues, issue]
+    }));
+  };
+
   return (
-    <form onSubmit={onSubmit} className="card mx-auto max-w-3xl space-y-6">
+    <form onSubmit={onSubmit} noValidate className="card mx-auto max-w-3xl space-y-6">
       <div className="space-y-2">
         <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">Foot Profile</p>
         <h1 className="text-2xl font-semibold">발 정보를 입력해주세요</h1>
@@ -63,8 +94,8 @@ export function OnboardingForm() {
               min={220}
               max={320}
               step={1}
-              value={form.actualFootLengthMm}
-              onChange={(e) => setForm((p) => ({ ...p, actualFootLengthMm: Number(e.target.value) }))}
+              value={actualFootLengthInput}
+              onChange={(e) => setActualFootLengthInput(e.target.value)}
               className="input mt-1"
               required
             />
@@ -77,13 +108,8 @@ export function OnboardingForm() {
               min={220}
               max={320}
               step={5}
-              value={form.purchasedShoeSizeMm ?? ""}
-              onChange={(e) =>
-                setForm((p) => ({
-                  ...p,
-                  purchasedShoeSizeMm: e.target.value ? Number(e.target.value) : undefined
-                }))
-              }
+              value={purchasedShoeSizeInput}
+              onChange={(e) => setPurchasedShoeSizeInput(e.target.value)}
               className="input mt-1"
               placeholder="예: 270"
             />
@@ -136,25 +162,26 @@ export function OnboardingForm() {
       <section className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
         <h2 className="text-lg font-semibold">핏 성향</h2>
 
-        <label className="block text-sm">
+        <div className="space-y-2">
           신발에서 자주 느끼는 불편은 무엇인가요?
-          <select
-            className="select mt-1"
-            value={form.commonIssue}
-            onChange={(e) =>
-              setForm((p) => ({
-                ...p,
-                commonIssue: e.target.value as FootSelfInput["commonIssue"]
-              }))
-            }
-          >
+          <div className="grid gap-2 sm:grid-cols-2">
             {issueOptions.map((option) => (
-              <option key={option.value} value={option.value}>
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => toggleIssue(option.value)}
+                className={[
+                  "rounded-2xl border px-4 py-3 text-left text-sm transition",
+                  form.commonIssues.includes(option.value)
+                    ? "border-neutral-900 bg-neutral-900 text-white"
+                    : "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400"
+                ].join(" ")}
+              >
                 {option.label}
-              </option>
+              </button>
             ))}
-          </select>
-        </label>
+          </div>
+        </div>
 
         <div className="space-y-2">
           <p className="text-sm">어떤 착화감을 선호하나요?</p>
@@ -186,11 +213,12 @@ export function OnboardingForm() {
       </section>
 
       <div className="space-y-3">
+        {error ? <p className="text-sm text-rose-700">{error}</p> : null}
         <button className="btn-primary w-full" type="submit">
           프로필 저장하고 계속하기
         </button>
         <p className="text-center text-xs text-neutral-500">
-          사진은 선택 입력입니다.
+          다음 단계에서 사진을 선택으로 추가할 수 있습니다.
         </p>
       </div>
     </form>

@@ -30,6 +30,7 @@ export async function analyzeFootPhotos(input: AnalyzeFootInput): Promise<MockAn
     toeShape: toeShapes[Math.floor(seed / 11) % toeShapes.length],
     heelSlipTendency: heelTendency[Math.floor(seed / 13) % heelTendency.length],
     leftRightDifference: lrDiff[Math.floor(seed / 17) % lrDiff.length],
-    confidence: 0.67
+    confidence: 0.67,
+    photoUploaded: true
   };
 }

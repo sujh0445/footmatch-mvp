@@ -23,9 +23,10 @@ export function createFallbackAnalysis(selfInput: FootSelfInput): MockAnalysisOu
     forefootWidth,
     instepHeight,
     toeShape: "egyptian",
-    heelSlipTendency: selfInput.commonIssue === "heel_slip" ? "high" : "medium",
+    heelSlipTendency: selfInput.commonIssues.includes("heel_slip") ? "high" : "medium",
     leftRightDifference: "small",
-    confidence: 0.42
+    confidence: 0.42,
+    photoUploaded: false
   };
 }
 
@@ -51,7 +52,7 @@ export function normalizeFootProfile(analysis: MockAnalysisOutput, selfInput: Fo
     forefootWidth: selfInput.sizeUpForWidth === "often" ? "wide" : analysis.forefootWidth,
     instepHeight: selfInput.instepPressureExperience === "often" ? "high" : analysis.instepHeight,
     toeShape: analysis.toeShape,
-    heelSlipTendency: selfInput.commonIssue === "heel_slip" ? "high" : analysis.heelSlipTendency,
+    heelSlipTendency: selfInput.commonIssues.includes("heel_slip") ? "high" : analysis.heelSlipTendency,
     leftRightDifference: analysis.leftRightDifference,
     purchasedShoeSizeMm: selfInput.purchasedShoeSizeMm,
     notes

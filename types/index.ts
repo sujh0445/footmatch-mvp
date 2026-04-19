@@ -3,13 +3,14 @@ export type InstepCategory = "low" | "normal" | "high";
 export type ToeShape = "egyptian" | "greek" | "square";
 export type HeelSlipTendency = "low" | "medium" | "high";
 export type LeftRightDifference = "small" | "medium" | "large";
+export type CommonIssue = "toe_tightness" | "width_pressure" | "instep_pressure" | "heel_slip";
 
 export interface FootSelfInput {
   actualFootLengthMm: number;
   purchasedShoeSizeMm?: number;
   sizeUpForWidth: "rarely" | "sometimes" | "often";
   instepPressureExperience: "rarely" | "sometimes" | "often";
-  commonIssue: "toe_tightness" | "width_pressure" | "instep_pressure" | "heel_slip" | "none";
+  commonIssues: CommonIssue[];
   preferredFit: "snug" | "regular" | "roomy";
 }
 
@@ -31,6 +32,7 @@ export interface MockAnalysisOutput {
   heelSlipTendency: HeelSlipTendency;
   leftRightDifference: LeftRightDifference;
   confidence: number;
+  photoUploaded?: boolean;
 }
 
 export interface ShoeModel {

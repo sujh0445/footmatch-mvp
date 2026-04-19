@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { shoes } from "@/data/shoes";
+import { getFootProfile } from "@/lib/storage";
+import { FootProfile } from "@/types";
 
 const categoryLabel: Record<string, string> = {
   running: "러닝",
@@ -30,17 +32,78 @@ function getBadges(shoe: (typeof shoes)[number]) {
   return badges.slice(0, 3);
 }
 
+function getRecommendationReasons(shoe: (typeof shoes)[number], profile: FootProfile) {
+  const text = `${shoe.fitSummary} ${shoe.sizingTendency}`.toLowerCase();
+  const reasons: string[] = [];
+
+  if (profile.forefootWidth === "wide") {
+    if (text.includes("여유") || text.includes("볼륨") || text.includes("넉넉")) reasons.push("앞볼 여유");
+    if (text.includes("타이트") || text.includes("좁")) reasons.push("앞볼 확인 필요");
+  } else if (text.includes("정사이즈")) {
+    reasons.push("정사이즈 경향");
+  }
+
+  if (profile.instepHeight === "high") {
+    if (text.includes("압박이 과하지") || text.includes("발등 압박은") || text.includes("여유")) reasons.push("발등 부담 적음");
+    if (text.includes("발등") && (text.includes("답답") || text.includes("조여") || text.includes("타이트"))) reasons.push("발등 체크");
+  }
+
+  if (profile.heelSlipTendency === "high" && (text.includes("고정") || text.includes("잡아"))) {
+    reasons.push("뒤꿈치 안정");
+  }
+
+  if (text.includes("쿠션") || text.includes("장시간")) reasons.push("장시간 착용");
+  if (reasons.length === 0) reasons.push(categoryLabel[shoe.category]);
+
+  return reasons.slice(0, 3);
+}
+
+function scoreShoeForProfile(shoe: (typeof shoes)[number], profile: FootProfile) {
+  const text = `${shoe.fitSummary} ${shoe.sizingTendency}`.toLowerCase();
+  let score = 0;
+
+  if (text.includes("정사이즈")) score += 3;
+  if (text.includes("여유") || text.includes("볼륨") || text.includes("넉넉")) score += profile.forefootWidth === "wide" ? 5 : 2;
+  if (text.includes("쿠션") || text.includes("장시간")) score += 2;
+  if (text.includes("고정") || text.includes("잡아")) score += profile.heelSlipTendency === "high" ? 3 : 1;
+
+  if (profile.forefootWidth === "wide" && (text.includes("앞볼이 타이트") || text.includes("앞볼이 좁") || text.includes("좁게"))) {
+    score -= 5;
+  }
+  if (profile.instepHeight === "high" && text.includes("발등") && (text.includes("답답") || text.includes("조여") || text.includes("타이트"))) {
+    score -= 4;
+  }
+  if (profile.instepHeight === "high" && (text.includes("압박이 과하지") || text.includes("발등 압박은") || text.includes("여유"))) {
+    score += 3;
+  }
+
+  return score;
+}
+
 export function ShoeSearchClient() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<"all" | "running" | "lifestyle" | "training">("all");
+  const [brand, setBrand] = useState("all");
+
+  const profile = useMemo(() => getFootProfile(), []);
+  const brands = useMemo(() => Array.from(new Set(shoes.map((shoe) => shoe.brand))).sort(), []);
+
+  const recommendedShoes = useMemo(() => {
+    if (!profile) return [];
+
+    return [...shoes]
+      .sort((a, b) => scoreShoeForProfile(b, profile) - scoreShoeForProfile(a, profile))
+      .slice(0, 3);
+  }, [profile]);
 
   const filtered = useMemo(() => {
     return shoes.filter((shoe) => {
       const categoryMatch = category === "all" || shoe.category === category;
+      const brandMatch = brand === "all" || shoe.brand === brand;
       const queryMatch = `${shoe.brand} ${shoe.modelName}`.toLowerCase().includes(query.toLowerCase());
-      return categoryMatch && queryMatch;
+      return categoryMatch && brandMatch && queryMatch;
     });
-  }, [category, query]);
+  }, [brand, category, query]);
 
   return (
     <section className="space-y-5">
@@ -51,7 +114,7 @@ export function ShoeSearchClient() {
           상세에서 추천 해석과 리뷰를 확인해보세요.
         </p>
 
-        <div className="grid gap-3 sm:grid-cols-[1fr_220px]">
+        <div className="grid gap-3 lg:grid-cols-[1fr_220px_220px]">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -68,48 +131,58 @@ export function ShoeSearchClient() {
             <option value="lifestyle">라이프스타일</option>
             <option value="training">트레이닝</option>
           </select>
+          <select
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            className="select"
+          >
+            <option value="all">전체 브랜드</option>
+            {brands.map((brandName) => (
+              <option key={brandName} value={brandName}>
+                {brandName}
+              </option>
+            ))}
+          </select>
         </div>
+      </div>
+
+      {profile ? (
+        <section className="space-y-3">
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <h2 className="text-xl font-semibold">내 발 기준 추천</h2>
+              <p className="text-sm text-neutral-600">저장된 발 프로필과 신발 핏 문구를 기준으로 먼저 골랐습니다.</p>
+            </div>
+            <Link href="/profile" className="text-sm font-medium text-neutral-900 underline underline-offset-4">
+              프로필 보기
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {recommendedShoes.map((shoe) => (
+              <ShoeCard key={shoe.id} shoe={shoe} badges={getRecommendationReasons(shoe, profile)} />
+            ))}
+          </div>
+        </section>
+      ) : (
+        <div className="card flex flex-col gap-3 text-sm text-neutral-700 sm:flex-row sm:items-center sm:justify-between">
+          <p>발 프로필을 만들면 내 발 기준 추천을 먼저 볼 수 있어요.</p>
+          <Link href="/onboarding" className="btn-primary">
+            발 프로필 만들기
+          </Link>
+        </div>
+      )}
+
+      <div className="space-y-3">
+        <h2 className="text-xl font-semibold">전체 신발</h2>
+        <p className="text-sm text-neutral-600">검색, 카테고리, 브랜드 필터를 함께 적용할 수 있습니다.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {filtered.map((shoe) => {
           const badges = getBadges(shoe);
 
-          return (
-            <Link
-              key={shoe.id}
-              href={`/shoes/${shoe.id}`}
-              className="card overflow-hidden p-0 transition hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <img src={shoe.imageSrc} alt={shoe.imageAlt} className="h-48 w-full object-cover" />
-
-              <div className="space-y-3 p-5">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-xs uppercase tracking-wide text-neutral-500">
-                    {categoryLabel[shoe.category]}
-                  </p>
-                  <span className="text-xs text-neutral-400">상세 보기</span>
-                </div>
-
-                <h2 className="text-lg font-semibold">
-                  {shoe.brand} {shoe.modelName}
-                </h2>
-
-                <div className="flex flex-wrap gap-2">
-                  {badges.map((badge) => (
-                    <span
-                      key={badge}
-                      className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs text-neutral-700"
-                    >
-                      {badge}
-                    </span>
-                  ))}
-                </div>
-
-                <p className="text-sm text-neutral-600">{shoe.fitSummary}</p>
-              </div>
-            </Link>
-          );
+          return <ShoeCard key={shoe.id} shoe={shoe} badges={badges} />;
         })}
       </div>
 
@@ -119,5 +192,42 @@ export function ShoeSearchClient() {
         </div>
       ) : null}
     </section>
+  );
+}
+
+function ShoeCard({ shoe, badges }: { shoe: (typeof shoes)[number]; badges: string[] }) {
+  return (
+    <Link
+      href={`/shoes/${shoe.id}`}
+      className="card overflow-hidden p-0 transition hover:-translate-y-0.5 hover:shadow-md"
+    >
+      <img src={shoe.imageSrc} alt={shoe.imageAlt} className="h-48 w-full object-cover" />
+
+      <div className="space-y-3 p-5">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs uppercase tracking-wide text-neutral-500">
+            {categoryLabel[shoe.category]}
+          </p>
+          <span className="text-xs text-neutral-400">상세 보기</span>
+        </div>
+
+        <h2 className="text-lg font-semibold">
+          {shoe.brand} {shoe.modelName}
+        </h2>
+
+        <div className="flex flex-wrap gap-2">
+          {badges.map((badge) => (
+            <span
+              key={badge}
+              className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs text-neutral-700"
+            >
+              {badge}
+            </span>
+          ))}
+        </div>
+
+        <p className="text-sm text-neutral-600">{shoe.fitSummary}</p>
+      </div>
+    </Link>
   );
 }

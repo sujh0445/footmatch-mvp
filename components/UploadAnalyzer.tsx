@@ -41,7 +41,7 @@ export function UploadAnalyzer() {
 
     saveAnalysisResult(analysis);
     saveFootProfile(normalizeFootProfile(analysis, selfInput));
-    router.push("/shoes");
+    router.push("/profile");
   };
 
   return (
@@ -87,7 +87,7 @@ export function UploadAnalyzer() {
             {loading ? "정리 중..." : "사진 참고 힌트 반영하기"}
           </button>
           <button className="btn-secondary w-full" onClick={() => finalize(false)} type="button">
-            사진 없이 추천 보기
+            사진 없이 프로필 보기
           </button>
         </div>
       </div>

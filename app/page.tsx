@@ -20,26 +20,26 @@ export default function HomePage() {
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/shoes" className="btn-primary">
-            신발 둘러보기
-          </Link>
-          <Link href="/onboarding" className="btn-secondary">
+          <Link href="/onboarding" className="btn-primary">
             내 발 프로필 만들기
+          </Link>
+          <Link href="/shoes" className="btn-secondary">
+            신발 둘러보기
           </Link>
         </div>
 
         <div className="grid gap-3 pt-2 sm:grid-cols-3">
           <div className="rounded-2xl border border-neutral-200 bg-white p-4">
-            <p className="text-sm font-medium text-neutral-900">1. 신발 선택</p>
+            <p className="text-sm font-medium text-neutral-900">1. 발 프로필 만들기</p>
             <p className="mt-1 text-sm text-neutral-600">
-              관심 있는 모델을 먼저 둘러보고 핏 특징을 빠르게 확인합니다.
+              실측 발길이와 착화 경험을 바탕으로 내 발 기준을 저장합니다.
             </p>
           </div>
 
           <div className="rounded-2xl border border-neutral-200 bg-white p-4">
-            <p className="text-sm font-medium text-neutral-900">2. 내 발 정보 입력</p>
+            <p className="text-sm font-medium text-neutral-900">2. 신발 둘러보기</p>
             <p className="mt-1 text-sm text-neutral-600">
-              실측 발길이와 실제 착화 경험을 바탕으로 내 발 프로필을 만듭니다.
+              관심 있는 모델의 핏 특징과 사이징 경향을 확인합니다.
             </p>
           </div>
 

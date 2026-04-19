@@ -10,6 +10,11 @@ function isClient() {
   return typeof window !== "undefined";
 }
 
+function notifyProfileChanged() {
+  if (!isClient()) return;
+  window.dispatchEvent(new Event("footmatch-profile-changed"));
+}
+
 export function saveSelfInput(input: FootSelfInput) {
   if (!isClient()) return;
   window.localStorage.setItem(KEYS.selfInput, JSON.stringify(input));
@@ -18,7 +23,16 @@ export function saveSelfInput(input: FootSelfInput) {
 export function getSelfInput(): FootSelfInput | null {
   if (!isClient()) return null;
   const raw = window.localStorage.getItem(KEYS.selfInput);
-  return raw ? (JSON.parse(raw) as FootSelfInput) : null;
+  if (!raw) return null;
+
+  const parsed = JSON.parse(raw) as FootSelfInput & { commonIssue?: FootSelfInput["commonIssues"][number] | "none" };
+
+  return {
+    ...parsed,
+    commonIssues:
+      parsed.commonIssues ??
+      (parsed.commonIssue && parsed.commonIssue !== "none" ? [parsed.commonIssue] : [])
+  };
 }
 
 export function saveAnalysisResult(output: MockAnalysisOutput) {
@@ -35,6 +49,7 @@ export function getAnalysisResult(): MockAnalysisOutput | null {
 export function saveFootProfile(profile: FootProfile) {
   if (!isClient()) return;
   window.localStorage.setItem(KEYS.profile, JSON.stringify(profile));
+  notifyProfileChanged();
 }
 
 export function getFootProfile(): FootProfile | null {
@@ -46,4 +61,5 @@ export function getFootProfile(): FootProfile | null {
 export function clearFootmatchProfile() {
   if (!isClient()) return;
   Object.values(KEYS).forEach((key) => window.localStorage.removeItem(key));
+  notifyProfileChanged();
 }
