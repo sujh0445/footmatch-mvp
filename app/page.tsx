@@ -27,17 +27,20 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid gap-3 pt-2 sm:grid-cols-3">
-          <div className="rounded-2xl border border-neutral-200 bg-white p-4">
-            <p className="text-sm font-medium text-neutral-900">발 정보 입력</p>
+        <div className="grid gap-1 rounded-lg border border-neutral-100 bg-neutral-50/60 px-2 py-1.5 text-xs text-neutral-500 sm:grid-cols-3">
+          <div className="flex items-center gap-2 px-2 py-1">
+            <span className="text-[11px] font-medium text-neutral-400">1</span>
+            <span>발 정보</span>
           </div>
 
-          <div className="rounded-2xl border border-neutral-200 bg-white p-4">
-            <p className="text-sm font-medium text-neutral-900">신발 선택</p>
+          <div className="flex items-center gap-2 px-2 py-1">
+            <span className="text-[11px] font-medium text-neutral-400">2</span>
+            <span>신발 선택</span>
           </div>
 
-          <div className="rounded-2xl border border-neutral-200 bg-white p-4">
-            <p className="text-sm font-medium text-neutral-900">추천 확인</p>
+          <div className="flex items-center gap-2 px-2 py-1">
+            <span className="text-[11px] font-medium text-neutral-400">3</span>
+            <span>추천 확인</span>
           </div>
         </div>
       </div>
