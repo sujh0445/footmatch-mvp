@@ -109,7 +109,6 @@ export function ShoeSearchClient() {
     <section className="space-y-5">
       <div className="card space-y-3">
         <h1 className="text-2xl font-semibold">신발 보기</h1>
-        <p className="text-sm text-neutral-600">브랜드, 카테고리, 핏 특징으로 빠르게 좁혀보세요.</p>
 
         <div className="space-y-1">
           <input
@@ -118,7 +117,6 @@ export function ShoeSearchClient() {
             className="input"
             placeholder="브랜드 또는 모델명 입력"
           />
-          <p className="text-xs text-neutral-500">입력하면 바로 목록이 좁혀집니다.</p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -158,7 +156,6 @@ export function ShoeSearchClient() {
           <div className="flex items-end justify-between gap-3">
             <div>
               <h2 className="text-xl font-semibold">내 발 기준 추천</h2>
-              <p className="text-sm text-neutral-600">잘 맞을 가능성이 높은 3개</p>
             </div>
             <Link href="/profile" className="text-sm font-medium text-neutral-900 underline underline-offset-4">
               프로필 보기
@@ -173,7 +170,7 @@ export function ShoeSearchClient() {
         </section>
       ) : (
         <div className="card flex flex-col gap-3 text-sm text-neutral-700 sm:flex-row sm:items-center sm:justify-between">
-          <p>발 프로필을 만들면 내 발 기준 추천을 먼저 볼 수 있어요.</p>
+          <p>발 프로필을 만들면 먼저 볼 수 있어요.</p>
           <Link href="/onboarding" className="btn-primary">
             발 프로필 만들기
           </Link>
@@ -182,7 +179,6 @@ export function ShoeSearchClient() {
 
       <div className="space-y-3">
         <h2 className="text-xl font-semibold">전체 신발</h2>
-        <p className="text-sm text-neutral-600">검색, 카테고리, 브랜드 필터를 함께 적용할 수 있습니다.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -195,7 +191,7 @@ export function ShoeSearchClient() {
 
       {filtered.length === 0 ? (
         <div className="card text-sm text-neutral-600">
-          검색 결과가 없습니다. 다른 키워드로 시도해보세요.
+          검색 결과가 없습니다.
         </div>
       ) : null}
     </section>

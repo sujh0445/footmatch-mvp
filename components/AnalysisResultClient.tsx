@@ -51,9 +51,8 @@ export function AnalysisResultClient() {
       </div>
 
       <div className="card space-y-2 text-sm text-neutral-700">
-        <p className="font-medium">사진 기준 참고 경향 안내</p>
-        <p>사진은 발볼과 발 모양을 참고용으로 추정합니다. 실제 구매 습관과 앞볼 압박 경험을 더 중요하게 반영합니다.</p>
-        <p className="text-xs text-neutral-500">사진 결과는 촬영 각도와 이미지에 따라 달라질 수 있습니다. 발볼 관련 결과는 참고용 힌트입니다. (참고 지표: {(analysis.confidence * 100).toFixed(0)}%)</p>
+        <p className="font-medium">사진 참고</p>
+        <p className="text-xs text-neutral-500">신뢰도 {(analysis.confidence * 100).toFixed(0)}%</p>
       </div>
 
       <button
@@ -63,7 +62,7 @@ export function AnalysisResultClient() {
           router.push("/shoes");
         }}
       >
-        추천 확인하러 가기
+        프로필 저장
       </button>
     </section>
   );
@@ -71,14 +70,14 @@ export function AnalysisResultClient() {
 
 function ResultCard({ label, value }: { label: string; value: string }) {
   const valueMap: Record<string, string> = {
-    narrow: "좁은 편으로 보일 수 있어요",
-    normal: "보통으로 보일 수 있어요",
-    wide: "보통~약간 넓은 편으로 보일 수 있어요",
-    low: "낮은 편으로 보일 수 있어요",
-    high: "높은 편으로 보일 수 있어요",
-    egyptian: "엄지발가락이 더 길어 보이는 형태",
-    greek: "둘째발가락이 더 길어 보이는 형태",
-    square: "앞쪽 발가락 길이가 비슷해 보이는 형태",
+    narrow: "좁은 편",
+    normal: "보통",
+    wide: "보통~넓은 편",
+    low: "낮은 편",
+    high: "높은 편",
+    egyptian: "엄지 긴 편",
+    greek: "둘째발가락 긴 편",
+    square: "발가락 길이 비슷",
     medium: "중간 정도",
     small: "작은 편",
     large: "큰 편"

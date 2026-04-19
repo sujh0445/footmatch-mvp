@@ -44,9 +44,6 @@ export function ProfileClient() {
     <section className="mx-auto max-w-4xl space-y-5">
       <div className="card space-y-3">
         <h1 className="text-2xl font-semibold">내 발 프로필</h1>
-        <p className="text-sm text-neutral-600">
-          저장된 발 정보로 신발을 비교할 수 있습니다.
-        </p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -68,8 +65,12 @@ export function ProfileClient() {
 
       <div className="card space-y-3 text-sm text-neutral-700">
         <h2 className="text-lg font-semibold">사진 참고</h2>
-        <p>{analysis.photoUploaded ? "보조 정보로만 반영했어요." : "입력 정보만으로 만들었어요."}</p>
-        <p className="text-xs text-neutral-500">사진 신뢰도: {(analysis.confidence * 100).toFixed(0)}%</p>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs text-neutral-700">
+            {analysis.photoUploaded ? "보조 반영" : "사진 없음"}
+          </span>
+          <span className="text-xs text-neutral-500">신뢰도 {(analysis.confidence * 100).toFixed(0)}%</span>
+        </div>
         {profile.notes?.length ? (
           <ul className="list-disc space-y-1 pl-5">
             {profile.notes.map((note) => (
@@ -87,7 +88,7 @@ export function ProfileClient() {
           발 정보 수정
         </button>
         <button
-          className="rounded-2xl border border-rose-300 px-4 py-3 text-sm font-medium text-rose-700 transition hover:bg-rose-50"
+          className="btn-danger"
           onClick={() => {
             const ok = window.confirm("저장된 발 정보와 사진 결과를 모두 지울까요?");
             if (!ok) return;

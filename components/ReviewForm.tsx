@@ -34,7 +34,6 @@ export function ReviewForm() {
   return (
     <section className="mx-auto max-w-3xl space-y-5">
       <div className="card space-y-2">
-        <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">Fit Review</p>
         <h1 className="text-2xl font-semibold">핏 리뷰 작성</h1>
         <p className="text-sm text-neutral-600">30초 안에 남길 수 있어요.</p>
       </div>
@@ -43,7 +42,6 @@ export function ReviewForm() {
         <section className="card space-y-4">
           <div>
             <h2 className="text-lg font-semibold">기본 정보</h2>
-            <p className="mt-1 text-xs text-neutral-500">필수</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -82,7 +80,6 @@ export function ReviewForm() {
         <section className="card space-y-4">
           <div>
             <h2 className="text-lg font-semibold">착화 경험</h2>
-            <p className="mt-1 text-xs text-neutral-500">필수</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
@@ -111,7 +108,6 @@ export function ReviewForm() {
         <section className="card space-y-4">
           <div>
             <h2 className="text-lg font-semibold">한 줄 코멘트</h2>
-            <p className="mt-1 text-xs text-neutral-500">필수</p>
           </div>
 
           <label className="text-sm">
@@ -141,11 +137,10 @@ export function ReviewForm() {
           <button className="btn-primary" type="submit">
             30초 핏 리뷰 제출
           </button>
-          <p className="text-xs text-neutral-500">필수 항목만 채워도 충분해요.</p>
         </div>
       </form>
 
-      {submitted ? <div className="card text-sm text-emerald-700">감사합니다. 현재는 프로토타입이라 임시 저장만 되지만, 이후 추천 정확도 개선에 반영될 수 있습니다.</div> : null}
+      {submitted ? <div className="card text-sm text-emerald-700">리뷰가 임시 저장됐습니다.</div> : null}
     </section>
   );
 }

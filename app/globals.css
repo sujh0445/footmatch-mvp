@@ -29,3 +29,7 @@ body {
 .btn-secondary {
   @apply inline-flex items-center justify-center rounded-xl border border-neutral-300 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50;
 }
+
+.btn-danger {
+  @apply inline-flex items-center justify-center rounded-xl border border-rose-300 bg-white px-4 py-2.5 text-sm font-medium text-rose-700 transition hover:bg-rose-50;
+}

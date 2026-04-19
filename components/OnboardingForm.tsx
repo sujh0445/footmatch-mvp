@@ -19,10 +19,10 @@ const issueOptions: Array<{ value: CommonIssue; label: string }> = [
   { value: "heel_slip", label: "뒤꿈치 들림" }
 ];
 
-const fitOptions: Array<{ value: FootSelfInput["preferredFit"]; label: string; desc: string }> = [
-  { value: "snug", label: "딱 맞는 느낌", desc: "발을 단단히 감싸는 느낌을 선호해요." },
-  { value: "regular", label: "정사이즈 느낌", desc: "가장 무난한 착화감을 선호해요." },
-  { value: "roomy", label: "앞쪽 여유 있는 느낌", desc: "발가락 공간이 조금 있는 편이 좋아요." }
+const fitOptions: Array<{ value: FootSelfInput["preferredFit"]; label: string }> = [
+  { value: "snug", label: "딱 맞게" },
+  { value: "regular", label: "정사이즈" },
+  { value: "roomy", label: "앞쪽 여유" }
 ];
 
 export function OnboardingForm() {
@@ -70,17 +70,10 @@ export function OnboardingForm() {
   };
 
   return (
-    <form onSubmit={onSubmit} noValidate className="card mx-auto max-w-3xl space-y-6">
+    <form onSubmit={onSubmit} noValidate className="card mx-auto max-w-3xl space-y-5">
       <div className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">Foot Profile</p>
-        <h1 className="text-2xl font-semibold">발 정보를 입력해주세요</h1>
-        <div className="flex items-center justify-between text-xs text-neutral-500">
-          <span>발 프로필 입력</span>
-          <span>3단계</span>
-        </div>
-        <p className="text-sm text-neutral-600">
-          실측 발길이와 착화 경험을 바탕으로 발 프로필을 입력합니다. 사진은 선택 입력입니다.
-        </p>
+        <h1 className="text-2xl font-semibold">발 프로필 입력</h1>
+        <p className="text-sm text-neutral-600">실측 발길이와 착화 경험을 바탕으로 입력합니다.</p>
       </div>
 
       <section className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
@@ -162,8 +155,8 @@ export function OnboardingForm() {
       <section className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
         <h2 className="text-lg font-semibold">핏 성향</h2>
 
-        <div className="space-y-2">
-          신발에서 자주 느끼는 불편은 무엇인가요?
+        <div className="space-y-2 text-sm">
+          자주 느끼는 불편
           <div className="grid gap-2 sm:grid-cols-2">
             {issueOptions.map((option) => (
               <button
@@ -184,7 +177,7 @@ export function OnboardingForm() {
         </div>
 
         <div className="space-y-2">
-          <p className="text-sm">어떤 착화감을 선호하나요?</p>
+          <p className="text-sm">선호 핏</p>
           <div className="grid gap-3 sm:grid-cols-3">
             {fitOptions.map((option) => {
               const selected = form.preferredFit === option.value;
@@ -202,9 +195,6 @@ export function OnboardingForm() {
                   ].join(" ")}
                 >
                   <p className="text-sm font-semibold">{option.label}</p>
-                  <p className={["mt-1 text-xs", selected ? "text-white/80" : "text-neutral-600"].join(" ")}>
-                    {option.desc}
-                  </p>
                 </button>
               );
             })}
@@ -217,9 +207,6 @@ export function OnboardingForm() {
         <button className="btn-primary w-full" type="submit">
           프로필 저장하고 계속하기
         </button>
-        <p className="text-center text-xs text-neutral-500">
-          다음 단계에서 사진을 선택으로 추가할 수 있습니다.
-        </p>
       </div>
     </form>
   );

@@ -50,7 +50,6 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
             {shoe.brand} {shoe.modelName}
           </h1>
           <p className="text-neutral-700">{shoe.fitSummary}</p>
-          <p className="text-sm text-neutral-600">앞볼과 전체 길이감을 먼저 확인해보세요.</p>
           <p className="text-sm text-neutral-600">기본 경향: {shoe.sizingTendency}</p>
           {shoe.productUrl ? (
             <a href={shoe.productUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-medium text-neutral-900 underline underline-offset-4">
@@ -77,7 +76,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       ) : (
         <div className="card space-y-3 text-sm text-neutral-700">
-          <p>내 발 기준으로 보려면 발 프로필을 먼저 입력해주세요.</p>
+          <p>내 발 기준으로 보려면 발 프로필을 입력해주세요.</p>
           <div className="mt-3">
             <Link href="/onboarding" className="btn-primary">
               발 프로필 입력하기
@@ -90,7 +89,6 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         <div className="space-y-3">
           <div className="card space-y-3 text-sm text-neutral-600">
             <h3 className="text-base font-semibold text-neutral-900">아직 등록된 핏 리뷰가 적어요</h3>
-            <p>현재는 모델 기본 정보와 사이징 경향을 먼저 참고해주세요.</p>
             <Link href="/review" className="btn-secondary">
               첫 리뷰 남기기
             </Link>
@@ -100,7 +98,6 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         <div className="space-y-6">
           <section className="space-y-3">
             <h2 className="text-xl font-semibold">내 발과 비슷한 리뷰</h2>
-            <p className="text-sm text-neutral-600">비슷한 발 프로필의 리뷰를 먼저 보여줍니다.</p>
             <div className="grid gap-4">
               {similarReviews.map((review) => (
                 <ReviewCard
@@ -121,7 +118,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
                 ))}
               </div>
             ) : (
-              <div className="card text-sm text-neutral-600">전체 리뷰를 위 유사 리뷰 섹션에 먼저 보여줬습니다.</div>
+              <div className="card text-sm text-neutral-600">나머지 리뷰가 없습니다.</div>
             )}
           </section>
 
@@ -132,7 +129,6 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
       ) : (
         <div className="space-y-3">
           <h2 className="text-xl font-semibold">핏 리뷰</h2>
-          <p className="text-sm text-neutral-600">발 프로필을 입력하면 나와 비슷한 리뷰를 먼저 볼 수 있어요.</p>
           <div className="grid gap-4">
             {reviews.map((review) => (
               <ReviewCard key={review.id} review={review} />
