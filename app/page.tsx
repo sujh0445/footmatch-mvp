@@ -10,20 +10,20 @@ export default function HomePage() {
           </p>
 
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            내 발 프로필 만들고 추천 사이즈 받기
+            사고 싶은 신발, 내 발 기준으로 사이즈 판단하기
           </h1>
 
           <p className="max-w-2xl text-sm text-neutral-600 sm:text-base">
-            발길이와 평소 핏 불편을 입력하면 내 발 기준으로 사이즈를 추천합니다.
+            발 프로필을 만들면 우선 추천 사이즈와 비교 후보를 함께 볼 수 있어요.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-3">
           <Link href="/onboarding" className="btn-primary">
-            내 발 프로필 만들기
+            사이즈 판단 시작하기
           </Link>
           <Link href="/shoes" className="btn-secondary">
-            신발 먼저 보기
+            신발 선택하기
           </Link>
         </div>
 
@@ -40,7 +40,7 @@ export default function HomePage() {
 
           <div className="flex items-center gap-2 px-2 py-1">
             <span className="text-[11px] font-medium text-neutral-400">3</span>
-            <span>추천 사이즈 확인</span>
+            <span>사이즈 판단 확인</span>
           </div>
         </div>
       </div>
