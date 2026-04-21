@@ -26,9 +26,9 @@ export function ProfileClient() {
   if (!profile || !selfInput || !analysis) {
     return (
       <div className="card max-w-2xl space-y-3 text-sm text-neutral-700">
-        <p>아직 저장된 발 프로필이 없습니다.</p>
+        <p>아직 저장된 사이즈 판단 기준이 없습니다.</p>
         <button onClick={() => router.push("/onboarding")} className="btn-primary">
-          발 프로필 만들기
+          사이즈 판단 시작하기
         </button>
       </div>
     );
@@ -43,7 +43,8 @@ export function ProfileClient() {
   return (
     <section className="mx-auto max-w-4xl space-y-5">
       <div className="card space-y-3">
-        <h1 className="text-2xl font-semibold">내 발 프로필</h1>
+        <h1 className="text-2xl font-semibold">내 사이즈 판단 기준</h1>
+        <p className="text-sm text-neutral-600">이 기준으로 신발별 우선 추천 사이즈와 비교 후보를 판단합니다.</p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -82,7 +83,7 @@ export function ProfileClient() {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <button className="btn-primary" onClick={() => router.push("/shoes")}>
-          추천 신발 보기
+          신발별 사이즈 판단하기
         </button>
         <button className="btn-secondary" onClick={() => router.push("/onboarding")}>
           발 프로필 수정
