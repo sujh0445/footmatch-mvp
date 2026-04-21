@@ -37,22 +37,22 @@ function getRecommendationReasons(shoe: (typeof shoes)[number], profile: FootPro
   const reasons: string[] = [];
 
   if (profile.forefootWidth === "wide") {
-    if (text.includes("여유") || text.includes("볼륨") || text.includes("넉넉")) reasons.push("앞볼 여유");
-    if (text.includes("타이트") || text.includes("좁")) reasons.push("앞볼 확인 필요");
+    if (text.includes("여유") || text.includes("볼륨") || text.includes("넉넉")) reasons.push("앞볼 여유 우선");
+    if (text.includes("타이트") || text.includes("좁")) reasons.push("앞볼 압박 주의");
   } else if (text.includes("정사이즈")) {
-    reasons.push("정사이즈 경향");
+    reasons.push("정사이즈 후보");
   }
 
   if (profile.instepHeight === "high") {
     if (text.includes("압박이 과하지") || text.includes("발등 압박은") || text.includes("여유")) reasons.push("발등 부담 적음");
-    if (text.includes("발등") && (text.includes("답답") || text.includes("조여") || text.includes("타이트"))) reasons.push("발등 체크");
+    if (text.includes("발등") && (text.includes("답답") || text.includes("조여") || text.includes("타이트"))) reasons.push("발등 압박 주의");
   }
 
   if (profile.heelSlipTendency === "high" && (text.includes("고정") || text.includes("잡아"))) {
-    reasons.push("뒤꿈치 안정");
+    reasons.push("뒤꿈치 안정 우선");
   }
 
-  if (text.includes("쿠션") || text.includes("장시간")) reasons.push("장시간 착용");
+  if (text.includes("쿠션") || text.includes("장시간")) reasons.push("장시간 착용 후보");
   if (reasons.length === 0) reasons.push(categoryLabel[shoe.category]);
 
   return reasons.slice(0, 3);
@@ -107,8 +107,37 @@ export function ShoeSearchClient() {
 
   return (
     <section className="space-y-5">
+      {profile ? (
+        <section className="space-y-3">
+          <div className="flex items-end justify-between gap-3">
+            <div className="space-y-1">
+              <h1 className="text-2xl font-semibold">내 발 기준 추천 후보</h1>
+              <p className="text-sm text-neutral-600">
+                발길이, 압박 경험, 선호 핏을 기준으로 먼저 확인할 신발입니다.
+              </p>
+            </div>
+            <Link href="/profile" className="shrink-0 text-sm font-medium text-neutral-900 underline underline-offset-4">
+              내 발 프로필
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {recommendedShoes.map((shoe) => (
+              <ShoeCard key={shoe.id} shoe={shoe} badges={getRecommendationReasons(shoe, profile)} decisionCta />
+            ))}
+          </div>
+        </section>
+      ) : (
+        <div className="card flex flex-col gap-3 text-sm text-neutral-700 sm:flex-row sm:items-center sm:justify-between">
+          <p>발 프로필을 만들면 내 발 기준 추천 후보를 먼저 볼 수 있어요.</p>
+          <Link href="/onboarding" className="btn-primary">
+            발 프로필 만들기
+          </Link>
+        </div>
+      )}
+
       <div className="card space-y-3">
-        <h1 className="text-2xl font-semibold">신발 보기</h1>
+        <h2 className="text-2xl font-semibold">{profile ? "전체 신발 검색" : "신발 보기"}</h2>
 
         <div className="space-y-1">
           <input
@@ -151,32 +180,6 @@ export function ShoeSearchClient() {
         </div>
       </div>
 
-      {profile ? (
-        <section className="space-y-3">
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h2 className="text-xl font-semibold">내 발 기준 추천</h2>
-            </div>
-            <Link href="/profile" className="text-sm font-medium text-neutral-900 underline underline-offset-4">
-              내 발 프로필
-            </Link>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {recommendedShoes.map((shoe) => (
-              <ShoeCard key={shoe.id} shoe={shoe} badges={getRecommendationReasons(shoe, profile)} />
-            ))}
-          </div>
-        </section>
-      ) : (
-        <div className="card flex flex-col gap-3 text-sm text-neutral-700 sm:flex-row sm:items-center sm:justify-between">
-          <p>발 프로필을 만들면 먼저 볼 수 있어요.</p>
-          <Link href="/onboarding" className="btn-primary">
-            발 프로필 만들기
-          </Link>
-        </div>
-      )}
-
       <div className="space-y-3">
         <h2 className="text-xl font-semibold">전체 신발</h2>
       </div>
@@ -198,7 +201,7 @@ export function ShoeSearchClient() {
   );
 }
 
-function ShoeCard({ shoe, badges }: { shoe: (typeof shoes)[number]; badges: string[] }) {
+function ShoeCard({ shoe, badges, decisionCta = false }: { shoe: (typeof shoes)[number]; badges: string[]; decisionCta?: boolean }) {
   return (
     <Link
       href={`/shoes/${shoe.id}`}
@@ -230,6 +233,11 @@ function ShoeCard({ shoe, badges }: { shoe: (typeof shoes)[number]; badges: stri
         </div>
 
         <p className="text-sm text-neutral-600">{shoe.fitSummary}</p>
+        {decisionCta ? (
+          <p className="text-sm font-medium text-neutral-900 underline underline-offset-4">
+            사이즈 판단 보기
+          </p>
+        ) : null}
       </div>
     </Link>
   );

@@ -39,6 +39,12 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
   const similarReviewIds = new Set(similarReviews.map((review) => review.id));
   const remainingReviews = profile ? reviews.filter((review) => !similarReviewIds.has(review.id)) : reviews;
   const recommendation = profile ? generateSizeRecommendation(profile, reviews) : null;
+  const similarReasonSummary =
+    profile && similarReviews.length > 0
+      ? Array.from(
+          new Set(similarReviews.flatMap((review) => explainSimilarity(profile, review.reviewerFootProfile)))
+        ).slice(0, 4)
+      : [];
 
   return (
     <section className="space-y-6">
@@ -61,16 +67,69 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
 
       {profile ? (
         <div className="card space-y-4">
-          <h2 className="text-xl font-semibold">내 발 기준 추천</h2>
+          <div className="space-y-1">
+            <h2 className="text-xl font-semibold">내 발 기준 구매 판단</h2>
+            <p className="text-sm text-neutral-600">발 정보와 비슷한 핏 리뷰를 함께 보고 우선 확인할 사이즈를 정리했어요.</p>
+          </div>
           {recommendation ? (
             <>
-              <p className="text-2xl font-semibold">추천 사이즈 {recommendation.recommendedSize}</p>
-              <div className="space-y-1 text-sm text-neutral-700">
-                {recommendation.rationale.slice(0, 2).map((item) => (
-                  <p key={item}>{item}</p>
-                ))}
+              <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+                <p className="text-sm font-medium text-neutral-600">결정 문장</p>
+                <p className="mt-1 text-xl font-semibold">{getDecisionSentence(recommendation)}</p>
+                {getComparisonCandidate(recommendation) ? (
+                  <p className="mt-2 text-sm text-neutral-700">
+                    딱 맞게 신는 편이면 {getComparisonCandidate(recommendation)}mm도 비교 후보입니다.
+                  </p>
+                ) : (
+                  <p className="mt-2 text-sm text-neutral-700">압박 경험이 적다면 우선 추천 사이즈부터 확인하세요.</p>
+                )}
               </div>
-              <p className="text-xs text-neutral-500">주의 포인트: {recommendation.recommendationNote}</p>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <DecisionMetric label="우선 추천" value={`${recommendation.recommendedSize}mm`} />
+                <DecisionMetric
+                  label="비교 후보"
+                  value={getComparisonCandidate(recommendation) ? `${getComparisonCandidate(recommendation)}mm` : "동일 사이즈 우선"}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-base font-semibold">추천 근거</h3>
+                <div className="grid gap-2">
+                  {buildEvidenceItems(recommendation).map((item) => (
+                    <div key={item.label} className="rounded-xl border border-neutral-200 bg-white p-3 text-sm">
+                      <p className="text-xs font-medium text-neutral-500">{item.label}</p>
+                      <p className="mt-1 text-neutral-800">{item.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-neutral-200 bg-white p-4 text-sm">
+                <p className="font-semibold">주의 조건</p>
+                <p className="mt-1 text-neutral-700">{getCautionText(recommendation)}</p>
+                <p className="mt-2 text-xs text-neutral-500">판단 기준: {recommendation.recommendationNote}</p>
+              </div>
+
+              {similarReviews.length > 0 ? (
+                <div className="space-y-2 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 text-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="font-semibold">근거가 된 비슷한 핏 리뷰</p>
+                    <span className="rounded-full bg-white px-3 py-1 text-xs text-neutral-600">
+                      판단에 {similarReviews.length}개 반영
+                    </span>
+                  </div>
+                  {similarReasonSummary.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {similarReasonSummary.map((reason) => (
+                        <span key={reason} className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs text-neutral-700">
+                          {reason}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
             </>
           ) : null}
         </div>
@@ -140,6 +199,45 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       )}
     </section>
+  );
+}
+
+function getComparisonCandidate(recommendation: { recommendedSize: number; baseSize: number }) {
+  return recommendation.recommendedSize !== recommendation.baseSize ? recommendation.baseSize : null;
+}
+
+function getDecisionSentence(recommendation: { recommendedSize: number; baseSize: number }) {
+  const comparisonCandidate = getComparisonCandidate(recommendation);
+  return comparisonCandidate
+    ? `${recommendation.recommendedSize}mm를 우선 추천합니다.`
+    : `${recommendation.recommendedSize}mm를 먼저 확인하세요.`;
+}
+
+function buildEvidenceItems(recommendation: { rationale: string[] }) {
+  const [lengthReason, pressureReason, reviewReason] = recommendation.rationale;
+  const items = [
+    { label: "발길이 기준", text: lengthReason },
+    { label: "압박 경험", text: pressureReason },
+    { label: "비슷한 리뷰", text: reviewReason }
+  ];
+
+  return items.filter((item): item is { label: string; text: string } => Boolean(item.text));
+}
+
+function getCautionText(recommendation: { recommendedSize: number; baseSize: number }) {
+  const comparisonCandidate = getComparisonCandidate(recommendation);
+
+  return comparisonCandidate
+    ? `압박을 피하려면 ${recommendation.recommendedSize}mm를 우선 보고, 딱 맞게 신는 편이면 ${comparisonCandidate}mm와 비교하세요.`
+    : "압박 경험이 적은 기준입니다. 브랜드별 착화감 차이는 비슷한 핏 리뷰로 한 번 더 확인하세요.";
+}
+
+function DecisionMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-neutral-200 bg-white p-4">
+      <p className="text-xs font-medium text-neutral-500">{label}</p>
+      <p className="mt-1 text-lg font-semibold">{value}</p>
+    </div>
   );
 }
 

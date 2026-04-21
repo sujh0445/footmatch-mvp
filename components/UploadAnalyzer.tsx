@@ -47,7 +47,12 @@ export function UploadAnalyzer() {
   return (
     <section className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-[1fr_320px]">
       <div className="card space-y-4">
-        <h1 className="text-2xl font-semibold">발 사진 업로드</h1>
+        <div className="space-y-2">
+          <h1 className="text-2xl font-semibold">발 사진 업로드</h1>
+          <p className="text-sm text-neutral-600">
+            사진은 길이 측정이 아니라 발볼과 발등 형태를 참고하기 위한 선택 단계입니다.
+          </p>
+        </div>
 
         <label className="block rounded-2xl border-2 border-dashed border-neutral-300 p-4 text-sm">
           <span className="mb-2 block font-medium">발 윗면 사진</span>
@@ -81,7 +86,7 @@ export function UploadAnalyzer() {
             onClick={() => finalize(true)}
             type="button"
           >
-            {loading ? "정리 중..." : "사진 반영하기"}
+            {loading ? "정리 중..." : "사진으로 형태 참고하기"}
           </button>
           <button className="btn-secondary w-full" onClick={() => finalize(false)} type="button">
             사진 없이 내 발 프로필
