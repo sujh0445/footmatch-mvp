@@ -135,10 +135,10 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       ) : (
         <div className="card space-y-3 text-sm text-neutral-700">
-          <p>발 프로필을 만들면 추천 사이즈를 볼 수 있어요.</p>
+          <p>발 프로필을 만들면 이 신발의 우선 추천 사이즈와 비교 후보를 볼 수 있어요.</p>
           <div className="mt-3">
             <Link href="/onboarding" className="btn-primary">
-              발 프로필 만들기
+              사이즈 판단 시작하기
             </Link>
           </div>
         </div>
@@ -156,7 +156,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
       ) : profile ? (
         <div className="space-y-6">
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">비슷한 핏 리뷰</h2>
+            <h2 className="text-xl font-semibold">판단 근거가 된 비슷한 핏 리뷰</h2>
             <div className="grid gap-4">
               {similarReviews.map((review) => (
                 <ReviewCard
@@ -169,7 +169,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">전체 핏 리뷰</h2>
+            <h2 className="text-xl font-semibold">보조로 볼 전체 핏 리뷰</h2>
             {remainingReviews.length > 0 ? (
               <div className="grid gap-4">
                 {remainingReviews.map((review) => (
@@ -187,7 +187,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       ) : (
         <div className="space-y-3">
-          <h2 className="text-xl font-semibold">핏 리뷰</h2>
+          <h2 className="text-xl font-semibold">보조로 볼 핏 리뷰</h2>
           <div className="grid gap-4">
             {reviews.map((review) => (
               <ReviewCard key={review.id} review={review} />

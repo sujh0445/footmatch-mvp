@@ -50,7 +50,7 @@ export function UploadAnalyzer() {
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold">발 사진 업로드</h1>
           <p className="text-sm text-neutral-600">
-            사진은 길이 측정이 아니라 발볼과 발등 형태를 참고하기 위한 선택 단계입니다.
+            사진은 길이 측정이 아니라 발볼과 발등 형태를 참고하기 위한 선택 단계입니다. 입력한 발 정보만으로도 사이즈 판단은 진행할 수 있어요.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export function UploadAnalyzer() {
             {loading ? "정리 중..." : "사진으로 형태 참고하기"}
           </button>
           <button className="btn-secondary w-full" onClick={() => finalize(false)} type="button">
-            사진 없이 내 발 프로필
+            사진 없이 사이즈 판단 준비
           </button>
         </div>
       </div>
