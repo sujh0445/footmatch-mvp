@@ -22,11 +22,11 @@ export function HeaderActions() {
 
   return (
     <nav className="flex items-center gap-2 text-sm">
-      <Link className="btn-secondary" href="/shoes">
+      <Link className="btn-secondary border-neutral-200 text-neutral-500 hover:text-neutral-700" href="/shoes">
         신발 선택하기
       </Link>
       <Link className="btn-primary" href={hasProfile ? "/profile" : "/onboarding"}>
-        {hasProfile ? "내 발 프로필" : "사이즈 판단 시작하기"}
+        {hasProfile ? "내 발 프로필" : "발 프로필 만들기"}
       </Link>
     </nav>
   );

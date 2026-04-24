@@ -1,33 +1,81 @@
-# Project AGENTS
+# FootMatch AGENTS.md
 
-## Project purpose
-This project is a prototype for helping users choose shoe sizes based on foot length and fit-related preferences.
+## Product
+FootMatch is a shoe size decision assistant.
+The core loop is:
+landing -> onboarding -> upload -> foot profile -> shoes -> shoe detail purchase decision
 
-## Environment
-- Check the project structure before making changes.
-- Prefer the project-specific setup instructions if they exist.
-- If Python is used, use the project virtual environment before running commands.
-- If this is a Node project, check package.json first.
+The first-priority user action is:
+create a foot profile to start size judgment.
 
-## Common commands
-- First inspect available commands before assuming anything.
-- If package.json exists, check scripts before running.
-- If requirements.txt exists, use the project virtual environment first.
-- Do not guess run commands without checking the project files.
+## UX direction
+The landing page should make users immediately understand:
+"I can create a light foot profile and quickly get shoe-size judgment based on my foot."
 
-## Editing rules
-- Prefer minimal changes first.
-- Do not refactor unrelated parts.
-- Keep the existing file structure unless explicitly asked to change it.
-- Keep UI/product copy simple and practical.
-- Do not change core recommendation logic broadly unless explicitly asked.
+Preferred result order:
+1. Recommended size
+2. Reason
+3. Reference profile
 
-## Important paths
-- Check the main app files first.
-- Check docs or notes if they exist.
-- Check configuration files before changing environment-related behavior.
+Avoid overclaiming photo-based foot analysis.
+Photo-based foot width / shape judgment is only supportive.
 
-## Workflow
-- First explain the current structure before making major changes.
-- Before editing, identify the smallest relevant files.
-- After editing, report what changed and how it was verified.
+Use consistent wording:
+- 발 프로필
+- 사이즈 판단
+- 내 발 기준
+- 신발 선택하기
+- 사이즈 판단 시작하기
+
+## OMX workflow
+Use this 4-step workflow by default:
+1. deep-interview
+2. ralplan
+3. autopilot
+4. ralph
+
+### deep-interview
+Clarify the real user problem first.
+Do not jump to UI patching without defining:
+- what users misunderstand
+- what first action is unclear
+- what wording or screen element causes friction
+
+### ralplan
+Turn the problem into a concrete change plan.
+Specify:
+- scope
+- files to edit
+- expected UX effect
+- constraints
+- verification method
+
+### autopilot
+Implement only within approved scope.
+Prefer minimal, targeted edits over broad rewrites.
+
+### ralph
+Re-check:
+- scope drift
+- wording consistency
+- CTA consistency
+- whether the first action is clearer
+- whether recommendation flow still matches the product loop
+
+## Engineering
+Project path:
+~/projects/footmatch-mvp
+
+Before making major edits:
+- inspect relevant files first
+- explain scope briefly
+- avoid unnecessary rewrites
+
+After edits:
+- run the dev server if needed
+- verify landing/onboarding/shoes/shoe detail flow
+- summarize changed files and why
+
+## Important product constraint
+This is not a precise foot measuring tool.
+It is a size judgment support service.

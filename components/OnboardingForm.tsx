@@ -72,8 +72,8 @@ export function OnboardingForm() {
   return (
     <form onSubmit={onSubmit} noValidate className="card mx-auto max-w-3xl space-y-5">
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold">사이즈 판단 기준 만들기</h1>
-        <p className="text-sm text-neutral-600">사고 싶은 신발의 우선 추천 사이즈와 비교 후보를 판단하는 데 사용됩니다.</p>
+        <h1 className="text-2xl font-semibold">발 프로필 만들기</h1>
+        <p className="text-sm text-neutral-600">사고 싶은 신발의 구매 사이즈 판단을 돕는 발 프로필입니다.</p>
       </div>
 
       <section className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
@@ -205,7 +205,7 @@ export function OnboardingForm() {
       <div className="space-y-3">
         {error ? <p className="text-sm text-rose-700">{error}</p> : null}
         <button className="btn-primary w-full" type="submit">
-          다음: 사이즈 판단 준비
+          다음: 사이즈 판단 시작하기
         </button>
       </div>
     </form>
