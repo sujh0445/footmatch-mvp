@@ -72,8 +72,15 @@ export function OnboardingForm() {
   return (
     <form onSubmit={onSubmit} noValidate className="card mx-auto max-w-3xl space-y-5">
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold">발 프로필 만들기</h1>
-        <p className="text-sm text-neutral-600">사고 싶은 신발의 구매 사이즈 판단을 돕는 발 프로필입니다.</p>
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">사이즈 판단 시작</p>
+        <h1 className="text-2xl font-semibold">내 발 기준이 될 발 프로필 만들기</h1>
+        <p className="text-sm text-neutral-600">
+          이 단계는 정밀 측정이 아니라, 사고 싶은 신발의 구매 사이즈를 판단하기 위한 기준을 빠르게 정리하는 단계입니다.
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
+        입력이 끝나면 선택 입력인 사진 참고 단계로 넘어가고, 그다음 신발별 추천 사이즈와 이유, 참고 리뷰를 확인할 수 있어요.
       </div>
 
       <section className="space-y-4 rounded-2xl border border-neutral-200 bg-white p-5">
@@ -205,7 +212,7 @@ export function OnboardingForm() {
       <div className="space-y-3">
         {error ? <p className="text-sm text-rose-700">{error}</p> : null}
         <button className="btn-primary w-full" type="submit">
-          다음: 사이즈 판단 시작하기
+          다음: 선택 입력 확인하기
         </button>
       </div>
     </form>

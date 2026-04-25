@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 import { shoeReviews } from "@/data/reviews";
@@ -49,7 +50,9 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
   return (
     <section className="space-y-6">
       <div className="card space-y-3 overflow-hidden p-0">
-        <img src={shoe.imageSrc} alt={shoe.imageAlt} className="h-64 w-full object-cover" />
+        <div className="relative h-64 w-full">
+          <Image src={shoe.imageSrc} alt={shoe.imageAlt} fill className="object-cover" sizes="(min-width: 1024px) 60vw, 100vw" />
+        </div>
         <div className="space-y-2 p-5">
           <p className="text-xs uppercase tracking-wide text-neutral-500">{categoryLabel[shoe.category]}</p>
           <h1 className="text-3xl font-semibold">
@@ -69,12 +72,14 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         <div className="card space-y-4">
           <div className="space-y-1">
             <h2 className="text-xl font-semibold">내 발 기준 구매 판단</h2>
-            <p className="text-sm text-neutral-600">발 정보와 비슷한 핏 리뷰를 함께 보고 우선 확인할 사이즈를 정리했어요.</p>
+            <p className="text-sm text-neutral-600">
+              이 신발을 기준으로 내 발 정보와 비슷한 사람들의 리뷰를 함께 보고, 먼저 확인할 구매 사이즈를 정리했어요.
+            </p>
           </div>
           {recommendation ? (
             <>
               <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-                <p className="text-sm font-medium text-neutral-600">결정 문장</p>
+                <p className="text-sm font-medium text-neutral-600">추천 사이즈</p>
                 <p className="mt-1 text-xl font-semibold">{getDecisionSentence(recommendation)}</p>
                 {getComparisonCandidate(recommendation) ? (
                   <p className="mt-2 text-sm text-neutral-700">
@@ -94,7 +99,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-base font-semibold">추천 근거</h3>
+                <h3 className="text-base font-semibold">판단 이유</h3>
                 <div className="grid gap-2">
                   {buildEvidenceItems(recommendation).map((item) => (
                     <div key={item.label} className="rounded-xl border border-neutral-200 bg-white p-3 text-sm">
@@ -114,7 +119,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
               {similarReviews.length > 0 ? (
                 <div className="space-y-2 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 text-sm">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="font-semibold">근거가 된 비슷한 핏 리뷰</p>
+                    <p className="font-semibold">참고 리뷰</p>
                     <span className="rounded-full bg-white px-3 py-1 text-xs text-neutral-600">
                       판단에 {similarReviews.length}개 반영
                     </span>
@@ -135,7 +140,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       ) : (
         <div className="card space-y-3 text-sm text-neutral-700">
-          <p>발 프로필을 만들면 이 신발의 우선 추천 사이즈와 비교 후보를 볼 수 있어요.</p>
+          <p>발 프로필을 만들면 이 신발의 구매 사이즈 판단과 이유, 참고 리뷰를 내 발 기준으로 볼 수 있어요.</p>
           <div className="mt-3">
             <Link href="/onboarding" className="btn-primary">
               사이즈 판단 시작하기
@@ -156,7 +161,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
       ) : profile ? (
         <div className="space-y-6">
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">판단 근거가 된 비슷한 핏 리뷰</h2>
+            <h2 className="text-xl font-semibold">판단에 반영된 참고 리뷰</h2>
             <div className="grid gap-4">
               {similarReviews.map((review) => (
                 <ReviewCard
@@ -169,7 +174,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">보조로 볼 전체 핏 리뷰</h2>
+            <h2 className="text-xl font-semibold">추가로 볼 전체 핏 리뷰</h2>
             {remainingReviews.length > 0 ? (
               <div className="grid gap-4">
                 {remainingReviews.map((review) => (
@@ -187,7 +192,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       ) : (
         <div className="space-y-3">
-          <h2 className="text-xl font-semibold">보조로 볼 핏 리뷰</h2>
+          <h2 className="text-xl font-semibold">참고로 볼 핏 리뷰</h2>
           <div className="grid gap-4">
             {reviews.map((review) => (
               <ReviewCard key={review.id} review={review} />

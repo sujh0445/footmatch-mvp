@@ -48,10 +48,15 @@ export function UploadAnalyzer() {
     <section className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-[1fr_320px]">
       <div className="card space-y-4">
         <div className="space-y-2">
-          <h1 className="text-2xl font-semibold">발 사진 업로드</h1>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">선택 입력</p>
+          <h1 className="text-2xl font-semibold">필요하면 발 사진을 참고로 추가하세요</h1>
           <p className="text-sm text-neutral-600">
-            사진은 길이 측정이 아니라 발볼과 발등 형태를 참고하기 위한 선택 단계입니다. 입력한 발 정보만으로도 사이즈 판단은 진행할 수 있어요.
+            사진은 길이 측정이 아니라 발볼과 발등 형태를 참고하기 위한 보조 입력입니다. 입력한 발 정보만으로도 사이즈 판단 준비를 계속할 수 있어요.
           </p>
+        </div>
+
+        <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
+          기본 경로는 사진 없이 계속 진행하는 것입니다. 사진은 판단 이유를 조금 더 보조하고 싶을 때만 추가하세요.
         </div>
 
         <label className="block rounded-2xl border-2 border-dashed border-neutral-300 p-4 text-sm">
@@ -82,14 +87,19 @@ export function UploadAnalyzer() {
         <div className="flex flex-col gap-3 sm:flex-row">
           <button
             className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={loading}
+            onClick={() => finalize(false)}
+            type="button"
+          >
+            {loading ? "정리 중..." : "사진 없이 계속하기"}
+          </button>
+          <button
+            className="btn-secondary w-full disabled:cursor-not-allowed disabled:opacity-50"
             disabled={!canAnalyze}
             onClick={() => finalize(true)}
             type="button"
           >
-            {loading ? "정리 중..." : "사진으로 형태 참고하기"}
-          </button>
-          <button className="btn-secondary w-full" onClick={() => finalize(false)} type="button">
-            사진 없이 사이즈 판단 준비
+            {loading ? "정리 중..." : "사진으로 형태 참고 추가"}
           </button>
         </div>
       </div>

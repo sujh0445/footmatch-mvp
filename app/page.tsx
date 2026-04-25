@@ -14,33 +14,39 @@ export default function HomePage() {
           </h1>
 
           <p className="max-w-2xl text-sm text-neutral-600 sm:text-base">
-            먼저 발 프로필을 만들면 내 발 기준의 참고용 사이즈 판단을 바로 시작할 수 있어요.
+            먼저 가벼운 발 프로필을 만들고, 사고 싶은 신발을 고르면 추천 사이즈와 이유, 참고 리뷰를 빠르게 확인할 수 있어요.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-3">
           <Link href="/onboarding" className="btn-primary">
-            발 프로필 만들기
+            사이즈 판단 시작하기
           </Link>
           <Link href="/shoes" className="btn-secondary border-neutral-200 text-neutral-500 hover:text-neutral-700">
             신발 선택하기
           </Link>
         </div>
 
-        <div className="grid gap-1 rounded-lg border border-neutral-100 bg-neutral-50/60 px-2 py-1.5 text-xs text-neutral-500 sm:grid-cols-3">
-          <div className="flex items-center gap-2 px-2 py-1">
-            <span className="text-[11px] font-medium text-neutral-400">1</span>
-            <span>발 프로필 만들기</span>
-          </div>
+        <div className="rounded-2xl border border-neutral-100 bg-neutral-50/60 p-4">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">
+            빠른 흐름
+          </p>
 
-          <div className="flex items-center gap-2 px-2 py-1">
-            <span className="text-[11px] font-medium text-neutral-400">2</span>
-            <span>신발 선택하기</span>
-          </div>
+          <div className="mt-3 grid gap-2 text-xs text-neutral-500 sm:grid-cols-3">
+            <div className="flex items-center gap-2 rounded-xl bg-white px-3 py-2">
+              <span className="text-[11px] font-medium text-neutral-400">1</span>
+              <span>발 프로필 만들기</span>
+            </div>
 
-          <div className="flex items-center gap-2 px-2 py-1">
-            <span className="text-[11px] font-medium text-neutral-400">3</span>
-            <span>구매 사이즈 판단 확인</span>
+            <div className="flex items-center gap-2 rounded-xl bg-white px-3 py-2">
+              <span className="text-[11px] font-medium text-neutral-400">2</span>
+              <span>신발 선택하기</span>
+            </div>
+
+            <div className="flex items-center gap-2 rounded-xl bg-white px-3 py-2">
+              <span className="text-[11px] font-medium text-neutral-400">3</span>
+              <span>추천 사이즈, 이유, 참고 리뷰 확인</span>
+            </div>
           </div>
         </div>
       </div>
