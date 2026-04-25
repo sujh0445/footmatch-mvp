@@ -8,19 +8,16 @@ export default function HomePage() {
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:items-start">
             <div className="space-y-6">
               <div className="flex flex-wrap gap-2">
-                <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-neutral-500">
-                  FootMatch
-                </span>
                 <span className="rounded-full bg-neutral-900 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-white">
-                  Size Judgment App
+                  사이즈 판단
                 </span>
               </div>
 
               <div className="space-y-3">
-                <h1 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">이 신발, 몇 사이즈?</h1>
+                <h1 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">FootMatch</h1>
 
                 <p className="max-w-2xl text-sm text-neutral-600 sm:text-base">
-                  구매 전, 내 발 기준으로 확인하세요.
+                  발 프로필과 핏 리뷰를 바탕으로 사고 싶은 신발의 구매 사이즈를 빠르게 판단하세요.
                 </p>
               </div>
 
@@ -28,13 +25,13 @@ export default function HomePage() {
 
               <div className="flex flex-wrap gap-2">
                 <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-700">
-                  구매 사이즈 판단
+                  사이즈 판단
                 </span>
                 <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-700">
-                  내 발 기준
+                  발 프로필
                 </span>
                 <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-700">
-                  근거 리뷰
+                  핏 리뷰
                 </span>
               </div>
             </div>
@@ -42,11 +39,11 @@ export default function HomePage() {
             <div className="rounded-[28px] border border-neutral-200 bg-white/90 p-5 shadow-[0_12px_30px_rgba(17,24,39,0.06)] sm:p-6">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">Flow</p>
-                  <p className="mt-1 text-lg font-semibold text-neutral-900">신발 선택부터 한 번에</p>
+                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">흐름</p>
+                  <p className="mt-1 text-lg font-semibold text-neutral-900">신발 선택부터 빠르게</p>
                 </div>
                 <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-neutral-500">
-                  App Home
+                  홈
                 </span>
               </div>
 
@@ -60,12 +57,12 @@ export default function HomePage() {
                   {
                     step: "02",
                     title: "발 프로필",
-                    body: "기준 만들기"
+                    body: "내 발 기준 정리"
                   },
                   {
                     step: "03",
                     title: "사이즈 판단",
-                    body: "추천 확인"
+                    body: "핏 리뷰 확인"
                   }
                 ].map((item, index, items) => (
                   <div

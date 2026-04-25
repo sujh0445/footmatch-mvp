@@ -34,7 +34,7 @@ export function ReviewForm() {
   return (
     <section className="mx-auto max-w-3xl space-y-5">
       <div className="card space-y-2">
-        <h1 className="text-2xl font-semibold">리뷰 작성</h1>
+        <h1 className="text-2xl font-semibold">핏 리뷰 남기기</h1>
         <p className="text-sm text-neutral-600">30초 안에 남길 수 있어요.</p>
       </div>
 
@@ -79,7 +79,7 @@ export function ReviewForm() {
 
         <section className="card space-y-4">
           <div>
-            <h2 className="text-lg font-semibold">착화 경험</h2>
+            <h2 className="text-lg font-semibold">핏</h2>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
@@ -107,11 +107,11 @@ export function ReviewForm() {
 
         <section className="card space-y-4">
           <div>
-            <h2 className="text-lg font-semibold">한 줄 코멘트</h2>
+            <h2 className="text-lg font-semibold">핏 코멘트</h2>
           </div>
 
           <label className="text-sm">
-            짧게 남겨주세요
+            핏 코멘트를 남겨주세요
             <textarea
               className="input mt-1 min-h-24"
               value={form.comment}
@@ -122,7 +122,7 @@ export function ReviewForm() {
           </label>
 
           <div className="space-y-2 border-t border-neutral-200 pt-4">
-            <p className="text-sm font-medium">선택 태그 <span className="font-normal text-neutral-500">(선택)</span></p>
+            <p className="text-sm font-medium">태그 <span className="font-normal text-neutral-500">(선택)</span></p>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <button key={tag} type="button" onClick={() => toggleTag(tag)} className={`rounded-full border px-3 py-1 text-xs ${form.tags.includes(tag) ? "border-neutral-900 bg-neutral-900 text-white" : "border-neutral-300 text-neutral-700"}`}>
@@ -135,12 +135,12 @@ export function ReviewForm() {
 
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <button className="btn-primary" type="submit">
-            리뷰 제출
+            핏 리뷰 남기기
           </button>
         </div>
       </form>
 
-      {submitted ? <div className="card text-sm text-emerald-700">리뷰가 임시 저장됐습니다.</div> : null}
+      {submitted ? <div className="card text-sm text-emerald-700">핏 리뷰가 저장됐습니다.</div> : null}
     </section>
   );
 }

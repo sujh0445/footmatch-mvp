@@ -91,21 +91,21 @@ export function OnboardingForm() {
     <form onSubmit={onSubmit} noValidate className="card mx-auto max-w-3xl space-y-6">
       <div className="space-y-4">
         <div className="space-y-2">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">발 프로필 만들기</p>
-          <h1 className="text-2xl font-semibold">발 프로필 만들기</h1>
-          <p className="text-sm text-neutral-600">핵심 정보만 빠르게 고르면 다음 단계에서 바로 신발 선택으로 이어집니다.</p>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">사이즈 판단 준비</p>
+          <h1 className="text-2xl font-semibold">발 프로필</h1>
+          <p className="text-sm text-neutral-600">핵심 정보만 빠르게 고르면 다음 단계에서 사진 힌트를 더할 수 있어요.</p>
         </div>
 
         <div className="flex flex-wrap gap-2 text-xs font-medium text-neutral-600">
           <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1.5">1. 발 프로필</span>
           <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">2. 사진 힌트</span>
-          <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">3. 신발 선택하기</span>
+          <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">3. 신발 선택</span>
         </div>
       </div>
 
       <section className="space-y-4 rounded-[28px] border border-neutral-200 bg-white p-5">
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">기본 기준</p>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">입력 항목</p>
           <h2 className="text-lg font-semibold">기본 정보</h2>
         </div>
 
@@ -135,7 +135,7 @@ export function OnboardingForm() {
               value={purchasedShoeSizeInput}
               onChange={(e) => setPurchasedShoeSizeInput(e.target.value)}
               className="input mt-2 border-0 bg-white"
-              placeholder="선택 입력"
+              placeholder="선택 사항"
             />
             <span className="mt-2 block text-xs text-neutral-500">예: 270mm</span>
           </label>
@@ -144,8 +144,8 @@ export function OnboardingForm() {
 
       <section className="space-y-4 rounded-[28px] border border-neutral-200 bg-white p-5">
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">압박 느낌</p>
-          <h2 className="text-lg font-semibold">발볼 압박과 발등 답답함</h2>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">착화감</p>
+          <h2 className="text-lg font-semibold">발볼과 발등</h2>
         </div>
 
         <div className="grid gap-4">
@@ -203,8 +203,8 @@ export function OnboardingForm() {
 
       <section className="space-y-4 rounded-[28px] border border-neutral-200 bg-white p-5">
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">핏 성향</p>
-          <h2 className="text-lg font-semibold">불편 포인트와 선호 핏</h2>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">핏</p>
+          <h2 className="text-lg font-semibold">핏 성향</h2>
         </div>
 
         <div className="space-y-2">
@@ -255,7 +255,7 @@ export function OnboardingForm() {
       </section>
 
       <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
-        다음 단계의 사진 입력은 선택입니다. 지금 만든 발 프로필만으로도 신발 선택 단계까지 이어갈 수 있습니다.
+        사진 힌트는 선택 사항입니다. 발 프로필을 먼저 저장한 뒤 신발 선택으로 이어갈 수 있어요.
       </div>
 
       <div className="space-y-3">

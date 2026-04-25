@@ -50,22 +50,22 @@ export function ProfileClient() {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <InfoCard label="발길이" value={`${profile.footLengthMm} mm`} />
         <InfoCard label="평소 사이즈" value={selfInput.purchasedShoeSizeMm ? `${selfInput.purchasedShoeSizeMm} mm` : "미입력"} />
-        <InfoCard label="발볼 때문에 크게 사는 편" value={labelize(selfInput.sizeUpForWidth)} />
-        <InfoCard label="발등 압박 경험" value={labelize(selfInput.instepPressureExperience)} />
-        <InfoCard label="선택한 불편 포인트" value={issueSummary} />
-        <InfoCard label="사진 업로드 여부" value={photoStatus} />
+        <InfoCard label="발볼 압박" value={labelize(selfInput.sizeUpForWidth)} />
+        <InfoCard label="발등 압박" value={labelize(selfInput.instepPressureExperience)} />
+        <InfoCard label="불편 포인트" value={issueSummary} />
+        <InfoCard label="사진 힌트" value={photoStatus} />
       </div>
 
       <div className="card space-y-3 text-sm text-neutral-700">
-        <h2 className="text-lg font-semibold">핏 기준</h2>
+        <h2 className="text-lg font-semibold">핏 성향</h2>
         <div className="grid gap-3 sm:grid-cols-2">
           <SummaryItem label="선호 핏" value={fitMap[selfInput.preferredFit]} />
-          <SummaryItem label="발 형태 기준" value={`${valueMap[profile.forefootWidth]} / ${valueMap[profile.instepHeight]}`} />
+          <SummaryItem label="발 형태" value={`${valueMap[profile.forefootWidth]} / ${valueMap[profile.instepHeight]}`} />
         </div>
       </div>
 
       <div className="card space-y-3 text-sm text-neutral-700">
-        <h2 className="text-lg font-semibold">사진 참고</h2>
+        <h2 className="text-lg font-semibold">사진 힌트</h2>
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs text-neutral-700">
             {analysis.photoUploaded ? "보조 반영" : "사진 없음"}

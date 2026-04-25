@@ -49,15 +49,15 @@ export function UploadAnalyzer() {
       <div className="card space-y-5">
         <div className="space-y-4">
           <div className="space-y-2">
-            <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">선택 입력</p>
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">선택 사항</p>
             <h1 className="text-2xl font-semibold">사진 힌트</h1>
-            <p className="text-sm text-neutral-600">사진은 선택 사항입니다. 지금 만든 발 프로필만으로도 바로 신발 선택 단계로 넘어갈 수 있습니다.</p>
+            <p className="text-sm text-neutral-600">사진은 선택 사항입니다. 저장한 뒤 발 프로필에서 내용을 확인할 수 있어요.</p>
           </div>
 
           <div className="flex flex-wrap gap-2 text-xs font-medium text-neutral-600">
-            <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">발 프로필 완료</span>
+            <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">발 프로필 입력</span>
             <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1.5">사진 힌트</span>
-            <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">다음: 신발 선택하기</span>
+            <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">다음: 발 프로필 보기</span>
           </div>
         </div>
 
@@ -65,7 +65,7 @@ export function UploadAnalyzer() {
           <div className="space-y-2">
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">기본 경로</p>
             <h2 className="text-lg font-semibold text-neutral-900">사진 없이 계속</h2>
-            <p className="text-sm text-neutral-600">사진 없이도 발 프로필을 저장하고 신발별 사이즈 판단을 시작할 수 있습니다.</p>
+            <p className="text-sm text-neutral-600">사진 없이도 저장한 뒤 발 프로필을 바로 확인할 수 있습니다.</p>
           </div>
 
           <button
@@ -81,9 +81,9 @@ export function UploadAnalyzer() {
         <section className="space-y-4 rounded-[28px] border border-neutral-200 bg-white p-5">
           <div className="space-y-2">
             <div className="inline-flex rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-600">
-              선택 보완
+              선택 사항
             </div>
-            <h2 className="text-lg font-semibold">사진 힌트</h2>
+            <h2 className="text-lg font-semibold">사진 추가</h2>
             <p className="text-sm text-neutral-600">정밀 측정이 아니라 발볼과 발등 형태를 참고하는 정도로만 사용됩니다.</p>
           </div>
 
@@ -120,7 +120,7 @@ export function UploadAnalyzer() {
             onClick={() => finalize(true)}
             type="button"
           >
-            {loading ? "정리 중..." : "사진 힌트 추가하고 계속"}
+            {loading ? "정리 중..." : "사진 힌트 저장하고 계속"}
           </button>
         </section>
       </div>

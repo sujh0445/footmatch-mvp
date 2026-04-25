@@ -60,7 +60,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
                     {shoe.brand} {shoe.modelName}
                   </h1>
                   <p className="mt-2 max-w-2xl text-sm text-white/75">
-                    내 발 기준과 비슷한 리뷰를 기준으로 먼저 확인할 사이즈를 정리했어요.
+                    내 발 기준과 비슷한 핏 리뷰를 바탕으로 먼저 확인할 사이즈를 정리했어요.
                   </p>
                 </div>
               </div>
@@ -105,12 +105,12 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
                   {similarReviews.length > 0 ? (
                     <div className="rounded-3xl border border-white/10 bg-white p-4 text-neutral-900">
                       <div className="flex flex-wrap items-center justify-between gap-2">
-                        <p className="text-sm font-semibold">근거 리뷰</p>
+                        <p className="text-sm font-semibold">비슷한 핏 리뷰</p>
                         <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs text-neutral-600">
                           {similarReviews.length}개 반영
                         </span>
                       </div>
-                      <p className="mt-2 text-sm text-neutral-700">비슷한 발 프로필 리뷰를 먼저 보여드려요.</p>
+                      <p className="mt-2 text-sm text-neutral-700">내 발과 가까운 핏 리뷰를 먼저 보여드려요.</p>
                       {similarReasonSummary.length > 0 ? (
                         <div className="mt-3 flex flex-wrap gap-2">
                           {similarReasonSummary.map((reason) => (
@@ -133,12 +133,12 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
               <h1 className="text-3xl font-semibold">
                 {shoe.brand} {shoe.modelName}
               </h1>
-              <p className="max-w-2xl text-sm text-white/75">발 프로필을 만들면 이 신발의 추천 사이즈와 근거 리뷰를 바로 볼 수 있어요.</p>
+              <p className="max-w-2xl text-sm text-white/75">발 프로필을 만들면 이 신발의 추천 사이즈와 핏 리뷰를 바로 볼 수 있어요.</p>
             </div>
             <div className="grid gap-3 sm:grid-cols-3">
               <InfoCard label="추천 사이즈" text="발 프로필을 만들면 바로 확인할 수 있어요." tone="dark" />
               <InfoCard label="비교 사이즈" text="내 발 기준으로 함께 비교할 사이즈를 보여드려요." tone="dark" />
-              <InfoCard label="근거 리뷰" text="비슷한 발 프로필 리뷰를 먼저 정리해드려요." tone="dark" />
+              <InfoCard label="핏 리뷰" text="비슷한 핏 리뷰를 먼저 정리해드려요." tone="dark" />
             </div>
             <div>
               <Link href="/onboarding" className="btn-primary">
@@ -159,7 +159,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
             </div>
             <div className="grid gap-3 text-sm text-neutral-600 sm:grid-cols-2 lg:grid-cols-1">
               <InfoCard label="기본 핏" text={shoe.sizingTendency} />
-              <InfoCard label="사용 장면" text={categoryLabel[shoe.category]} />
+              <InfoCard label="카테고리" text={categoryLabel[shoe.category]} />
             </div>
             {shoe.productUrl ? (
               <a href={shoe.productUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-medium text-neutral-900 underline underline-offset-4">
@@ -182,7 +182,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
       ) : profile ? (
         <div className="space-y-6">
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">근거 리뷰</h2>
+            <h2 className="text-xl font-semibold">비슷한 핏 리뷰</h2>
             <div className="grid gap-4">
               {similarReviews.map((review) => (
                 <ReviewCard
@@ -208,7 +208,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </section>
 
           <Link href="/review" className="btn-secondary">
-            리뷰 작성
+            핏 리뷰 남기기
           </Link>
         </div>
       ) : (
@@ -220,7 +220,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
             ))}
           </div>
           <Link href="/review" className="btn-secondary">
-            리뷰 작성
+            핏 리뷰 남기기
           </Link>
         </div>
       )}
@@ -244,7 +244,7 @@ function buildEvidenceItems(recommendation: { rationale: string[] }) {
   const items = [
     { label: "발길이 기준", text: lengthReason },
     { label: "압박 경험", text: pressureReason },
-    { label: "비슷한 리뷰", text: reviewReason }
+    { label: "비슷한 핏 리뷰", text: reviewReason }
   ];
 
   return items.filter((item): item is { label: string; text: string } => Boolean(item.text));
@@ -304,7 +304,7 @@ function ReviewCard({ review, reasons = [] }: { review: ShoeReview; reasons?: st
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-sm text-neutral-600">사용 목적: {useCaseLabel[review.useCase]}</p>
         <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700">
-          {reasons.length > 0 ? `비슷한 이유 ${reasons.length}개` : "핏 리뷰"}
+          {reasons.length > 0 ? `비슷한 기준 ${reasons.length}개` : "핏 리뷰"}
         </span>
       </div>
 

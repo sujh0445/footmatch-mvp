@@ -132,6 +132,6 @@ export function generateSizeRecommendation(user: FootProfile, reviews: ShoeRevie
     recommendedSize,
     baseSize,
     rationale: rationale.slice(0, 3),
-    recommendationNote: "입력값과 핏 리뷰 기준"
+    recommendationNote: "발 프로필과 핏 리뷰 기준"
   };
 }
