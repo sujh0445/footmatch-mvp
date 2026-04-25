@@ -55,9 +55,9 @@ export function ShoeSearchClient() {
         <section className="space-y-3">
           <div className="flex items-end justify-between gap-3">
             <div className="space-y-1">
-              <h1 className="text-2xl font-semibold">신발 선택</h1>
+              <h1 className="text-2xl font-semibold">사이즈 볼 신발 선택</h1>
               <p className="text-sm text-neutral-600">
-                먼저 사고 싶은 신발을 고르세요. 선택한 뒤에 내 발 기준으로 사이즈 판단과 근거 리뷰를 확인할 수 있어요.
+                사고 싶은 신발을 먼저 고르면, 내 발 기준으로 사이즈 판단과 근거를 바로 확인할 수 있어요.
               </p>
             </div>
             <Link href="/profile" className="shrink-0 text-sm font-medium text-neutral-900 underline underline-offset-4">
@@ -67,7 +67,7 @@ export function ShoeSearchClient() {
         </section>
       ) : (
         <div className="card flex flex-col gap-3 text-sm text-neutral-700 sm:flex-row sm:items-center sm:justify-between">
-          <p>먼저 발 프로필을 만들면, 사고 싶은 신발마다 내 발 기준으로 사이즈 판단을 볼 수 있어요.</p>
+          <p>먼저 사이즈 볼 신발을 고르세요. 필요한 순간에 발 프로필을 이어서 만들고 내 발 기준 판단을 볼 수 있어요.</p>
           <Link href="/onboarding" className="btn-primary">
             사이즈 판단 시작하기
           </Link>
@@ -76,9 +76,9 @@ export function ShoeSearchClient() {
 
       <div className="card space-y-3">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold">신발 선택하기</h2>
+          <h2 className="text-2xl font-semibold">사이즈 볼 신발 고르기</h2>
           <p className="text-sm text-neutral-600">
-            브랜드나 모델명을 찾아 바로 들어가면, 그 신발의 사이즈 판단을 확인할 수 있어요.
+            브랜드나 모델명을 찾아, 사이즈를 확인하고 싶은 신발을 직접 선택하세요.
           </p>
         </div>
 
@@ -155,22 +155,26 @@ function ShoeCard({ shoe, badges, decisionCta = false }: { shoe: (typeof shoes)[
           <p className="text-xs uppercase tracking-wide text-neutral-500">
             {categoryLabel[shoe.category]}
           </p>
-          <span className="text-xs text-neutral-400">{decisionCta ? "판단 보기" : "사이즈 보기"}</span>
+          <span className="text-xs text-neutral-400">사이즈 보기</span>
         </div>
 
         <h2 className="text-lg font-semibold">
           {shoe.brand} {shoe.modelName}
         </h2>
 
-        <div className="flex flex-wrap gap-2">
-          {badges.map((badge) => (
-            <span
-              key={badge}
-              className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs text-neutral-700"
-            >
-              {badge}
-            </span>
-          ))}
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-neutral-500">사이즈 판단 힌트</p>
+
+          <div className="flex flex-wrap gap-2">
+            {badges.map((badge) => (
+              <span
+                key={badge}
+                className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs text-neutral-700"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
         </div>
 
         <p className="text-sm text-neutral-600">{shoe.fitSummary}</p>
