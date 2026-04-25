@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ProfileAwareCtas } from "@/components/ProfileAwareCtas";
 
 export default function HomePage() {
   return (
@@ -18,14 +18,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          <Link href="/onboarding" className="btn-primary">
-            사이즈 판단 시작하기
-          </Link>
-          <Link href="/shoes" className="btn-secondary border-neutral-200 text-neutral-500 hover:text-neutral-700">
-            신발 선택하기
-          </Link>
-        </div>
+        <ProfileAwareCtas />
 
         <div className="rounded-2xl border border-neutral-100 bg-neutral-50/60 p-4">
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">

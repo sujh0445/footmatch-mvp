@@ -1,47 +1,5 @@
-"use client";
-
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { getFootProfile } from "@/lib/storage";
+import { ProfileAwareCtas } from "@/components/ProfileAwareCtas";
 
 export function HeaderActions() {
-  const [hasProfile, setHasProfile] = useState(false);
-
-  useEffect(() => {
-    const syncProfileState = () => setHasProfile(Boolean(getFootProfile()));
-
-    syncProfileState();
-    window.addEventListener("footmatch-profile-changed", syncProfileState);
-    window.addEventListener("storage", syncProfileState);
-
-    return () => {
-      window.removeEventListener("footmatch-profile-changed", syncProfileState);
-      window.removeEventListener("storage", syncProfileState);
-    };
-  }, []);
-
-  return (
-    <nav className="flex items-center gap-2 text-sm">
-      <Link
-        className={
-          hasProfile
-            ? "btn-primary"
-            : "btn-secondary border-neutral-200 text-neutral-500 hover:text-neutral-700"
-        }
-        href="/shoes"
-      >
-        신발 선택하기
-      </Link>
-      <Link
-        className={
-          hasProfile
-            ? "btn-secondary border-neutral-200 text-neutral-500 hover:text-neutral-700"
-            : "btn-primary"
-        }
-        href={hasProfile ? "/profile" : "/onboarding"}
-      >
-        {hasProfile ? "내 발 기준 보기" : "사이즈 판단 시작하기"}
-      </Link>
-    </nav>
-  );
+  return <ProfileAwareCtas className="flex items-center gap-2 text-sm" />;
 }
