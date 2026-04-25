@@ -17,13 +17,10 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-3">
-                <h1 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">
-                  사고 싶은 신발의 구매 사이즈를
-                  <br className="hidden sm:block" />내 발 기준으로 바로 판단하세요
-                </h1>
+                <h1 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">이 신발, 몇 사이즈?</h1>
 
                 <p className="max-w-2xl text-sm text-neutral-600 sm:text-base">
-                  구매 전, 내 발 기준으로 사이즈 선택 근거를 확인하세요.
+                  구매 전, 내 발 기준으로 확인하세요.
                 </p>
               </div>
 
@@ -37,7 +34,7 @@ export default function HomePage() {
                   내 발 기준
                 </span>
                 <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-700">
-                  리뷰 근거
+                  근거 리뷰
                 </span>
               </div>
             </div>
@@ -62,8 +59,8 @@ export default function HomePage() {
                   },
                   {
                     step: "02",
-                    title: "내 발 기준",
-                    body: "프로필 맞추기"
+                    title: "발 프로필",
+                    body: "기준 만들기"
                   },
                   {
                     step: "03",

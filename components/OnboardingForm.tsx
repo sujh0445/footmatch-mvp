@@ -57,7 +57,7 @@ export function OnboardingForm() {
     const purchasedShoeSizeMm = purchasedShoeSizeInput.trim() ? Number(purchasedShoeSizeInput) : undefined;
 
     if (!actualFootLengthInput.trim() || Number.isNaN(actualFootLengthMm) || actualFootLengthMm < 220 || actualFootLengthMm > 320) {
-      setError("실측 발길이를 220-320mm 사이로 입력해주세요.");
+      setError("발길이를 220-320mm 사이로 입력해주세요.");
       return;
     }
 
@@ -65,7 +65,7 @@ export function OnboardingForm() {
       purchasedShoeSizeMm !== undefined &&
       (Number.isNaN(purchasedShoeSizeMm) || purchasedShoeSizeMm < 220 || purchasedShoeSizeMm > 320)
     ) {
-      setError("자주 구매하는 신발 사이즈는 220-320mm 사이로 입력해주세요.");
+      setError("평소 사이즈는 220-320mm 사이로 입력해주세요.");
       return;
     }
 
@@ -91,14 +91,14 @@ export function OnboardingForm() {
     <form onSubmit={onSubmit} noValidate className="card mx-auto max-w-3xl space-y-6">
       <div className="space-y-4">
         <div className="space-y-2">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">내 발 기준 만들기</p>
-          <h1 className="text-2xl font-semibold">사이즈 판단에 쓸 내 발 기준</h1>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">발 프로필 만들기</p>
+          <h1 className="text-2xl font-semibold">발 프로필 만들기</h1>
           <p className="text-sm text-neutral-600">핵심 정보만 빠르게 고르면 다음 단계에서 바로 신발 선택으로 이어집니다.</p>
         </div>
 
         <div className="flex flex-wrap gap-2 text-xs font-medium text-neutral-600">
-          <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1.5">1. 내 발 기준 입력</span>
-          <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">2. 발 형태 힌트 보완</span>
+          <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1.5">1. 발 프로필</span>
+          <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">2. 사진 힌트</span>
           <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5">3. 신발 선택하기</span>
         </div>
       </div>
@@ -106,7 +106,7 @@ export function OnboardingForm() {
       <section className="space-y-4 rounded-[28px] border border-neutral-200 bg-white p-5">
         <div className="space-y-1">
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">기본 기준</p>
-          <h2 className="text-lg font-semibold">발길이와 평소 사이즈</h2>
+          <h2 className="text-lg font-semibold">기본 정보</h2>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -255,13 +255,13 @@ export function OnboardingForm() {
       </section>
 
       <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
-        다음 단계의 사진 입력은 선택입니다. 지금 만든 기준만으로도 신발 선택 단계까지 이어갈 수 있습니다.
+        다음 단계의 사진 입력은 선택입니다. 지금 만든 발 프로필만으로도 신발 선택 단계까지 이어갈 수 있습니다.
       </div>
 
       <div className="space-y-3">
         {error ? <p className="text-sm text-rose-700">{error}</p> : null}
         <button className="btn-primary w-full" type="submit">
-          다음: 발 형태 힌트 보완
+          다음: 사진 힌트
         </button>
       </div>
     </form>

@@ -26,7 +26,7 @@ export function ProfileClient() {
   if (!profile || !selfInput || !analysis) {
     return (
       <div className="card max-w-2xl space-y-3 text-sm text-neutral-700">
-        <p>아직 저장된 사이즈 판단 기준이 없습니다.</p>
+        <p>아직 저장된 발 프로필이 없습니다.</p>
         <button onClick={() => router.push("/onboarding")} className="btn-primary">
           사이즈 판단 시작하기
         </button>
@@ -43,13 +43,13 @@ export function ProfileClient() {
   return (
     <section className="mx-auto max-w-4xl space-y-5">
       <div className="card space-y-3">
-        <h1 className="text-2xl font-semibold">내 사이즈 판단 기준</h1>
-        <p className="text-sm text-neutral-600">이 기준으로 신발별 우선 추천 사이즈와 비교 후보를 판단합니다.</p>
+        <h1 className="text-2xl font-semibold">발 프로필</h1>
+        <p className="text-sm text-neutral-600">이 프로필을 기준으로 신발별 사이즈 판단과 비교 후보를 확인합니다.</p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <InfoCard label="실측 발길이" value={`${profile.footLengthMm} mm`} />
-        <InfoCard label="평소 신는 사이즈" value={selfInput.purchasedShoeSizeMm ? `${selfInput.purchasedShoeSizeMm} mm` : "미입력"} />
+        <InfoCard label="발길이" value={`${profile.footLengthMm} mm`} />
+        <InfoCard label="평소 사이즈" value={selfInput.purchasedShoeSizeMm ? `${selfInput.purchasedShoeSizeMm} mm` : "미입력"} />
         <InfoCard label="발볼 때문에 크게 사는 편" value={labelize(selfInput.sizeUpForWidth)} />
         <InfoCard label="발등 압박 경험" value={labelize(selfInput.instepPressureExperience)} />
         <InfoCard label="선택한 불편 포인트" value={issueSummary} />
@@ -83,7 +83,7 @@ export function ProfileClient() {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <button className="btn-primary" onClick={() => router.push("/shoes")}>
-          신발별 사이즈 판단하기
+          신발 선택하기
         </button>
         <button className="btn-secondary" onClick={() => router.push("/onboarding")}>
           발 프로필 수정

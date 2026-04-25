@@ -62,7 +62,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           <p className="text-sm text-neutral-600">기본 경향: {shoe.sizingTendency}</p>
           {shoe.productUrl ? (
             <a href={shoe.productUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-medium text-neutral-900 underline underline-offset-4">
-              공식 제품 정보 보기
+              공식 정보
             </a>
           ) : null}
         </div>
@@ -71,9 +71,9 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
       {profile ? (
         <div className="card space-y-4">
           <div className="space-y-1">
-            <h2 className="text-xl font-semibold">내 발 기준 구매 판단</h2>
+            <h2 className="text-xl font-semibold">사이즈 판단</h2>
             <p className="text-sm text-neutral-600">
-              이 신발을 기준으로 내 발 정보와 비슷한 사람들의 리뷰를 함께 보고, 먼저 확인할 구매 사이즈를 정리했어요.
+              이 신발을 기준으로 내 발 기준과 비슷한 리뷰를 함께 보고, 먼저 확인할 사이즈를 정리했어요.
             </p>
           </div>
           {recommendation ? (
@@ -99,7 +99,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-base font-semibold">판단 이유</h3>
+                <h3 className="text-base font-semibold">추천 근거</h3>
                 <div className="grid gap-2">
                   {buildEvidenceItems(recommendation).map((item) => (
                     <div key={item.label} className="rounded-xl border border-neutral-200 bg-white p-3 text-sm">
@@ -119,7 +119,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
               {similarReviews.length > 0 ? (
                 <div className="space-y-2 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 text-sm">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="font-semibold">참고 리뷰</p>
+                    <p className="font-semibold">근거 리뷰</p>
                     <span className="rounded-full bg-white px-3 py-1 text-xs text-neutral-600">
                       판단에 {similarReviews.length}개 반영
                     </span>
@@ -140,7 +140,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
         </div>
       ) : (
         <div className="card space-y-3 text-sm text-neutral-700">
-          <p>발 프로필을 만들면 이 신발의 구매 사이즈 판단과 이유, 참고 리뷰를 내 발 기준으로 볼 수 있어요.</p>
+          <p>발 프로필을 만들면 이 신발의 사이즈 판단과 근거 리뷰를 내 발 기준으로 볼 수 있어요.</p>
           <div className="mt-3">
             <Link href="/onboarding" className="btn-primary">
               사이즈 판단 시작하기
@@ -161,7 +161,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
       ) : profile ? (
         <div className="space-y-6">
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">판단에 반영된 참고 리뷰</h2>
+            <h2 className="text-xl font-semibold">근거 리뷰</h2>
             <div className="grid gap-4">
               {similarReviews.map((review) => (
                 <ReviewCard
@@ -174,7 +174,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-semibold">추가로 볼 전체 핏 리뷰</h2>
+            <h2 className="text-xl font-semibold">전체 핏 리뷰</h2>
             {remainingReviews.length > 0 ? (
               <div className="grid gap-4">
                 {remainingReviews.map((review) => (
@@ -187,19 +187,19 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </section>
 
           <Link href="/review" className="btn-secondary">
-            핏 리뷰 작성
+            리뷰 작성
           </Link>
         </div>
       ) : (
         <div className="space-y-3">
-          <h2 className="text-xl font-semibold">참고로 볼 핏 리뷰</h2>
+          <h2 className="text-xl font-semibold">핏 리뷰</h2>
           <div className="grid gap-4">
             {reviews.map((review) => (
               <ReviewCard key={review.id} review={review} />
             ))}
           </div>
           <Link href="/review" className="btn-secondary">
-            핏 리뷰 작성
+            리뷰 작성
           </Link>
         </div>
       )}

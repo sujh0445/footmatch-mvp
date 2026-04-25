@@ -34,7 +34,7 @@ export function ReviewForm() {
   return (
     <section className="mx-auto max-w-3xl space-y-5">
       <div className="card space-y-2">
-        <h1 className="text-2xl font-semibold">핏 리뷰 작성</h1>
+        <h1 className="text-2xl font-semibold">리뷰 작성</h1>
         <p className="text-sm text-neutral-600">30초 안에 남길 수 있어요.</p>
       </div>
 
@@ -135,12 +135,12 @@ export function ReviewForm() {
 
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <button className="btn-primary" type="submit">
-            30초 핏 리뷰 제출
+            리뷰 제출
           </button>
         </div>
       </form>
 
-      {submitted ? <div className="card text-sm text-emerald-700">핏 리뷰가 임시 저장됐습니다.</div> : null}
+      {submitted ? <div className="card text-sm text-emerald-700">리뷰가 임시 저장됐습니다.</div> : null}
     </section>
   );
 }
