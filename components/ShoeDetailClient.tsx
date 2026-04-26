@@ -49,9 +49,9 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
 
   return (
     <section className="space-y-6">
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.9fr)]">
+      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.9fr)]">
         {profile ? (
-          <div className="card space-y-4 border-neutral-900 bg-neutral-900 text-white">
+          <div className="card h-fit self-start space-y-4 border-neutral-900 bg-neutral-900 text-white">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="space-y-2">
                 <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/60">사이즈 판단</p>
@@ -127,7 +127,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
             ) : null}
           </div>
         ) : (
-          <div className="card space-y-4 border-neutral-900 bg-neutral-900 text-white">
+          <div className="card h-fit self-start space-y-4 border-neutral-900 bg-neutral-900 text-white">
             <div className="space-y-2">
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/60">사이즈 판단</p>
               <h1 className="text-3xl font-semibold">
@@ -148,7 +148,7 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </div>
         )}
 
-        <div className="card overflow-hidden p-0">
+        <div className="card h-fit self-start overflow-hidden p-0">
           <div className="relative h-56 w-full">
             <Image src={shoe.imageSrc} alt={shoe.imageAlt} fill className="object-cover" sizes="(min-width: 1024px) 32vw, 100vw" />
           </div>
