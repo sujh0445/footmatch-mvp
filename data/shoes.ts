@@ -3,6 +3,7 @@ import normalizedProducts from "./normalized-products.json";
 
 type CatalogShoe = ShoeModel & {
   sourceCategory?: string;
+  routeId?: string;
 };
 
 type NormalizedProduct = {
@@ -274,6 +275,32 @@ function buildImageAlt(brand: string, modelName: string) {
   return `${brand} ${modelName} 대표 이미지`;
 }
 
+function safeDecodeURIComponent(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+function getProductNo(productUrl: string) {
+  const match = productUrl.match(/[?&]no=(\d+)/);
+  return match?.[1] ?? null;
+}
+
+function ensureUniqueRouteId(candidate: string, usedRouteIds: Set<string>) {
+  if (!usedRouteIds.has(candidate)) {
+    return candidate;
+  }
+
+  let suffix = 2;
+  while (usedRouteIds.has(`${candidate}-${suffix}`)) {
+    suffix += 1;
+  }
+
+  return `${candidate}-${suffix}`;
+}
+
 function buildImportedId(canonicalKey: string, usedIds: Set<string>) {
   const baseId = slugify(canonicalKey);
   const suffixes = ["", "-normalized", "-normalized-2", "-normalized-3", "-normalized-4", "-normalized-5"];
@@ -295,12 +322,25 @@ function buildImportedId(canonicalKey: string, usedIds: Set<string>) {
   }
 }
 
-function mapNormalizedProduct(product: NormalizedProduct, usedIds: Set<string>): CatalogShoe {
+function buildImportedRouteId(product: NormalizedProduct, fallbackId: string, usedRouteIds: Set<string>) {
+  const no = product.productUrls.map(getProductNo).find(Boolean);
+  const baseRouteId = no ? `asics-${no}` : fallbackId;
+  return ensureUniqueRouteId(baseRouteId, usedRouteIds);
+}
+
+function mapNormalizedProduct(
+  product: NormalizedProduct,
+  usedIds: Set<string>,
+  usedRouteIds: Set<string>
+): CatalogShoe {
   const id = buildImportedId(product.canonicalKey, usedIds);
   usedIds.add(id);
+  const routeId = buildImportedRouteId(product, id, usedRouteIds);
+  usedRouteIds.add(routeId);
 
   return {
     id,
+    routeId,
     brand: product.brand,
     modelName: product.modelName,
     category: resolveDisplayCategory(product.category),
@@ -314,21 +354,22 @@ function mapNormalizedProduct(product: NormalizedProduct, usedIds: Set<string>):
 }
 
 const seedIds = new Set(seedShoes.map((shoe) => shoe.id));
+const seedRouteIds = new Set(seedShoes.map((shoe) => shoe.id));
 const normalizedShoes = (normalizedProducts as NormalizedProduct[]).map((product) =>
-  mapNormalizedProduct(product, seedIds)
+  mapNormalizedProduct(product, seedIds, seedRouteIds)
 );
 
 export const shoes: CatalogShoe[] = [...seedShoes, ...normalizedShoes];
 
 export function normalizeShoeId(id: string) {
-  return id.replace(/^asics-asics-/, "asics-");
+  return safeDecodeURIComponent(id).replace(/^asics-asics-/, "asics-");
 }
 
 export function getShoeById(id: string) {
   const normalizedId = normalizeShoeId(id);
-  return shoes.find((shoe) => normalizeShoeId(shoe.id) === normalizedId);
+  return shoes.find((shoe) => normalizeShoeId(shoe.id) === normalizedId || normalizeShoeId(shoe.routeId ?? shoe.id) === normalizedId);
 }
 
 export function getShoeRouteId(shoe: CatalogShoe) {
-  return normalizeShoeId(shoe.id);
+  return normalizeShoeId(shoe.routeId ?? shoe.id);
 }
