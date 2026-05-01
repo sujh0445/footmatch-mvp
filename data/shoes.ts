@@ -1,6 +1,21 @@
 import { ShoeModel } from "@/types";
+import normalizedProducts from "./normalized-products.json";
 
-export const shoes: ShoeModel[] = [
+type CatalogShoe = ShoeModel & {
+  sourceCategory?: string;
+};
+
+type NormalizedProduct = {
+  canonicalKey: string;
+  brand: string;
+  modelName: string;
+  category: string;
+  gender: string;
+  imageUrl: string;
+  productUrls: string[];
+};
+
+const seedShoes: CatalogShoe[] = [
   {
     id: "nb-990v6",
     brand: "New Balance",
@@ -222,3 +237,85 @@ export const shoes: ShoeModel[] = [
     productUrl: "https://www.nike.com/t/free-metcon-6-mens-workout-shoes"
   }
 ];
+
+function slugify(value: string) {
+  return value
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[^\p{Letter}\p{Number}]+/gu, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function resolveDisplayCategory(category: string): ShoeModel["category"] {
+  if (category === "running" || category === "lifestyle" || category === "training") {
+    return category;
+  }
+
+  if (category === "tennis") {
+    return "training";
+  }
+
+  if (category === "sportstyle") {
+    return "lifestyle";
+  }
+
+  return "lifestyle";
+}
+
+function buildFallbackFitSummary(brand: string, modelName: string) {
+  return `${brand} ${modelName}의 핏 정보는 아직 정리 중이에요.`;
+}
+
+function buildFallbackSizingTendency(brand: string, modelName: string) {
+  return `${brand} ${modelName}의 사이즈 판단 정보는 아직 없어요.`;
+}
+
+function buildImageAlt(brand: string, modelName: string) {
+  return `${brand} ${modelName} 대표 이미지`;
+}
+
+function buildImportedId(canonicalKey: string, usedIds: Set<string>) {
+  const baseId = `asics-${slugify(canonicalKey)}`;
+  const suffixes = ["", "-normalized", "-normalized-2", "-normalized-3", "-normalized-4", "-normalized-5"];
+
+  for (const suffix of suffixes) {
+    const candidate = `${baseId}${suffix}`;
+    if (!usedIds.has(candidate)) {
+      return candidate;
+    }
+  }
+
+  let index = suffixes.length;
+  while (true) {
+    const candidate = `${baseId}-normalized-${index}`;
+    if (!usedIds.has(candidate)) {
+      return candidate;
+    }
+    index += 1;
+  }
+}
+
+function mapNormalizedProduct(product: NormalizedProduct, usedIds: Set<string>): CatalogShoe {
+  const id = buildImportedId(product.canonicalKey, usedIds);
+  usedIds.add(id);
+
+  return {
+    id,
+    brand: product.brand,
+    modelName: product.modelName,
+    category: resolveDisplayCategory(product.category),
+    sourceCategory: product.category,
+    fitSummary: buildFallbackFitSummary(product.brand, product.modelName),
+    sizingTendency: buildFallbackSizingTendency(product.brand, product.modelName),
+    imageSrc: product.imageUrl,
+    imageAlt: buildImageAlt(product.brand, product.modelName),
+    productUrl: product.productUrls[0]
+  };
+}
+
+const seedIds = new Set(seedShoes.map((shoe) => shoe.id));
+const normalizedShoes = (normalizedProducts as NormalizedProduct[]).map((product) =>
+  mapNormalizedProduct(product, seedIds)
+);
+
+export const shoes: CatalogShoe[] = [...seedShoes, ...normalizedShoes];
