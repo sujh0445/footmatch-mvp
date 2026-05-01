@@ -1,0 +1,683 @@
+[
+  {
+    "canonicalKey": "asics::gt 2160::unisex",
+    "brand": "ASICS",
+    "modelName": "GT 2160",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/1203A764_100_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21870",
+      "https://www.asics.co.kr/goods/view?no=20423"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 소노마 tr62::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 소노마 TR62",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/1203A734_102_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21841",
+      "https://www.asics.co.kr/goods/view?no=20840",
+      "https://www.asics.co.kr/goods/view?no=20624"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::트라부코 14 고어텍스::men",
+    "brand": "ASICS",
+    "modelName": "트라부코 14 고어텍스",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011C165_002_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21839"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::후지스피드 4::unisex",
+    "brand": "ASICS",
+    "modelName": "후지스피드 4",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1013A179_400_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21828"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 님버스 28 네이처 배싱::men",
+    "brand": "ASICS",
+    "modelName": "젤 님버스 28 네이처 배싱",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011C216_300_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21827"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 카야노 12.1::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 카야노 12.1",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/1203A759_001_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21815",
+      "https://www.asics.co.kr/goods/view?no=21742"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::코트 ff 3::men",
+    "brand": "ASICS",
+    "modelName": "코트 FF 3",
+    "category": "tennis",
+    "gender": "men",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1041A370_404_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21806"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 큐뮬러스 16::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 큐뮬러스 16",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/1203A733_002_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21801",
+      "https://www.asics.co.kr/goods/view?no=21740",
+      "https://www.asics.co.kr/goods/view?no=21735",
+      "https://www.asics.co.kr/goods/view?no=21734",
+      "https://www.asics.co.kr/goods/view?no=21712",
+      "https://www.asics.co.kr/goods/view?no=20838"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 키네틱 2.0::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 키네틱 2.0",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/1203A678_023_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21800",
+      "https://www.asics.co.kr/goods/view?no=21798"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 레졸루션 x::men",
+    "brand": "ASICS",
+    "modelName": "젤 레졸루션 X",
+    "category": "tennis",
+    "gender": "men",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1041A481_402_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21793",
+      "https://www.asics.co.kr/goods/view?no=21726",
+      "https://www.asics.co.kr/goods/view?no=20936"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 nyc 2.0::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 NYC 2.0",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/1203A895_021_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21786"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 nyc::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 NYC",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203B125_250_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21769"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::gt 2160 브리즈::unisex",
+    "brand": "ASICS",
+    "modelName": "GT 2160 브리즈",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/1203A951_020_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21762",
+      "https://www.asics.co.kr/goods/view?no=21760"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::조그 100s::unisex",
+    "brand": "ASICS",
+    "modelName": "조그 100S",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203A741_104_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21758"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 퀀텀 360 i amp::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 퀀텀 360 I AMP",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203A731_100_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21750"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 1130::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 1130",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203A609_111_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21746",
+      "https://www.asics.co.kr/goods/view?no=20993"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::트라부코 14::men",
+    "brand": "ASICS",
+    "modelName": "트라부코 14",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011C166_400_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21741"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::us7-s 젤 키네틱 플루언트::unisex",
+    "brand": "ASICS",
+    "modelName": "US7-S 젤 키네틱 플루언트",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203A973_020_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21739",
+      "https://www.asics.co.kr/goods/view?no=21736"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 키네틱 플루언트::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 키네틱 플루언트",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203A892_100_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21721",
+      "https://www.asics.co.kr/goods/view?no=21452"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::코트 ff 3 oc::men",
+    "brand": "ASICS",
+    "modelName": "코트 FF 3 OC",
+    "category": "tennis",
+    "gender": "men",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1041A369_107_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21715"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 님버스 10.1::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 님버스 10.1",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2025/25AW/1203A543_022_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=20561",
+      "https://www.asics.co.kr/goods/view?no=18694",
+      "https://www.asics.co.kr/goods/view?no=21551",
+      "https://www.asics.co.kr/goods/view?no=21042"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::리브레 cf::unisex",
+    "brand": "ASICS",
+    "modelName": "리브레 CF",
+    "category": "tennis",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1073A073_101_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=20960",
+      "https://www.asics.co.kr/goods/view?no=20942",
+      "https://www.asics.co.kr/goods/view?no=20929",
+      "https://www.asics.co.kr/goods/view?no=20932"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 누노비키::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 누노비키",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS/1203A597_001_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=19778",
+      "https://www.asics.co.kr/goods/view?no=20407",
+      "https://www.asics.co.kr/goods/view?no=20406"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::스카이핸드 og::unisex",
+    "brand": "ASICS",
+    "modelName": "스카이핸드 OG",
+    "category": "sportstyle",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203A452_300_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=18239"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::코트 ff 3::unisex",
+    "brand": "ASICS",
+    "modelName": "코트 FF 3",
+    "category": "tennis",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1041A370_106_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=20951"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 터레인::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 터레인",
+    "category": "sportstyle",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203A342_250_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=17222"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::액티브리즈 하이브리드 샌들::unisex",
+    "brand": "ASICS",
+    "modelName": "액티브리즈 하이브리드 샌들",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN/1013A133_301_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=18356"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 님버스 28::men",
+    "brand": "ASICS",
+    "modelName": "젤 님버스 28",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011C127_101_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=20944"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 카야노 14::unisex",
+    "brand": "ASICS",
+    "modelName": "젤 카야노 14",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2025/25AW/1203A537_401_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=20815",
+      "https://www.asics.co.kr/goods/view?no=20345"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::gt 2160 ns::unisex",
+    "brand": "ASICS",
+    "modelName": "GT 2160 NS",
+    "category": "sportstyle",
+    "gender": "unisex",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_SPS_/2026/26SS/1203A375_001_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=17473",
+      "https://www.asics.co.kr/goods/view?no=17467"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::코트 ff 3 클레이::men",
+    "brand": "ASICS",
+    "modelName": "코트 FF 3 클레이",
+    "category": "tennis",
+    "gender": "men",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1041A371_106_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=20927"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 레졸루션 x 와이드::men",
+    "brand": "ASICS",
+    "modelName": "젤 레졸루션 X 와이드",
+    "category": "tennis",
+    "gender": "men",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1041A487_103_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21458"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 카야노 32(2e)::men",
+    "brand": "ASICS",
+    "modelName": "젤 카야노 32(2E)",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011C051_404_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21826",
+      "https://www.asics.co.kr/goods/view?no=20957"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 컨텐드 9(4e)::men",
+    "brand": "ASICS",
+    "modelName": "젤 컨텐드 9(4E)",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011B882_023_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21725"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::윈잡 cp215 와이드::unknown",
+    "brand": "ASICS",
+    "modelName": "윈잡 CP215 와이드",
+    "category": "running",
+    "gender": "unknown",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1273A079_001_SR_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21589"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::윈잡 cp312 와이드::unknown",
+    "brand": "ASICS",
+    "modelName": "윈잡 CP312 와이드",
+    "category": "running",
+    "gender": "unknown",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1273A111_020_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21561"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::노바블라스트 5(2e)::men",
+    "brand": "ASICS",
+    "modelName": "노바블라스트 5(2E)",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011B975_020_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21559",
+      "https://www.asics.co.kr/goods/view?no=21225",
+      "https://www.asics.co.kr/goods/view?no=21221",
+      "https://www.asics.co.kr/goods/view?no=20530"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::윈잡 cp229 boa 와이드::unknown",
+    "brand": "ASICS",
+    "modelName": "윈잡 CP229 BOA 와이드",
+    "category": "running",
+    "gender": "unknown",
+    "imageUrl": "https://akrebiz.s3.ap-northeast-2.amazonaws.com/1.PACKSHOT/PACKSHOT_CPS/1273A123_020_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21355"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::매직 스피드 5(2e)::unisex",
+    "brand": "ASICS",
+    "modelName": "매직 스피드 5(2E)",
+    "category": "running",
+    "gender": "unisex",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1013A184_400_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21340"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 카야노 32(4e)::men",
+    "brand": "ASICS",
+    "modelName": "젤 카야노 32(4E)",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2025/1011C054_001_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21211",
+      "https://www.asics.co.kr/goods/view?no=20938",
+      "https://www.asics.co.kr/goods/view?no=19962"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 님버스 28(4e)::men",
+    "brand": "ASICS",
+    "modelName": "젤 님버스 28(4E)",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011C145_001_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=20953",
+      "https://www.asics.co.kr/goods/view?no=20921"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 카야노 32::men",
+    "brand": "ASICS",
+    "modelName": "젤 카야노 32",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011C052_300_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21550",
+      "https://www.asics.co.kr/goods/view?no=21018",
+      "https://www.asics.co.kr/goods/view?no=21542",
+      "https://www.asics.co.kr/goods/view?no=19948"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  },
+  {
+    "canonicalKey": "asics::젤 카야노 32 써니시즐::men",
+    "brand": "ASICS",
+    "modelName": "젤 카야노 32 써니시즐",
+    "category": "running",
+    "gender": "men",
+    "imageUrl": "https://d26wss9rw703v0.cloudfront.net/1.PACKSHOT/PACKSHOT_PRUN_1/2026/1011C284_400_SL_LT_GLB.png",
+    "productUrls": [
+      "https://www.asics.co.kr/goods/view?no=21747"
+    ],
+    "rawSources": [
+      "brand_site"
+    ],
+    "latestFetchedAt": "2026-05-01T15:23:25.519Z"
+  }
+]
