@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { shoes } from "@/data/shoes";
+import { getShoeRouteId, shoes } from "@/data/shoes";
 import { getFootProfile } from "@/lib/storage";
 
 const categoryLabel: Record<string, string> = {
@@ -143,7 +143,7 @@ export function ShoeSearchClient() {
 function ShoeCard({ shoe, badges, decisionCta = false }: { shoe: (typeof shoes)[number]; badges: string[]; decisionCta?: boolean }) {
   return (
     <Link
-      href={`/shoes/${shoe.id}`}
+      href={`/shoes/${getShoeRouteId(shoe)}`}
       className="card overflow-hidden p-0 transition hover:-translate-y-0.5 hover:shadow-md"
     >
       <div className="relative h-48 w-full">

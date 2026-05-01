@@ -275,7 +275,7 @@ function buildImageAlt(brand: string, modelName: string) {
 }
 
 function buildImportedId(canonicalKey: string, usedIds: Set<string>) {
-  const baseId = `asics-${slugify(canonicalKey)}`;
+  const baseId = slugify(canonicalKey);
   const suffixes = ["", "-normalized", "-normalized-2", "-normalized-3", "-normalized-4", "-normalized-5"];
 
   for (const suffix of suffixes) {
@@ -319,3 +319,16 @@ const normalizedShoes = (normalizedProducts as NormalizedProduct[]).map((product
 );
 
 export const shoes: CatalogShoe[] = [...seedShoes, ...normalizedShoes];
+
+export function normalizeShoeId(id: string) {
+  return id.replace(/^asics-asics-/, "asics-");
+}
+
+export function getShoeById(id: string) {
+  const normalizedId = normalizeShoeId(id);
+  return shoes.find((shoe) => normalizeShoeId(shoe.id) === normalizedId);
+}
+
+export function getShoeRouteId(shoe: CatalogShoe) {
+  return normalizeShoeId(shoe.id);
+}
