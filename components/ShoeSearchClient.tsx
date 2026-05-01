@@ -3,14 +3,55 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { getShoeRouteId, shoes } from "@/data/shoes";
 import { getFootProfile } from "@/lib/storage";
+
+type ShoeCategoryFilter = "all" | "running" | "lifestyle" | "training";
 
 const categoryLabel: Record<string, string> = {
   running: "러닝",
   lifestyle: "라이프스타일",
   training: "트레이닝"
 };
+
+function normalizeCategory(value: string | null): ShoeCategoryFilter {
+  if (value === "running" || value === "lifestyle" || value === "training") {
+    return value;
+  }
+
+  return "all";
+}
+
+function buildShoeListUrl(params: {
+  query: string;
+  category: ShoeCategoryFilter;
+  brand: string;
+  pathname: string;
+}) {
+  const nextSearchParams = new URLSearchParams();
+
+  if (params.query.trim()) {
+    nextSearchParams.set("q", params.query);
+  } else {
+    nextSearchParams.delete("q");
+  }
+
+  if (params.category === "all") {
+    nextSearchParams.delete("category");
+  } else {
+    nextSearchParams.set("category", params.category);
+  }
+
+  if (params.brand === "all") {
+    nextSearchParams.delete("brand");
+  } else {
+    nextSearchParams.set("brand", params.brand);
+  }
+
+  const search = nextSearchParams.toString();
+  return search ? `${params.pathname}?${search}` : params.pathname;
+}
 
 function getBadges(shoe: (typeof shoes)[number]) {
   const text = `${shoe.brand} ${shoe.modelName} ${shoe.fitSummary}`.toLowerCase();
@@ -33,12 +74,25 @@ function getBadges(shoe: (typeof shoes)[number]) {
 }
 
 export function ShoeSearchClient() {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<"all" | "running" | "lifestyle" | "training">("all");
-  const [brand, setBrand] = useState("all");
-
+  const searchParams = useSearchParams();
   const profile = useMemo(() => getFootProfile(), []);
   const brands = useMemo(() => Array.from(new Set(shoes.map((shoe) => shoe.brand))).sort(), []);
+
+  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
+  const [category, setCategory] = useState<ShoeCategoryFilter>(() => normalizeCategory(searchParams.get("category")));
+  const [brand, setBrand] = useState(() => {
+    const initialBrand = searchParams.get("brand") ?? "all";
+    return initialBrand === "all" || brands.includes(initialBrand) ? initialBrand : "all";
+  });
+
+  const updateFilters = (nextFilters: { query: string; category: ShoeCategoryFilter; brand: string }) => {
+    const nextUrl = buildShoeListUrl({
+      ...nextFilters,
+      pathname: "/shoes"
+    });
+
+    window.history.replaceState(window.history.state, "", nextUrl);
+  };
 
   const filtered = useMemo(() => {
     return shoes.filter((shoe) => {
@@ -85,7 +139,11 @@ export function ShoeSearchClient() {
         <div className="space-y-1">
           <input
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              const nextQuery = e.target.value;
+              setQuery(nextQuery);
+              updateFilters({ query: nextQuery, category, brand });
+            }}
             className="input"
             placeholder="사고 싶은 브랜드 또는 모델명 입력"
           />
@@ -96,7 +154,11 @@ export function ShoeSearchClient() {
             카테고리
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value as typeof category)}
+              onChange={(e) => {
+                const nextCategory = e.target.value as ShoeCategoryFilter;
+                setCategory(nextCategory);
+                updateFilters({ query, category: nextCategory, brand });
+              }}
               className="select mt-1"
             >
               <option value="all">전체</option>
@@ -109,7 +171,11 @@ export function ShoeSearchClient() {
             브랜드
             <select
               value={brand}
-              onChange={(e) => setBrand(e.target.value)}
+              onChange={(e) => {
+                const nextBrand = e.target.value;
+                setBrand(nextBrand);
+                updateFilters({ query, category, brand: nextBrand });
+              }}
               className="select mt-1"
             >
               <option value="all">전체</option>
