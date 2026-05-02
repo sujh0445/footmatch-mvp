@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "verify:asics-launch-family-registry": "tsx scripts/verify-asics-launch-family-registry.ts",
     "import:asics": "tsx scripts/import-agent.ts"
   },
   "dependencies": {

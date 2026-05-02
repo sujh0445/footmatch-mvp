@@ -44,12 +44,13 @@ type FitInsightDraft = {
   };
 };
 
-type LaunchSpec = {
+type LaunchFamilyRegistryEntry = {
   familyKey: LaunchFamilyKey;
-  familyLabel: string;
-  representativeMatcher: string;
+  displayName: string;
+  representativeCatalogId: string;
+  representativeRouteId: string;
+  fitInsightTarget: boolean;
   shoeType: FitInsightShoeType;
-  pilotCandidate: boolean;
 };
 
 export type CatalogShoe = ShoeModel & {
@@ -65,30 +66,68 @@ export type CatalogShoe = ShoeModel & {
   fitInsightDraft?: FitInsightDraft;
 };
 
-const launchSpecs: LaunchSpec[] = [
-  { familyKey: "gel-nimbus-28", familyLabel: "젤 님버스 28", representativeMatcher: "젤 님버스 28", shoeType: "road_daily", pilotCandidate: true },
-  { familyKey: "gel-kayano-32", familyLabel: "젤 카야노 32", representativeMatcher: "젤 카야노 32", shoeType: "road_stability", pilotCandidate: true },
-  { familyKey: "novablast-5", familyLabel: "노바블라스트 5", representativeMatcher: "노바블라스트 5", shoeType: "road_daily", pilotCandidate: true },
-  { familyKey: "magic-speed-5", familyLabel: "매직 스피드 5", representativeMatcher: "매직 스피드 5", shoeType: "tempo", pilotCandidate: true },
-  { familyKey: "trabuco-14", familyLabel: "트라부코 14", representativeMatcher: "트라부코 14", shoeType: "trail", pilotCandidate: true },
-  { familyKey: "fujispeed-4", familyLabel: "후지스피드 4", representativeMatcher: "후지스피드 4", shoeType: "trail", pilotCandidate: false }
+export const defaultReviewFamilyKey: LaunchFamilyKey = "gel-nimbus-28";
+
+export const launchFamilyRegistry: LaunchFamilyRegistryEntry[] = [
+  {
+    familyKey: "gel-nimbus-28",
+    displayName: "젤 님버스 28",
+    representativeCatalogId: "asics-젤-님버스-28-men",
+    representativeRouteId: "asics-20944",
+    fitInsightTarget: true,
+    shoeType: "road_daily"
+  },
+  {
+    familyKey: "gel-kayano-32",
+    displayName: "젤 카야노 32",
+    representativeCatalogId: "asics-젤-카야노-32-men",
+    representativeRouteId: "asics-21550",
+    fitInsightTarget: true,
+    shoeType: "road_stability"
+  },
+  {
+    familyKey: "novablast-5",
+    displayName: "노바블라스트 5",
+    representativeCatalogId: "asics-노바블라스트-5-2e-men",
+    representativeRouteId: "asics-21559",
+    fitInsightTarget: true,
+    shoeType: "road_daily"
+  },
+  {
+    familyKey: "magic-speed-5",
+    displayName: "매직 스피드 5",
+    representativeCatalogId: "asics-매직-스피드-5-2e-unisex",
+    representativeRouteId: "asics-21340",
+    fitInsightTarget: true,
+    shoeType: "tempo"
+  },
+  {
+    familyKey: "trabuco-14",
+    displayName: "트라부코 14",
+    representativeCatalogId: "asics-트라부코-14-men",
+    representativeRouteId: "asics-21741",
+    fitInsightTarget: true,
+    shoeType: "trail"
+  },
+  {
+    familyKey: "fujispeed-4",
+    displayName: "후지스피드 4",
+    representativeCatalogId: "asics-후지스피드-4-unisex",
+    representativeRouteId: "asics-21828",
+    fitInsightTarget: false,
+    shoeType: "trail"
+  }
 ];
 
 const heritageLifestyleModelPrefixes = ["GT 2160", "젤 NYC", "젤 1130", "젤 카야노 14"];
-
-function getLaunchSpec(modelName: string) {
-  return launchSpecs.find(
-    (spec) => modelName === spec.representativeMatcher || modelName.startsWith(spec.representativeMatcher)
-  );
-}
 
 function isHeritageLifestyleModel(modelName: string, category: string) {
   return heritageLifestyleModelPrefixes.some((prefix) => modelName.startsWith(prefix)) || category === "tennis" || category === "sportstyle";
 }
 
-function buildFitInsightDraft(shoeType: FitInsightShoeType, pilotCandidate: boolean): FitInsightDraft {
+function buildFitInsightDraft(shoeType: FitInsightShoeType, fitInsightTarget: boolean): FitInsightDraft {
   return {
-    status: pilotCandidate ? "pilot_candidate" : "launch_visible_not_piloted",
+    status: fitInsightTarget ? "pilot_candidate" : "launch_visible_not_piloted",
     objective: {
       trueToSize: "unknown",
       internalLengthMm: null,
@@ -429,13 +468,14 @@ function mapHiddenSeedShoe(shoe: ShoeModel): CatalogShoe {
 }
 
 function mapNormalizedProduct(product: NormalizedProduct, usedIds: Set<string>, usedRouteIds: Set<string>): CatalogShoe {
-  const launchSpec = getLaunchSpec(product.modelName);
-  const isLaunchTarget = Boolean(launchSpec);
   const id = buildImportedId(product.canonicalKey, usedIds);
   usedIds.add(id);
 
   const routeId = buildImportedRouteId(product, id, usedRouteIds);
   usedRouteIds.add(routeId);
+
+  const launchRegistryEntry = launchFamilyRegistry.find((entry) => entry.representativeCatalogId === id);
+  const isLaunchTarget = Boolean(launchRegistryEntry);
 
   const runningUseType: RunningUseType = isLaunchTarget
     ? "running_launch"
@@ -459,7 +499,7 @@ function mapNormalizedProduct(product: NormalizedProduct, usedIds: Set<string>, 
     sourceModelName: product.modelName,
     catalogVisibility: "hidden",
     catalogFamily,
-    familyKey: launchSpec?.familyKey,
+    familyKey: launchRegistryEntry?.familyKey,
     isLaunchTarget,
     runningUseType,
     fitSummary: buildFallbackFitSummary(product.brand, product.modelName),
@@ -467,7 +507,9 @@ function mapNormalizedProduct(product: NormalizedProduct, usedIds: Set<string>, 
     imageSrc: product.imageUrl,
     imageAlt: buildImageAlt(product.brand, product.modelName),
     productUrl: product.productUrls[0],
-    fitInsightDraft: launchSpec ? buildFitInsightDraft(launchSpec.shoeType, launchSpec.pilotCandidate) : undefined
+    fitInsightDraft: launchRegistryEntry
+      ? buildFitInsightDraft(launchRegistryEntry.shoeType, launchRegistryEntry.fitInsightTarget)
+      : undefined
   };
 }
 
@@ -481,37 +523,51 @@ const catalogNormalizedShoes = (normalizedProducts as NormalizedProduct[]).map((
 export const catalogShoes: CatalogShoe[] = [...hiddenSeedShoes, ...catalogNormalizedShoes];
 export const hiddenCatalogShoes = catalogShoes;
 
-function pickRepresentativeRawShoe(spec: LaunchSpec) {
-  return (
-    catalogShoes.find((shoe) => shoe.brand === "ASICS" && shoe.modelName === spec.representativeMatcher) ??
-    catalogShoes.find((shoe) => shoe.brand === "ASICS" && shoe.modelName.startsWith(spec.representativeMatcher))
-  );
+const catalogShoesById = new Map(catalogShoes.map((shoe) => [shoe.id, shoe] as const));
+
+function requireCatalogShoeById(id: string) {
+  const shoe = catalogShoesById.get(id);
+  if (!shoe) {
+    throw new Error(`Missing catalog shoe for registry anchor: ${id}`);
+  }
+  return shoe;
 }
 
-function buildPublicRepresentativeShoe(rawShoe: CatalogShoe | undefined, spec: LaunchSpec): CatalogShoe | null {
-  if (!rawShoe) {
-    return null;
+function buildPublicRepresentativeShoe(entry: LaunchFamilyRegistryEntry): CatalogShoe {
+  const rawShoe = requireCatalogShoeById(entry.representativeCatalogId);
+  if (!rawShoe.routeId) {
+    throw new Error(`Missing raw route anchor for registry family ${entry.familyKey}: ${entry.representativeCatalogId}`);
   }
-
+  if (rawShoe.routeId !== entry.representativeRouteId) {
+    throw new Error(
+      `Launch registry route mismatch for ${entry.familyKey}: expected ${entry.representativeRouteId}, got ${rawShoe.routeId}`
+    );
+  }
   return {
     ...rawShoe,
-    modelName: spec.familyLabel,
+    modelName: entry.displayName,
     sourceModelName: rawShoe.modelName,
     catalogVisibility: "public",
     catalogFamily: "asics-launch",
-    familyKey: spec.familyKey,
+    familyKey: entry.familyKey,
     isLaunchTarget: true,
     isPublicRepresentative: true,
     runningUseType: "running_launch",
-    fitInsightDraft: buildFitInsightDraft(spec.shoeType, spec.pilotCandidate)
+    fitInsightDraft: buildFitInsightDraft(entry.shoeType, entry.fitInsightTarget)
   };
 }
 
-export const publicCatalogShoes = launchSpecs
-  .map((spec) => buildPublicRepresentativeShoe(pickRepresentativeRawShoe(spec), spec))
-  .filter((shoe): shoe is CatalogShoe => Boolean(shoe));
+export const publicCatalogShoes = launchFamilyRegistry.map((entry) => buildPublicRepresentativeShoe(entry));
 
 export const fitInsightPilotShoes = publicCatalogShoes.filter((shoe) => shoe.fitInsightDraft?.status === "pilot_candidate");
+
+export function getDefaultReviewShoeId() {
+  const defaultShoe = publicCatalogShoes.find((shoe) => shoe.familyKey === defaultReviewFamilyKey);
+  if (!defaultShoe) {
+    throw new Error(`Missing default review family: ${defaultReviewFamilyKey}`);
+  }
+  return defaultShoe.id;
+}
 
 export function getPublicCatalogShoes() {
   return publicCatalogShoes;
