@@ -1,25 +1,28 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { shoes } from "@/data/shoes";
+import type { CatalogShoe } from "@/data/shoes";
 
-const defaultForm = {
-  shoeId: shoes[0].id,
-  usualSize: 270,
-  purchasedSize: 270,
-  fitResult: "true-to-size",
-  forefootPressure: "none",
-  instepPressure: "none",
-  heelSlip: "none",
-  comfort: 4,
-  comment: "",
-  tags: [] as string[]
+type ReviewFormProps = {
+  shoes: CatalogShoe[];
+  defaultShoeId: string;
 };
 
 const tags = ["장거리 워킹", "헬스", "러닝", "일상 착용"];
 
-export function ReviewForm() {
-  const [form, setForm] = useState(defaultForm);
+export function ReviewForm({ shoes, defaultShoeId }: ReviewFormProps) {
+  const [form, setForm] = useState({
+    shoeId: defaultShoeId,
+    usualSize: 270,
+    purchasedSize: 270,
+    fitResult: "true-to-size",
+    forefootPressure: "none",
+    instepPressure: "none",
+    heelSlip: "none",
+    comfort: 4,
+    comment: "",
+    tags: [] as string[]
+  });
   const [submitted, setSubmitted] = useState(false);
 
   const toggleTag = (tag: string) => {

@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { ShoeDetailClient } from "@/components/ShoeDetailClient";
-import { getShoeById } from "@/data/shoes";
+import { getPublicShoeById } from "@/data/shoes";
 
 export default function ShoeDetailPage({ params }: { params: { id: string } }) {
-  const shoe = getShoeById(params.id);
+  const shoe = getPublicShoeById(params.id);
 
   if (!shoe) {
     notFound();

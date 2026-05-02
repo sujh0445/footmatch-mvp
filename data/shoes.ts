@@ -1,11 +1,6 @@
 import { ShoeModel } from "@/types";
 import normalizedProducts from "./normalized-products.json";
 
-type CatalogShoe = ShoeModel & {
-  sourceCategory?: string;
-  routeId?: string;
-};
-
 type NormalizedProduct = {
   canonicalKey: string;
   brand: string;
@@ -16,7 +11,101 @@ type NormalizedProduct = {
   productUrls: string[];
 };
 
-const seedShoes: CatalogShoe[] = [
+type RunningUseType = "running_launch" | "running_heritage_lifestyle" | "running_archive" | "legacy_sample";
+
+type CatalogVisibility = "public" | "hidden";
+
+type CatalogFamily = "asics-launch" | "asics-heritage" | "asics-archive" | "legacy-seed";
+
+type LaunchFamilyKey =
+  | "gel-nimbus-28"
+  | "gel-kayano-32"
+  | "novablast-5"
+  | "magic-speed-5"
+  | "trabuco-14"
+  | "fujispeed-4";
+
+type FitInsightShoeType = "road_daily" | "road_stability" | "tempo" | "trail";
+
+type FitInsightDraft = {
+  status: "pilot_candidate" | "launch_visible_not_piloted";
+  objective: {
+    trueToSize: "unknown";
+    internalLengthMm: null;
+    toeboxWidthMm: null;
+    toeboxHeightMm: null;
+    widthOptions: string[];
+    shoeType: FitInsightShoeType;
+  };
+  reviewSignals: {
+    usualSizeMm: number[];
+    purchasedSizeMm: number[];
+    keywords: string[];
+  };
+};
+
+type LaunchSpec = {
+  familyKey: LaunchFamilyKey;
+  familyLabel: string;
+  representativeMatcher: string;
+  shoeType: FitInsightShoeType;
+  pilotCandidate: boolean;
+};
+
+export type CatalogShoe = ShoeModel & {
+  catalogVisibility: CatalogVisibility;
+  catalogFamily: CatalogFamily;
+  familyKey?: LaunchFamilyKey;
+  isLaunchTarget: boolean;
+  isPublicRepresentative?: boolean;
+  runningUseType: RunningUseType;
+  sourceCategory?: string;
+  sourceModelName?: string;
+  routeId?: string;
+  fitInsightDraft?: FitInsightDraft;
+};
+
+const launchSpecs: LaunchSpec[] = [
+  { familyKey: "gel-nimbus-28", familyLabel: "젤 님버스 28", representativeMatcher: "젤 님버스 28", shoeType: "road_daily", pilotCandidate: true },
+  { familyKey: "gel-kayano-32", familyLabel: "젤 카야노 32", representativeMatcher: "젤 카야노 32", shoeType: "road_stability", pilotCandidate: true },
+  { familyKey: "novablast-5", familyLabel: "노바블라스트 5", representativeMatcher: "노바블라스트 5", shoeType: "road_daily", pilotCandidate: true },
+  { familyKey: "magic-speed-5", familyLabel: "매직 스피드 5", representativeMatcher: "매직 스피드 5", shoeType: "tempo", pilotCandidate: true },
+  { familyKey: "trabuco-14", familyLabel: "트라부코 14", representativeMatcher: "트라부코 14", shoeType: "trail", pilotCandidate: true },
+  { familyKey: "fujispeed-4", familyLabel: "후지스피드 4", representativeMatcher: "후지스피드 4", shoeType: "trail", pilotCandidate: false }
+];
+
+const heritageLifestyleModelPrefixes = ["GT 2160", "젤 NYC", "젤 1130", "젤 카야노 14"];
+
+function getLaunchSpec(modelName: string) {
+  return launchSpecs.find(
+    (spec) => modelName === spec.representativeMatcher || modelName.startsWith(spec.representativeMatcher)
+  );
+}
+
+function isHeritageLifestyleModel(modelName: string, category: string) {
+  return heritageLifestyleModelPrefixes.some((prefix) => modelName.startsWith(prefix)) || category === "tennis" || category === "sportstyle";
+}
+
+function buildFitInsightDraft(shoeType: FitInsightShoeType, pilotCandidate: boolean): FitInsightDraft {
+  return {
+    status: pilotCandidate ? "pilot_candidate" : "launch_visible_not_piloted",
+    objective: {
+      trueToSize: "unknown",
+      internalLengthMm: null,
+      toeboxWidthMm: null,
+      toeboxHeightMm: null,
+      widthOptions: [],
+      shoeType
+    },
+    reviewSignals: {
+      usualSizeMm: [],
+      purchasedSizeMm: [],
+      keywords: []
+    }
+  };
+}
+
+const seedShoes = [
   {
     id: "nb-990v6",
     brand: "New Balance",
@@ -237,7 +326,7 @@ const seedShoes: CatalogShoe[] = [
     imageAlt: "Nike Free Metcon 6 대표 이미지",
     productUrl: "https://www.nike.com/t/free-metcon-6-mens-workout-shoes"
   }
-];
+] satisfies ShoeModel[];
 
 function slugify(value: string) {
   return value
@@ -323,20 +412,42 @@ function buildImportedId(canonicalKey: string, usedIds: Set<string>) {
 }
 
 function buildImportedRouteId(product: NormalizedProduct, fallbackId: string, usedRouteIds: Set<string>) {
-  const no = product.productUrls.map(getProductNo).find(Boolean);
+  const no = getProductNo(product.productUrls[0] ?? "");
   const baseRouteId = no ? `asics-${no}` : fallbackId;
   return ensureUniqueRouteId(baseRouteId, usedRouteIds);
 }
 
-function mapNormalizedProduct(
-  product: NormalizedProduct,
-  usedIds: Set<string>,
-  usedRouteIds: Set<string>
-): CatalogShoe {
+function mapHiddenSeedShoe(shoe: ShoeModel): CatalogShoe {
+  return {
+    ...shoe,
+    catalogVisibility: "hidden",
+    catalogFamily: "legacy-seed",
+    isLaunchTarget: false,
+    runningUseType: "legacy_sample",
+    routeId: shoe.id
+  };
+}
+
+function mapNormalizedProduct(product: NormalizedProduct, usedIds: Set<string>, usedRouteIds: Set<string>): CatalogShoe {
+  const launchSpec = getLaunchSpec(product.modelName);
+  const isLaunchTarget = Boolean(launchSpec);
   const id = buildImportedId(product.canonicalKey, usedIds);
   usedIds.add(id);
+
   const routeId = buildImportedRouteId(product, id, usedRouteIds);
   usedRouteIds.add(routeId);
+
+  const runningUseType: RunningUseType = isLaunchTarget
+    ? "running_launch"
+    : isHeritageLifestyleModel(product.modelName, product.category)
+      ? "running_heritage_lifestyle"
+      : "running_archive";
+
+  const catalogFamily: CatalogFamily = isLaunchTarget
+    ? "asics-launch"
+    : runningUseType === "running_heritage_lifestyle"
+      ? "asics-heritage"
+      : "asics-archive";
 
   return {
     id,
@@ -345,31 +456,104 @@ function mapNormalizedProduct(
     modelName: product.modelName,
     category: resolveDisplayCategory(product.category),
     sourceCategory: product.category,
+    sourceModelName: product.modelName,
+    catalogVisibility: "hidden",
+    catalogFamily,
+    familyKey: launchSpec?.familyKey,
+    isLaunchTarget,
+    runningUseType,
     fitSummary: buildFallbackFitSummary(product.brand, product.modelName),
     sizingTendency: buildFallbackSizingTendency(product.brand, product.modelName),
     imageSrc: product.imageUrl,
     imageAlt: buildImageAlt(product.brand, product.modelName),
-    productUrl: product.productUrls[0]
+    productUrl: product.productUrls[0],
+    fitInsightDraft: launchSpec ? buildFitInsightDraft(launchSpec.shoeType, launchSpec.pilotCandidate) : undefined
   };
 }
 
-const seedIds = new Set(seedShoes.map((shoe) => shoe.id));
-const seedRouteIds = new Set(seedShoes.map((shoe) => shoe.id));
-const normalizedShoes = (normalizedProducts as NormalizedProduct[]).map((product) =>
+const hiddenSeedShoes = seedShoes.map(mapHiddenSeedShoe);
+const seedIds = new Set(hiddenSeedShoes.map((shoe) => shoe.id));
+const seedRouteIds = new Set(hiddenSeedShoes.map((shoe) => shoe.routeId ?? shoe.id));
+const catalogNormalizedShoes = (normalizedProducts as NormalizedProduct[]).map((product) =>
   mapNormalizedProduct(product, seedIds, seedRouteIds)
 );
 
-export const shoes: CatalogShoe[] = [...seedShoes, ...normalizedShoes];
+export const catalogShoes: CatalogShoe[] = [...hiddenSeedShoes, ...catalogNormalizedShoes];
+export const hiddenCatalogShoes = catalogShoes;
+
+function pickRepresentativeRawShoe(spec: LaunchSpec) {
+  return (
+    catalogShoes.find((shoe) => shoe.brand === "ASICS" && shoe.modelName === spec.representativeMatcher) ??
+    catalogShoes.find((shoe) => shoe.brand === "ASICS" && shoe.modelName.startsWith(spec.representativeMatcher))
+  );
+}
+
+function buildPublicRepresentativeShoe(rawShoe: CatalogShoe | undefined, spec: LaunchSpec): CatalogShoe | null {
+  if (!rawShoe) {
+    return null;
+  }
+
+  return {
+    ...rawShoe,
+    modelName: spec.familyLabel,
+    sourceModelName: rawShoe.modelName,
+    catalogVisibility: "public",
+    catalogFamily: "asics-launch",
+    familyKey: spec.familyKey,
+    isLaunchTarget: true,
+    isPublicRepresentative: true,
+    runningUseType: "running_launch",
+    fitInsightDraft: buildFitInsightDraft(spec.shoeType, spec.pilotCandidate)
+  };
+}
+
+export const publicCatalogShoes = launchSpecs
+  .map((spec) => buildPublicRepresentativeShoe(pickRepresentativeRawShoe(spec), spec))
+  .filter((shoe): shoe is CatalogShoe => Boolean(shoe));
+
+export const fitInsightPilotShoes = publicCatalogShoes.filter((shoe) => shoe.fitInsightDraft?.status === "pilot_candidate");
+
+export function getPublicCatalogShoes() {
+  return publicCatalogShoes;
+}
+
+export function getLaunchRunningShoes() {
+  return publicCatalogShoes;
+}
+
+export function getHiddenLegacyShoes() {
+  return hiddenCatalogShoes;
+}
+
+export function getFitInsightPilotShoes() {
+  return fitInsightPilotShoes;
+}
 
 export function normalizeShoeId(id: string) {
   return safeDecodeURIComponent(id).replace(/^asics-asics-/, "asics-");
 }
 
-export function getShoeById(id: string) {
+function getMatchingShoe(shoesToSearch: CatalogShoe[], id: string) {
   const normalizedId = normalizeShoeId(id);
-  return shoes.find((shoe) => normalizeShoeId(shoe.id) === normalizedId || normalizeShoeId(shoe.routeId ?? shoe.id) === normalizedId);
+  return shoesToSearch.find(
+    (shoe) => normalizeShoeId(shoe.id) === normalizedId || normalizeShoeId(shoe.routeId ?? shoe.id) === normalizedId
+  );
+}
+
+export function getPublicShoeById(id: string) {
+  return getMatchingShoe(publicCatalogShoes, id);
+}
+
+export function getHiddenShoeById(id: string) {
+  return getMatchingShoe(hiddenCatalogShoes, id);
+}
+
+export function getShoeById(id: string) {
+  return getPublicShoeById(id);
 }
 
 export function getShoeRouteId(shoe: CatalogShoe) {
   return normalizeShoeId(shoe.routeId ?? shoe.id);
 }
+
+export const shoes = publicCatalogShoes;

@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { getShoeRouteId, shoes } from "@/data/shoes";
 import { getFootProfile } from "@/lib/storage";
+import type { CatalogShoe } from "@/data/shoes";
 
 type ShoeCategoryFilter = "all" | "running" | "lifestyle" | "training";
 
@@ -13,6 +13,10 @@ const categoryLabel: Record<string, string> = {
   running: "러닝",
   lifestyle: "라이프스타일",
   training: "트레이닝"
+};
+
+type ShoeSearchClientProps = {
+  shoes: CatalogShoe[];
 };
 
 function normalizeCategory(value: string | null): ShoeCategoryFilter {
@@ -53,7 +57,7 @@ function buildShoeListUrl(params: {
   return search ? `${params.pathname}?${search}` : params.pathname;
 }
 
-function getBadges(shoe: (typeof shoes)[number]) {
+function getBadges(shoe: CatalogShoe) {
   const text = `${shoe.brand} ${shoe.modelName} ${shoe.fitSummary}`.toLowerCase();
   const badges: string[] = [];
 
@@ -73,10 +77,10 @@ function getBadges(shoe: (typeof shoes)[number]) {
   return badges.slice(0, 3);
 }
 
-export function ShoeSearchClient() {
+export function ShoeSearchClient({ shoes }: ShoeSearchClientProps) {
   const searchParams = useSearchParams();
   const profile = useMemo(() => getFootProfile(), []);
-  const brands = useMemo(() => Array.from(new Set(shoes.map((shoe) => shoe.brand))).sort(), []);
+  const brands = useMemo(() => Array.from(new Set(shoes.map((shoe) => shoe.brand))).sort(), [shoes]);
 
   const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
   const [category, setCategory] = useState<ShoeCategoryFilter>(() => normalizeCategory(searchParams.get("category")));
@@ -101,7 +105,7 @@ export function ShoeSearchClient() {
       const queryMatch = `${shoe.brand} ${shoe.modelName}`.toLowerCase().includes(query.toLowerCase());
       return categoryMatch && brandMatch && queryMatch;
     });
-  }, [brand, category, query]);
+  }, [brand, category, query, shoes]);
 
   return (
     <section className="space-y-5">
@@ -206,10 +210,10 @@ export function ShoeSearchClient() {
   );
 }
 
-function ShoeCard({ shoe, badges, decisionCta = false }: { shoe: (typeof shoes)[number]; badges: string[]; decisionCta?: boolean }) {
+function ShoeCard({ shoe, badges, decisionCta = false }: { shoe: CatalogShoe; badges: string[]; decisionCta?: boolean }) {
   return (
     <Link
-      href={`/shoes/${getShoeRouteId(shoe)}`}
+      href={`/shoes/${shoe.routeId ?? shoe.id}`}
       className="card overflow-hidden p-0 transition hover:-translate-y-0.5 hover:shadow-md"
     >
       <div className="relative h-48 w-full">
