@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "verify:asics-launch-family-registry": "tsx scripts/verify-asics-launch-family-registry.ts",
+    "verify:asics-fitinsight-placeholder": "tsx scripts/verify-asics-fitinsight-placeholder.ts",
     "import:asics": "tsx scripts/import-agent.ts"
   },
   "dependencies": {

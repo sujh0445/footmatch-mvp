@@ -30,17 +30,20 @@ type FitInsightShoeType = "road_daily" | "road_stability" | "tempo" | "trail";
 type FitInsightDraft = {
   status: "pilot_candidate" | "launch_visible_not_piloted";
   objective: {
-    trueToSize: "unknown";
-    internalLengthMm: null;
-    toeboxWidthMm: null;
-    toeboxHeightMm: null;
-    widthOptions: string[];
-    shoeType: FitInsightShoeType;
+    size_tendency: string;
+    forefoot_tendency: string;
+    width_tendency: string;
+    instep_tendency: string;
+    cushioning_type: string;
+    stability_type: string;
+    ride_feel: string;
   };
-  reviewSignals: {
-    usualSizeMm: number[];
-    purchasedSizeMm: number[];
-    keywords: string[];
+  recommendation: {
+    recommended_user_foot_profile: string[];
+    caution_notes: string[];
+  };
+  evidence_placeholders: {
+    placeholder_notes: string[];
   };
 };
 
@@ -125,21 +128,26 @@ function isHeritageLifestyleModel(modelName: string, category: string) {
   return heritageLifestyleModelPrefixes.some((prefix) => modelName.startsWith(prefix)) || category === "tennis" || category === "sportstyle";
 }
 
-function buildFitInsightDraft(shoeType: FitInsightShoeType, fitInsightTarget: boolean): FitInsightDraft {
+const fitInsightPlaceholderText = "아직 입력 전";
+
+function buildFitInsightDraft(fitInsightTarget: boolean): FitInsightDraft {
   return {
     status: fitInsightTarget ? "pilot_candidate" : "launch_visible_not_piloted",
     objective: {
-      trueToSize: "unknown",
-      internalLengthMm: null,
-      toeboxWidthMm: null,
-      toeboxHeightMm: null,
-      widthOptions: [],
-      shoeType
+      size_tendency: fitInsightPlaceholderText,
+      forefoot_tendency: fitInsightPlaceholderText,
+      width_tendency: fitInsightPlaceholderText,
+      instep_tendency: fitInsightPlaceholderText,
+      cushioning_type: fitInsightPlaceholderText,
+      stability_type: fitInsightPlaceholderText,
+      ride_feel: fitInsightPlaceholderText
     },
-    reviewSignals: {
-      usualSizeMm: [],
-      purchasedSizeMm: [],
-      keywords: []
+    recommendation: {
+      recommended_user_foot_profile: [fitInsightPlaceholderText],
+      caution_notes: [fitInsightPlaceholderText]
+    },
+    evidence_placeholders: {
+      placeholder_notes: [fitInsightPlaceholderText]
     }
   };
 }
@@ -507,9 +515,7 @@ function mapNormalizedProduct(product: NormalizedProduct, usedIds: Set<string>, 
     imageSrc: product.imageUrl,
     imageAlt: buildImageAlt(product.brand, product.modelName),
     productUrl: product.productUrls[0],
-    fitInsightDraft: launchRegistryEntry
-      ? buildFitInsightDraft(launchRegistryEntry.shoeType, launchRegistryEntry.fitInsightTarget)
-      : undefined
+    fitInsightDraft: launchRegistryEntry ? buildFitInsightDraft(launchRegistryEntry.fitInsightTarget) : undefined
   };
 }
 
@@ -553,7 +559,7 @@ function buildPublicRepresentativeShoe(entry: LaunchFamilyRegistryEntry): Catalo
     isLaunchTarget: true,
     isPublicRepresentative: true,
     runningUseType: "running_launch",
-    fitInsightDraft: buildFitInsightDraft(entry.shoeType, entry.fitInsightTarget)
+    fitInsightDraft: buildFitInsightDraft(entry.fitInsightTarget)
   };
 }
 
@@ -583,6 +589,32 @@ export function getHiddenLegacyShoes() {
 
 export function getFitInsightPilotShoes() {
   return fitInsightPilotShoes;
+}
+
+export type FitInsightDraftPreview = {
+  title: string;
+  summary: string;
+  lines: string[];
+};
+
+export function getFitInsightDraftPreview(shoe: CatalogShoe): FitInsightDraftPreview | null {
+  const draft = shoe.fitInsightDraft;
+
+  if (draft?.status !== "pilot_candidate") {
+    return null;
+  }
+
+  return {
+    title: "리뷰 기반 핏 인사이트 준비 중",
+    summary: "아직 실제 리뷰 근거를 연결하지 않았어요.",
+    lines: [
+      `사이즈 경향: ${draft.objective.size_tendency}`,
+      `앞볼 / 발볼 / 발등: ${draft.objective.forefoot_tendency} / ${draft.objective.width_tendency} / ${draft.objective.instep_tendency}`,
+      `쿠션 / 안정감 / 착화감: ${draft.objective.cushioning_type} / ${draft.objective.stability_type} / ${draft.objective.ride_feel}`,
+      `추천 발 프로필: ${draft.recommendation.recommended_user_foot_profile.join(" / ")}`,
+      `주의 메모: ${draft.recommendation.caution_notes.join(" / ")}`
+    ]
+  };
 }
 
 export function normalizeShoeId(id: string) {

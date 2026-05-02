@@ -7,7 +7,9 @@ import { shoeReviews } from "@/data/reviews";
 import { FootProfileChips } from "@/components/FootProfileChips";
 import { explainSimilarity, generateSizeRecommendation, getSimilarReviews } from "@/lib/profile";
 import { getFootProfile } from "@/lib/storage";
-import { ShoeModel, ShoeReview } from "@/types";
+import { ShoeReview } from "@/types";
+import { getFitInsightDraftPreview } from "@/data/shoes";
+import type { CatalogShoe } from "@/data/shoes";
 
 const categoryLabel: Record<string, string> = {
   running: "러닝",
@@ -33,13 +35,14 @@ const fitLabel: Record<string, string> = {
   long: "길게 느낌"
 };
 
-export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
+export function ShoeDetailClient({ shoe }: { shoe: CatalogShoe }) {
   const profile = useMemo(() => getFootProfile(), []);
   const reviews = shoeReviews.filter((review) => review.shoeId === shoe.id);
   const similarReviews = profile ? getSimilarReviews(profile, reviews).slice(0, 5) : [];
   const similarReviewIds = new Set(similarReviews.map((review) => review.id));
   const remainingReviews = profile ? reviews.filter((review) => !similarReviewIds.has(review.id)) : reviews;
   const recommendation = profile ? generateSizeRecommendation(profile, reviews) : null;
+  const fitInsightPreview = getFitInsightDraftPreview(shoe);
   const similarReasonSummary =
     profile && similarReviews.length > 0
       ? Array.from(
@@ -60,6 +63,18 @@ export function ShoeDetailClient({ shoe }: { shoe: ShoeModel }) {
           </h1>
           <p className="text-neutral-700">{shoe.fitSummary}</p>
           <p className="text-sm text-neutral-600">기본 경향: {shoe.sizingTendency}</p>
+          {fitInsightPreview ? (
+            <div className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-4 text-sm text-neutral-700">
+              <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">핏 인사이트</p>
+              <h2 className="mt-1 text-base font-semibold text-neutral-900">{fitInsightPreview.title}</h2>
+              <p className="mt-2">{fitInsightPreview.summary}</p>
+              <ul className="mt-3 space-y-1">
+                {fitInsightPreview.lines.map((line) => (
+                  <li key={line}>• {line}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
           {shoe.productUrl ? (
             <a href={shoe.productUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-medium text-neutral-900 underline underline-offset-4">
               공식 정보
