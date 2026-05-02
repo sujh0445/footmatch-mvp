@@ -81,9 +81,23 @@ const expectedNeutralPreviewLines = [
   "앞볼 여유: 준비 중",
   "발볼 여유: 준비 중",
   "발등 압박: 준비 중",
+  "뒤꿈치 들림: 준비 중",
+  "와이드 옵션 여부: 준비 중",
+  "구매 사이즈 판단: 준비 중",
+  "맞는 발 프로필: 준비 중",
+  "사이즈 주의 조건: 준비 중",
+  "판단 근거: 준비 중"
+];
+const forbiddenLegacyPreviewLabels = [
   "뒤꿈치 고정: 준비 중",
   "와이드 옵션: 준비 중",
-  "사이즈 판단 힌트: 준비 중"
+  "사이즈 판단 힌트: 준비 중",
+  "뒤꿈치 고정감",
+  "와이드 선택지",
+  "사이즈 선택 방향",
+  "잘 맞을 가능성이 높은 조건",
+  "구매 전 확인할 조건",
+  "근거 상태"
 ];
 
 for (const shoe of publicShoes) {
@@ -120,6 +134,7 @@ for (const shoe of publicShoes) {
   assert(preview, `${shoe.familyKey ?? shoe.id} should render the placeholder block`);
   expectEqual(preview?.title, expectedNeutralPreviewTitle, `${shoe.familyKey ?? shoe.id} preview title`);
   expectEqual(preview?.summary, expectedNeutralPreviewSummary, `${shoe.familyKey ?? shoe.id} preview summary`);
+  expectEqual(preview?.lines.length, expectedNeutralPreviewLines.length, `${shoe.familyKey ?? shoe.id} preview line count`);
   expectEqual(shoe.fitInsightDraft?.status, "pilot_candidate", `${shoe.familyKey ?? shoe.id} fitInsight status`);
   expectEqual(
     Object.keys(shoe.fitInsightDraft ?? {}).join(","),
@@ -161,6 +176,9 @@ for (const shoe of publicShoes) {
   }
   for (const fieldName of internalFieldNames) {
     assert(!previewText.includes(fieldName), `${shoe.familyKey ?? shoe.id} preview leaked internal field name: ${fieldName}`);
+  }
+  for (const label of forbiddenLegacyPreviewLabels) {
+    assert(!previewText.includes(label), `${shoe.familyKey ?? shoe.id} preview leaked legacy label: ${label}`);
   }
 
   assert(
