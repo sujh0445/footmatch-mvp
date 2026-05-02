@@ -204,7 +204,7 @@ const seedShoes = [
     brand: "Nike",
     modelName: "Pegasus 41",
     category: "running",
-    fitSummary: "균형형 데일리 러닝화로 뒤꿈치 고정감이 안정적인 편.",
+    fitSummary: "균형형 데일리 러닝화로 뒤꿈치 안정감이 좋은 편.",
     sizingTendency: "길이는 무난하지만 넓은 발은 앞볼이 타이트하게 느껴질 수 있음.",
     imageSrc: "/shoes/nike-pegasus-41.svg",
     imageAlt: "Nike Pegasus 41 대표 이미지",
@@ -629,19 +629,13 @@ export function getFitInsightDraftPreview(shoe: CatalogShoe): FitInsightDraftPre
   }
 
   return {
-    title: "리뷰 기반 사이즈 판단 준비 중",
-    summary: "아직 실제 리뷰 근거를 연결하지 않았어요.",
+    title: "사이즈 판단 준비 중",
+    summary: "내 발 프로필을 먼저 기준으로 보고 있어요. 리뷰 데이터는 아직 연결 전이에요.",
     lines: [
-      "길이 맞음: 준비 중",
-      "앞볼 여유: 준비 중",
-      "발볼 여유: 준비 중",
-      "발등 압박: 준비 중",
+      "사이즈 경향: 준비 중",
+      "발 공간감: 준비 중",
       "뒤꿈치 들림: 준비 중",
-      "와이드 옵션 여부: 준비 중",
-      "구매 사이즈 판단: 준비 중",
-      "맞는 발 프로필: 준비 중",
-      "사이즈 주의 조건: 준비 중",
-      "판단 근거: 준비 중"
+      "와이드 옵션: 준비 중"
     ]
   };
 }

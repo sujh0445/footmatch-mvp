@@ -8,6 +8,7 @@ import { FootProfileChips } from "@/components/FootProfileChips";
 import { explainSimilarity, generateSizeRecommendation, getSimilarReviews } from "@/lib/profile";
 import { getFootProfile } from "@/lib/storage";
 import { ShoeReview } from "@/types";
+import { getFitInsightDraftPreview } from "@/data/shoes";
 import type { CatalogShoe } from "@/data/shoes";
 
 const categoryLabel: Record<string, string> = {
@@ -34,19 +35,6 @@ const fitLabel: Record<string, string> = {
   long: "길게 느낌"
 };
 
-const fitInsightLabelRows = [
-  { label: "사이즈 경향", value: "준비 중" },
-  { label: "앞볼 공간", value: "준비 중" },
-  { label: "발볼 체감", value: "준비 중" },
-  { label: "발등 압박", value: "준비 중" },
-  { label: "뒤꿈치 들림", value: "준비 중" },
-  { label: "와이드 옵션 여부", value: "준비 중" },
-  { label: "구매 사이즈 판단", value: "준비 중" },
-  { label: "맞는 발 프로필", value: "준비 중" },
-  { label: "사이즈 주의 조건", value: "준비 중" },
-  { label: "판단 근거", value: "준비 중" }
-] as const;
-
 export function ShoeDetailClient({ shoe }: { shoe: CatalogShoe }) {
   const profile = useMemo(() => getFootProfile(), []);
   const reviews = shoeReviews.filter((review) => review.shoeId === shoe.id);
@@ -54,13 +42,7 @@ export function ShoeDetailClient({ shoe }: { shoe: CatalogShoe }) {
   const similarReviewIds = new Set(similarReviews.map((review) => review.id));
   const remainingReviews = profile ? reviews.filter((review) => !similarReviewIds.has(review.id)) : reviews;
   const recommendation = profile ? generateSizeRecommendation(profile, reviews) : null;
-  const fitInsightPreview =
-    shoe.fitInsightDraft?.status === "pilot_candidate"
-      ? {
-          title: "리뷰 기반 사이즈 판단 준비 중",
-          summary: "아직 실제 리뷰 근거를 연결하지 않았어요."
-        }
-      : null;
+  const fitInsightPreview = getFitInsightDraftPreview(shoe);
   const similarReasonSummary =
     profile && similarReviews.length > 0
       ? Array.from(
@@ -87,12 +69,16 @@ export function ShoeDetailClient({ shoe }: { shoe: CatalogShoe }) {
               <h2 className="mt-1 text-base font-semibold text-neutral-900">{fitInsightPreview.title}</h2>
               <p className="mt-2">{fitInsightPreview.summary}</p>
               <ul className="mt-3 space-y-1">
-                {fitInsightLabelRows.map((row) => (
-                  <li key={row.label} className="flex items-start gap-2">
-                    <span className="min-w-28 shrink-0 font-medium text-neutral-600">{row.label}</span>
-                    <span className="text-neutral-700">{row.value}</span>
-                  </li>
-                ))}
+                {fitInsightPreview.lines.map((line) => {
+                  const [label, value] = line.split(": ");
+
+                  return (
+                    <li key={label} className="flex items-start gap-2">
+                      <span className="min-w-28 shrink-0 font-medium text-neutral-600">{label}</span>
+                      <span className="text-neutral-700">{value}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ) : null}
@@ -109,7 +95,7 @@ export function ShoeDetailClient({ shoe }: { shoe: CatalogShoe }) {
           <div className="space-y-1">
             <h2 className="text-xl font-semibold">사이즈 판단</h2>
             <p className="text-sm text-neutral-600">
-              이 신발을 기준으로 내 발 기준과 비슷한 리뷰를 함께 보고, 먼저 확인할 사이즈를 정리했어요.
+              현재 추천은 내 발 프로필을 먼저 기준으로 계산해요. 리뷰 기반 신발 핏 데이터가 연결되면 더 정교해질 수 있어요.
             </p>
           </div>
           {recommendation ? (

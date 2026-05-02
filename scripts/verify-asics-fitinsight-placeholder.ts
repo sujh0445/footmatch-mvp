@@ -20,6 +20,18 @@ function expectEqual(actual: unknown, expected: unknown, label: string) {
 }
 
 const forbiddenTerms = ["RunRepeat", "Musinsa", "Naver", "runrepeat", "musinsa", "naver"];
+const forbiddenPublicCopyTerms = [
+  "뒤꿈치 고정감",
+  "와이드 선택지",
+  "사이즈 선택 방향",
+  "잘 맞을 가능성이 높은 조건",
+  "구매 전 확인할 조건",
+  "근거 상태",
+  "길이 맞음",
+  "앞볼 여유",
+  "발볼 여유",
+  "발등 여유"
+];
 const internalFieldNames = [
   "lengthFit",
   "forefootRoom",
@@ -74,24 +86,25 @@ const expectedCoreKeys = [
 
 const expectedSourceAvailabilityKeys = ["runrepeat", "musinsa", "naver"];
 const expectedShoeCharacterKeys = ["cushioning_type", "stability_type", "ride_feel", "weight_feel", "bounce_feel"];
-const expectedNeutralPreviewTitle = "리뷰 기반 사이즈 판단 준비 중";
-const expectedNeutralPreviewSummary = "아직 실제 리뷰 근거를 연결하지 않았어요.";
+const expectedNeutralPreviewTitle = "사이즈 판단 준비 중";
+const expectedNeutralPreviewSummary = "내 발 프로필을 먼저 기준으로 보고 있어요. 리뷰 데이터는 아직 연결 전이에요.";
 const expectedNeutralPreviewLines = [
+  "사이즈 경향: 준비 중",
+  "발 공간감: 준비 중",
+  "뒤꿈치 들림: 준비 중",
+  "와이드 옵션: 준비 중"
+];
+const forbiddenLegacyPreviewLabels = [
   "길이 맞음: 준비 중",
   "앞볼 여유: 준비 중",
   "발볼 여유: 준비 중",
   "발등 압박: 준비 중",
-  "뒤꿈치 들림: 준비 중",
+  "뒤꿈치 고정: 준비 중",
   "와이드 옵션 여부: 준비 중",
   "구매 사이즈 판단: 준비 중",
   "맞는 발 프로필: 준비 중",
   "사이즈 주의 조건: 준비 중",
-  "판단 근거: 준비 중"
-];
-const forbiddenLegacyPreviewLabels = [
-  "뒤꿈치 고정: 준비 중",
-  "와이드 옵션: 준비 중",
-  "사이즈 판단 힌트: 준비 중",
+  "판단 근거: 준비 중",
   "뒤꿈치 고정감",
   "와이드 선택지",
   "사이즈 선택 방향",
@@ -104,6 +117,9 @@ for (const shoe of publicShoes) {
   const rootText = [shoe.fitSummary, shoe.sizingTendency].join(" ");
   for (const term of forbiddenTerms) {
     assert(!rootText.includes(term), `${shoe.familyKey ?? shoe.id} root copy leaked forbidden term: ${term}`);
+  }
+  for (const term of forbiddenPublicCopyTerms) {
+    assert(!rootText.includes(term), `${shoe.familyKey ?? shoe.id} root copy leaked public placeholder label: ${term}`);
   }
 
   const preview = getFitInsightDraftPreview(shoe);
