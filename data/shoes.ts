@@ -27,24 +27,41 @@ type LaunchFamilyKey =
 
 type FitInsightShoeType = "road_daily" | "road_stability" | "tempo" | "trail";
 
+type FitInsightFieldState = "pending";
+type FitInsightEvidenceStatus = "placeholder";
+type FitInsightSourceConnectionState = "not_connected";
+type FitInsightDerivedCode = "no_evidence";
+type FitInsightRiskFlag = "no_source_data";
+
+type FitInsightSourceAvailability = {
+  runrepeat: FitInsightSourceConnectionState;
+  musinsa: FitInsightSourceConnectionState;
+  naver: FitInsightSourceConnectionState;
+};
+
+type FitInsightCharacterDraft = {
+  cushioning_type: FitInsightFieldState;
+  stability_type: FitInsightFieldState;
+  ride_feel: FitInsightFieldState;
+  weight_feel: FitInsightFieldState;
+  bounce_feel: FitInsightFieldState;
+};
+
 type FitInsightDraft = {
   status: "pilot_candidate" | "launch_visible_not_piloted";
-  objective: {
-    size_tendency: string;
-    forefoot_tendency: string;
-    width_tendency: string;
-    instep_tendency: string;
-    cushioning_type: string;
-    stability_type: string;
-    ride_feel: string;
-  };
-  recommendation: {
-    recommended_user_foot_profile: string[];
-    caution_notes: string[];
-  };
-  evidence_placeholders: {
-    placeholder_notes: string[];
-  };
+  lengthFit: FitInsightFieldState;
+  forefootRoom: FitInsightFieldState;
+  widthFit: FitInsightFieldState;
+  instepVolume: FitInsightFieldState;
+  heelHold: FitInsightFieldState;
+  widthOptionAvailable: FitInsightFieldState;
+  sizeActionHint: FitInsightFieldState;
+  bestFor: FitInsightDerivedCode[];
+  cautionFor: FitInsightDerivedCode[];
+  evidenceStatus: FitInsightEvidenceStatus;
+  sourceAvailability: FitInsightSourceAvailability;
+  riskFlags: FitInsightRiskFlag[];
+  shoeCharacter: FitInsightCharacterDraft;
 };
 
 type LaunchFamilyRegistryEntry = {
@@ -128,26 +145,33 @@ function isHeritageLifestyleModel(modelName: string, category: string) {
   return heritageLifestyleModelPrefixes.some((prefix) => modelName.startsWith(prefix)) || category === "tennis" || category === "sportstyle";
 }
 
-const fitInsightPlaceholderText = "아직 입력 전";
-
 function buildFitInsightDraft(fitInsightTarget: boolean): FitInsightDraft {
+  const riskFlags: FitInsightRiskFlag[] = ["no_source_data"];
+
   return {
     status: fitInsightTarget ? "pilot_candidate" : "launch_visible_not_piloted",
-    objective: {
-      size_tendency: fitInsightPlaceholderText,
-      forefoot_tendency: fitInsightPlaceholderText,
-      width_tendency: fitInsightPlaceholderText,
-      instep_tendency: fitInsightPlaceholderText,
-      cushioning_type: fitInsightPlaceholderText,
-      stability_type: fitInsightPlaceholderText,
-      ride_feel: fitInsightPlaceholderText
+    lengthFit: "pending",
+    forefootRoom: "pending",
+    widthFit: "pending",
+    instepVolume: "pending",
+    heelHold: "pending",
+    widthOptionAvailable: "pending",
+    sizeActionHint: "pending",
+    bestFor: [],
+    cautionFor: [],
+    evidenceStatus: "placeholder",
+    sourceAvailability: {
+      runrepeat: "not_connected",
+      musinsa: "not_connected",
+      naver: "not_connected"
     },
-    recommendation: {
-      recommended_user_foot_profile: [fitInsightPlaceholderText],
-      caution_notes: [fitInsightPlaceholderText]
-    },
-    evidence_placeholders: {
-      placeholder_notes: [fitInsightPlaceholderText]
+    riskFlags,
+    shoeCharacter: {
+      cushioning_type: "pending",
+      stability_type: "pending",
+      ride_feel: "pending",
+      weight_feel: "pending",
+      bounce_feel: "pending"
     }
   };
 }
@@ -605,14 +629,16 @@ export function getFitInsightDraftPreview(shoe: CatalogShoe): FitInsightDraftPre
   }
 
   return {
-    title: "리뷰 기반 핏 인사이트 준비 중",
+    title: "리뷰 기반 사이즈 판단 준비 중",
     summary: "아직 실제 리뷰 근거를 연결하지 않았어요.",
     lines: [
-      `사이즈 경향: ${draft.objective.size_tendency}`,
-      `앞볼 / 발볼 / 발등: ${draft.objective.forefoot_tendency} / ${draft.objective.width_tendency} / ${draft.objective.instep_tendency}`,
-      `쿠션 / 안정감 / 착화감: ${draft.objective.cushioning_type} / ${draft.objective.stability_type} / ${draft.objective.ride_feel}`,
-      `추천 발 프로필: ${draft.recommendation.recommended_user_foot_profile.join(" / ")}`,
-      `주의 메모: ${draft.recommendation.caution_notes.join(" / ")}`
+      "길이 맞음: 준비 중",
+      "앞볼 여유: 준비 중",
+      "발볼 여유: 준비 중",
+      "발등 압박: 준비 중",
+      "뒤꿈치 고정: 준비 중",
+      "와이드 옵션: 준비 중",
+      "사이즈 판단 힌트: 준비 중"
     ]
   };
 }

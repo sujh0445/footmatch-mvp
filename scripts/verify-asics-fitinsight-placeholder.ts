@@ -20,6 +20,21 @@ function expectEqual(actual: unknown, expected: unknown, label: string) {
 }
 
 const forbiddenTerms = ["RunRepeat", "Musinsa", "Naver", "runrepeat", "musinsa", "naver"];
+const internalFieldNames = [
+  "lengthFit",
+  "forefootRoom",
+  "widthFit",
+  "instepVolume",
+  "heelHold",
+  "widthOptionAvailable",
+  "sizeActionHint",
+  "bestFor",
+  "cautionFor",
+  "evidenceStatus",
+  "sourceAvailability",
+  "riskFlags",
+  "shoeCharacter"
+];
 const publicShoes = getPublicCatalogShoes();
 const pilotShoes = getFitInsightPilotShoes();
 
@@ -40,6 +55,37 @@ expectEqual(
   "pilot family order"
 );
 
+const expectedCoreKeys = [
+  "status",
+  "lengthFit",
+  "forefootRoom",
+  "widthFit",
+  "instepVolume",
+  "heelHold",
+  "widthOptionAvailable",
+  "sizeActionHint",
+  "bestFor",
+  "cautionFor",
+  "evidenceStatus",
+  "sourceAvailability",
+  "riskFlags",
+  "shoeCharacter"
+];
+
+const expectedSourceAvailabilityKeys = ["runrepeat", "musinsa", "naver"];
+const expectedShoeCharacterKeys = ["cushioning_type", "stability_type", "ride_feel", "weight_feel", "bounce_feel"];
+const expectedNeutralPreviewTitle = "리뷰 기반 사이즈 판단 준비 중";
+const expectedNeutralPreviewSummary = "아직 실제 리뷰 근거를 연결하지 않았어요.";
+const expectedNeutralPreviewLines = [
+  "길이 맞음: 준비 중",
+  "앞볼 여유: 준비 중",
+  "발볼 여유: 준비 중",
+  "발등 압박: 준비 중",
+  "뒤꿈치 고정: 준비 중",
+  "와이드 옵션: 준비 중",
+  "사이즈 판단 힌트: 준비 중"
+];
+
 for (const shoe of publicShoes) {
   const rootText = [shoe.fitSummary, shoe.sizingTendency].join(" ");
   for (const term of forbiddenTerms) {
@@ -53,41 +99,73 @@ for (const shoe of publicShoes) {
     assert(!preview, "FUJISPEED 4 must not render the pilot placeholder block");
     expectEqual(shoe.fitInsightDraft?.status, "launch_visible_not_piloted", "FUJISPEED 4 fitInsight status");
     expectEqual(
-      Object.keys(shoe.fitInsightDraft?.objective ?? {}).join(","),
-      "size_tendency,forefoot_tendency,width_tendency,instep_tendency,cushioning_type,stability_type,ride_feel",
-      "FUJISPEED 4 fitInsight objective keys"
+      Object.keys(shoe.fitInsightDraft ?? {}).join(","),
+      expectedCoreKeys.join(","),
+      "FUJISPEED 4 fitInsight keys"
+    );
+    expectEqual(shoe.fitInsightDraft?.evidenceStatus, "placeholder", "FUJISPEED 4 evidenceStatus");
+    expectEqual(
+      Object.keys(shoe.fitInsightDraft?.sourceAvailability ?? {}).join(","),
+      expectedSourceAvailabilityKeys.join(","),
+      "FUJISPEED 4 sourceAvailability keys"
+    );
+    expectEqual(
+      Object.keys(shoe.fitInsightDraft?.shoeCharacter ?? {}).join(","),
+      expectedShoeCharacterKeys.join(","),
+      "FUJISPEED 4 shoeCharacter keys"
     );
     continue;
   }
 
   assert(preview, `${shoe.familyKey ?? shoe.id} should render the placeholder block`);
-  expectEqual(preview?.title, "리뷰 기반 핏 인사이트 준비 중", `${shoe.familyKey ?? shoe.id} preview title`);
-  expectEqual(preview?.summary, "아직 실제 리뷰 근거를 연결하지 않았어요.", `${shoe.familyKey ?? shoe.id} preview summary`);
+  expectEqual(preview?.title, expectedNeutralPreviewTitle, `${shoe.familyKey ?? shoe.id} preview title`);
+  expectEqual(preview?.summary, expectedNeutralPreviewSummary, `${shoe.familyKey ?? shoe.id} preview summary`);
   expectEqual(shoe.fitInsightDraft?.status, "pilot_candidate", `${shoe.familyKey ?? shoe.id} fitInsight status`);
   expectEqual(
-    Object.keys(shoe.fitInsightDraft?.objective ?? {}).join(","),
-    "size_tendency,forefoot_tendency,width_tendency,instep_tendency,cushioning_type,stability_type,ride_feel",
-    `${shoe.familyKey ?? shoe.id} fitInsight objective keys`
+    Object.keys(shoe.fitInsightDraft ?? {}).join(","),
+    expectedCoreKeys.join(","),
+    `${shoe.familyKey ?? shoe.id} fitInsight keys`
   );
+  expectEqual(shoe.fitInsightDraft?.lengthFit, "pending", `${shoe.familyKey ?? shoe.id} lengthFit`);
+  expectEqual(shoe.fitInsightDraft?.forefootRoom, "pending", `${shoe.familyKey ?? shoe.id} forefootRoom`);
+  expectEqual(shoe.fitInsightDraft?.widthFit, "pending", `${shoe.familyKey ?? shoe.id} widthFit`);
+  expectEqual(shoe.fitInsightDraft?.instepVolume, "pending", `${shoe.familyKey ?? shoe.id} instepVolume`);
+  expectEqual(shoe.fitInsightDraft?.heelHold, "pending", `${shoe.familyKey ?? shoe.id} heelHold`);
+  expectEqual(shoe.fitInsightDraft?.widthOptionAvailable, "pending", `${shoe.familyKey ?? shoe.id} widthOptionAvailable`);
+  expectEqual(shoe.fitInsightDraft?.sizeActionHint, "pending", `${shoe.familyKey ?? shoe.id} sizeActionHint`);
+  expectEqual(shoe.fitInsightDraft?.bestFor.length, 0, `${shoe.familyKey ?? shoe.id} bestFor length`);
+  expectEqual(shoe.fitInsightDraft?.cautionFor.length, 0, `${shoe.familyKey ?? shoe.id} cautionFor length`);
+  expectEqual(shoe.fitInsightDraft?.evidenceStatus, "placeholder", `${shoe.familyKey ?? shoe.id} evidenceStatus`);
   expectEqual(
-    Object.keys(shoe.fitInsightDraft?.recommendation ?? {}).join(","),
-    "recommended_user_foot_profile,caution_notes",
-    `${shoe.familyKey ?? shoe.id} fitInsight recommendation keys`
+    Object.keys(shoe.fitInsightDraft?.sourceAvailability ?? {}).join(","),
+    expectedSourceAvailabilityKeys.join(","),
+    `${shoe.familyKey ?? shoe.id} sourceAvailability keys`
   );
+  expectEqual(shoe.fitInsightDraft?.sourceAvailability.runrepeat, "not_connected", `${shoe.familyKey ?? shoe.id} sourceAvailability.runrepeat`);
+  expectEqual(shoe.fitInsightDraft?.sourceAvailability.musinsa, "not_connected", `${shoe.familyKey ?? shoe.id} sourceAvailability.musinsa`);
+  expectEqual(shoe.fitInsightDraft?.sourceAvailability.naver, "not_connected", `${shoe.familyKey ?? shoe.id} sourceAvailability.naver`);
+  expectEqual(shoe.fitInsightDraft?.riskFlags.join(","), "no_source_data", `${shoe.familyKey ?? shoe.id} riskFlags`);
   expectEqual(
-    Object.keys(shoe.fitInsightDraft?.evidence_placeholders ?? {}).join(","),
-    "placeholder_notes",
-    `${shoe.familyKey ?? shoe.id} fitInsight evidence placeholder keys`
+    Object.keys(shoe.fitInsightDraft?.shoeCharacter ?? {}).join(","),
+    expectedShoeCharacterKeys.join(","),
+    `${shoe.familyKey ?? shoe.id} shoeCharacter keys`
   );
+  expectEqual(shoe.fitInsightDraft?.shoeCharacter.cushioning_type, "pending", `${shoe.familyKey ?? shoe.id} shoeCharacter.cushioning_type`);
+  expectEqual(shoe.fitInsightDraft?.shoeCharacter.stability_type, "pending", `${shoe.familyKey ?? shoe.id} shoeCharacter.stability_type`);
+  expectEqual(shoe.fitInsightDraft?.shoeCharacter.ride_feel, "pending", `${shoe.familyKey ?? shoe.id} shoeCharacter.ride_feel`);
+  expectEqual(shoe.fitInsightDraft?.shoeCharacter.weight_feel, "pending", `${shoe.familyKey ?? shoe.id} shoeCharacter.weight_feel`);
+  expectEqual(shoe.fitInsightDraft?.shoeCharacter.bounce_feel, "pending", `${shoe.familyKey ?? shoe.id} shoeCharacter.bounce_feel`);
 
-  const joined = previewText;
   for (const term of forbiddenTerms) {
-    assert(!joined.includes(term), `${shoe.familyKey ?? shoe.id} preview leaked forbidden term: ${term}`);
+    assert(!previewText.includes(term), `${shoe.familyKey ?? shoe.id} preview leaked forbidden term: ${term}`);
+  }
+  for (const fieldName of internalFieldNames) {
+    assert(!previewText.includes(fieldName), `${shoe.familyKey ?? shoe.id} preview leaked internal field name: ${fieldName}`);
   }
 
   assert(
-    preview?.lines.every((line) => line.includes("아직 입력 전")),
-    `${shoe.familyKey ?? shoe.id} preview should remain placeholder-only`
+    preview?.lines.every((line, index) => line === expectedNeutralPreviewLines[index]),
+    `${shoe.familyKey ?? shoe.id} preview should remain neutral and placeholder-only`
   );
 }
 

@@ -65,7 +65,7 @@ export function ShoeDetailClient({ shoe }: { shoe: CatalogShoe }) {
           <p className="text-sm text-neutral-600">기본 경향: {shoe.sizingTendency}</p>
           {fitInsightPreview ? (
             <div className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-4 text-sm text-neutral-700">
-              <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">핏 인사이트</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">사이즈 판단</p>
               <h2 className="mt-1 text-base font-semibold text-neutral-900">{fitInsightPreview.title}</h2>
               <p className="mt-2">{fitInsightPreview.summary}</p>
               <ul className="mt-3 space-y-1">
